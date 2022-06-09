@@ -1,0 +1,412 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_aktifitas"
+        android:minHeight="?attr/actionBarSize"
+        android:background="@color/page_join_visit"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        app:titleTextAppearance="@style/ToolbarTitleText"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <ScrollView
+        android:layout_below="@id/toolbar_aktifitas"
+        android:layout_marginBottom="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_below="@id/toolbar_aktifitas"
+            android:id="@+id/photo_toko_wrapper"
+            android:orientation="vertical"
+            android:layout_marginTop="0dp"
+            android:layout_marginBottom="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:layout_marginTop="7dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="3dp"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
+
+                    <TextView android:text="Internal / External :"
+                        android:visibility="visible"
+                        android:id="@+id/selection3"
+                        android:layout_marginTop="5dp"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content" />
+
+                    <Spinner android:id="@+id/spinner_complain_purpose"
+                        android:visibility="visible"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:drawSelectorOnTop="true"
+                        android:entries="@array/slc_complain_purpose"/>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:visibility="visible"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp">
+
+                        <EditText
+                            android:id="@+id/txt_complain_from"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:ems="10"
+                            android:hint="From"
+                            android:focusable="true"
+                            android:inputType="textPersonName" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <AutoCompleteTextView
+                        android:id="@+id/multi_ac_to"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:layout_below="@+id/txt_salesman"
+                        android:layout_alignLeft="@+id/txt_salesman"
+                        android:layout_alignStart="@+id/txt_salesman"
+                        android:hint="Complain To " />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:visibility="visible"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp">
+
+                        <EditText
+                            android:id="@+id/txt_subject"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:ems="10"
+                            android:hint="Subject"
+                            android:focusable="true"
+                            android:inputType="textPersonName" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:visibility="visible"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp">
+
+                        <EditText
+                            android:id="@+id/txt_due_date"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:ems="10"
+                            android:hint="Due Date"
+                            android:focusable="false"
+                            android:inputType="textPersonName" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <TextView android:text="Jenis Complain :"
+                        android:layout_marginTop="5dp"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content" />
+
+                    <Spinner android:id="@+id/spinner_jenis_complain"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:drawSelectorOnTop="true"
+                        android:entries="@array/slc_jenis_complain"/>
+
+                    <TextView android:text="Periode :"
+                        android:id="@+id/txt_durasi"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginLeft="7dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                    <LinearLayout
+                        android:id="@+id/layout_durasi"
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center" >
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/lbl_jam_buka"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginTop="10dp">
+
+                            <EditText
+                                android:id="@+id/txt_periode_awal"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:ems="10"
+                                android:hint="Periode Awal"
+                                android:focusable="false"
+                                android:inputType="textPersonName" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/lbl_jam_tutup"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginTop="10dp">
+
+                            <EditText
+                                android:id="@+id/txt_periode_akhir"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:ems="10"
+                                android:hint="Periode Akhir"
+                                android:focusable="false"
+                                android:inputType="textPersonName" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:visibility="visible"
+                        android:id="@+id/layout_l"
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center" >
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:visibility="visible"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp">
+
+                            <EditText
+                                android:id="@+id/txt_l1"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:ems="10"
+                                android:hint="L1"
+                                android:focusable="true"
+                                android:inputType="textPersonName" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:visibility="visible"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp">
+
+                            <EditText
+                                android:id="@+id/txt_l2"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:ems="10"
+                                android:hint="L2"
+                                android:focusable="true"
+                                android:inputType="textPersonName" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:visibility="visible"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp">
+
+                            <EditText
+                                android:id="@+id/txt_l3"
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content"
+                                android:ems="10"
+                                android:hint="L3"
+                                android:focusable="true"
+                                android:inputType="textPersonName" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:visibility="gone"
+                        android:id="@+id/layout_project"
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center" >
+
+                        <AutoCompleteTextView
+                            android:id="@+id/multi_pic2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:ems="10"
+                            android:hint="PIC 2 " />
+
+                        <TextView android:text="Main Project :"
+                            android:layout_marginTop="5dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+
+                        <Spinner android:id="@+id/spinner_project"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="10dp"
+                            android:drawSelectorOnTop="true"/>
+
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:visibility="gone"
+                        android:id="@+id/layout_subproject"
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center" >
+
+                        <TextView android:text="Sub Project :"
+                            android:layout_marginTop="5dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+
+                        <Spinner android:id="@+id/spinner_subproject"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="10dp"
+                            android:drawSelectorOnTop="true"/>
+
+                    </LinearLayout>
+
+                    <Button
+                        android:layout_alignParentTop="false"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="10dp"
+                        android:id="@+id/btn_deskripsi"
+                        android:text="Add Deskripsi"
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <LinearLayout android:orientation="horizontal"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:gravity="center_horizontal"
+                        android:id="@+id/fillable_area">
+
+                        <TableLayout
+                            android:id="@+id/tabel_1a"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="0dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginRight="0dp"
+                            android:layout_marginBottom="10dp"
+                            android:gravity="top">
+
+                            <TableRow
+                                android:layout_width="wrap_content"
+                                android:layout_height="0dp"
+                                android:layout_margin="0dp"
+                                android:background="@color/white">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_column="0"
+                                    android:layout_margin="1dp"
+                                    android:background="@color/page_join_visit"
+                                    android:gravity="center"
+                                    android:text="No"
+                                    android:paddingLeft="3dp"
+                                    android:paddingRight="3dp"
+                                    android:textAppearance="?android:attr/textAppearanceLarge"
+                                    android:textColor="@color/white"
+                                    android:textSize="10dp"
+                                    android:textStyle="bold" />
+
+                            </TableRow>
+
+                        </TableLayout>
+
+                        <HorizontalScrollView
+                            android:id="@+id/hsv_tabel_1b"
+                            android:fillViewport="true"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TableLayout
+                                android:id="@+id/tabel_1b"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:layout_marginLeft="0dp"
+                                android:layout_marginRight="0dp"
+                                android:layout_marginBottom="10dp"
+                                android:stretchColumns="*"
+                                android:gravity="top">
+
+                                <TableRow
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="0dp"
+                                    android:layout_margin="0dp"
+                                    android:background="@color/white">
+
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:textAppearance="?android:attr/textAppearanceLarge"
+                                        android:text="Deskripsi"
+                                        android:layout_margin="1dp"
+                                        android:layout_column="0"
+                                        android:background="@color/page_join_visit"
+                                        android:textColor="@color/white"
+                                        android:textStyle="bold"
+                                        android:textSize="10dp"
+                                        android:gravity="center"
+                                        />
+
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:textAppearance="?android:attr/textAppearanceLarge"
+                                        android:text="Act"
+                                        android:layout_margin="1dp"
+                                        android:layout_column="1"
+                                        android:background="@color/page_join_visit"
+                                        android:textColor="@color/white"
+                                        android:textStyle="bold"
+                                        android:textSize="10dp"
+                                        android:gravity="center"
+                                        />
+
+                                </TableRow>
+
+                            </TableLayout>
+
+                        </HorizontalScrollView>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</RelativeLayout>

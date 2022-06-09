@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/backSub"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/border_bottom_bg"
+    android:gravity="center_vertical"
+    android:minHeight="48dp"
+    android:paddingLeft="0dp">
+
+    <com.joanzapata.iconify.widget.IconTextView
+        android:id="@+id/icon_arrow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="@dimen/space_medium"
+        android:layout_marginTop="12dp"
+        android:gravity="center_vertical"
+        android:text="{fa-chevron-right}"
+        android:textColor="@color/black" />
+
+    <com.joanzapata.iconify.widget.IconTextView
+        android:id="@+id/icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="12dp"
+        android:layout_toRightOf="@id/icon_arrow"
+        android:gravity="center_vertical"
+        android:text="{fa-briefcase}"
+        android:textColor="@color/black" />
+
+    <LinearLayout
+        android:id="@+id/ll_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="@dimen/space_medium"
+        android:layout_toRightOf="@+id/icon"
+        android:gravity="center_vertical"
+        android:maxWidth="220dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/text_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="@dimen/space_medium"
+            android:layout_toRightOf="@+id/icon"
+            android:gravity="center_vertical"
+            android:maxWidth="220dp"
+            android:padding="3dp"
+            android:text="project"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/text_title2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="@dimen/space_medium"
+            android:gravity="center_vertical"
+            android:maxWidth="220dp"
+            android:text="project"
+            android:textColor="@color/white"
+            android:textSize="10sp" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/text_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_toLeftOf="@+id/lock"
+        android:background="@drawable/bg_count_circle_red"
+        android:minWidth="@dimen/icon_size_small"
+        android:text="7"
+        android:textAlignment="center"
+        android:textColor="@color/white" />
+
+    <com.joanzapata.iconify.widget.IconTextView
+        android:id="@+id/lock"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="@dimen/space_small"
+        android:layout_marginTop="4dp"
+        android:layout_toLeftOf="@+id/move"
+        android:gravity="center_vertical"
+        android:padding="8dp"
+        android:textColor="@android:color/white"
+        android:textSize="14sp" />
+
+    <com.joanzapata.iconify.widget.IconTextView
+        android:id="@+id/move"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/ll_title"
+        android:layout_alignParentRight="true"
+        android:layout_alignRight="@+id/ll_title"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="@dimen/space_small"
+        android:layout_marginTop="4dp"
+        android:gravity="center_vertical"
+        android:padding="8dp"
+        android:text="{fa-share-square}"
+        android:textColor="@color/black"
+        android:textSize="14sp" />
+</RelativeLayout>

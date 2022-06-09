@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_aktifitas"
+        android:minHeight="?attr/actionBarSize"
+        android:background="@color/page_join_visit"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        app:titleTextAppearance="@style/ToolbarTitleText"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <ScrollView
+        android:layout_below="@id/toolbar_aktifitas"
+        android:layout_marginBottom="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_below="@id/toolbar_aktifitas"
+            android:id="@+id/photo_toko_wrapper"
+            android:orientation="vertical"
+            android:layout_marginTop="0dp"
+            android:layout_marginBottom="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:layout_marginTop="7dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="3dp"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
+
+                    <HorizontalScrollView
+                        android:id="@+id/hsv_tabel_1b"
+                        android:fillViewport="true"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TableLayout
+                            android:id="@+id/tabel_1b"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginLeft="0dp"
+                            android:layout_marginRight="0dp"
+                            android:layout_marginBottom="10dp"
+                            android:stretchColumns="1,2,3"
+                            android:gravity="top">
+
+                            <TableRow
+                                android:layout_width="wrap_content"
+                                android:layout_height="0dp"
+                                android:layout_margin="0dp"
+                                android:background="@color/white">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textAppearance="?android:attr/textAppearanceLarge"
+                                    android:text="No"
+                                    android:layout_margin="1dp"
+                                    android:layout_column="0"
+                                    android:background="@color/page_join_visit"
+                                    android:textColor="@color/white"
+                                    android:textStyle="bold"
+                                    android:textSize="10dp"
+                                    android:gravity="center"
+                                    />
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:textAppearance="?android:attr/textAppearanceLarge"
+                                    android:text="Respon"
+                                    android:layout_margin="1dp"
+                                    android:layout_column="1"
+                                    android:background="@color/page_join_visit"
+                                    android:textColor="@color/white"
+                                    android:textStyle="bold"
+                                    android:textSize="10dp"
+                                    android:gravity="center"
+                                    />
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:textAppearance="?android:attr/textAppearanceLarge"
+                                    android:text="From"
+                                    android:layout_margin="1dp"
+                                    android:layout_column="2"
+                                    android:background="@color/page_join_visit"
+                                    android:textColor="@color/white"
+                                    android:textStyle="bold"
+                                    android:textSize="10dp"
+                                    android:gravity="center"
+                                    />
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:textAppearance="?android:attr/textAppearanceLarge"
+                                    android:text="Pict"
+                                    android:layout_margin="1dp"
+                                    android:layout_column="3"
+                                    android:background="@color/page_join_visit"
+                                    android:textColor="@color/white"
+                                    android:textStyle="bold"
+                                    android:textSize="10dp"
+                                    android:gravity="center"
+                                    />
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:textAppearance="?android:attr/textAppearanceLarge"
+                                    android:text="Act"
+                                    android:layout_margin="1dp"
+                                    android:layout_column="4"
+                                    android:background="@color/page_join_visit"
+                                    android:textColor="@color/white"
+                                    android:textStyle="bold"
+                                    android:textSize="10dp"
+                                    android:gravity="center"
+                                    />
+
+                            </TableRow>
+
+                        </TableLayout>
+
+                    </HorizontalScrollView>
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</RelativeLayout>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_main_ms"
+        android:minHeight="?attr/actionBarSize"
+        android:background="@color/page_red"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:elevation="@dimen/elevation_medium"
+        app:titleTextAppearance="@style/ToolbarTitleText"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+    </androidx.appcompat.widget.Toolbar>
+
+
+    <LinearLayout
+        android:layout_below="@id/toolbar_main_ms"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="5dp"
+        android:orientation="vertical">
+
+            <!-- CalendarView with monday as first day and minmal and maximal day -->
+            <CalendarView
+                android:visibility="gone"
+                android:id="@+id/simpleCalendarView"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:firstDayOfWeek="2"
+                android:minDate="01/01/2020" />
+
+        <com.skyhope.eventcalenderlibrary.CalenderEvent
+            android:id="@+id/calender_event"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            />
+
+    </LinearLayout>
+
+</RelativeLayout>

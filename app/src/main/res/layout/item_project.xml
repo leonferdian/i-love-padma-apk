@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:descendantFocusability="blocksDescendants">
+
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="4"
+        android:orientation="horizontal"
+        android:padding="5dip">
+
+
+
+        <!--  ListRow Left sied Thumbnail image -->
+
+
+
+        <LinearLayout
+            android:id="@+id/centerContent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="4"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <RelativeLayout
+                android:id="@+id/centerContent1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="4"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:visibility="visible">
+
+                <TextView
+                    android:id="@+id/task_project_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="10dp"
+                    android:text="Project Name"
+                    android:textColor="#676464"
+                    android:textSize="14sp"
+                    android:visibility="visible" />
+
+                <TextView
+                    android:id="@+id/txt_tgl_project"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:textAlignment="center"
+                    android:text="tgl project"
+                    android:textColor="#676464"
+                    android:textSize="12sp"
+                    android:typeface="sans" />
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/task_jenis_project"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Jenis Project"
+                android:textColor="#676464"
+                android:textSize="10sp"
+                android:typeface="sans" />
+
+
+            <RelativeLayout
+                android:id="@+id/centerContent4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:visibility="visible">
+
+                <TextView
+                    android:id="@+id/lbl_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="10dp"
+                    android:text="Main Project  "
+                    android:textColor="#676464"
+                    android:textSize="14sp"
+                    android:visibility="visible" />
+
+                <TextView
+                    android:id="@+id/txt_main_project"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:textAlignment="center"
+                    android:text="Main Project Name"
+                    android:textColor="#676464"
+                    android:textSize="14sp"
+                    android:typeface="sans" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:visibility="visible">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="10dp"
+                    android:text="Status Project  "
+                    android:textColor="#676464"
+                    android:textSize="14sp"
+                    android:visibility="visible" />
+
+                <TextView
+                    android:id="@+id/txt_status_project"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:textAlignment="center"
+                    android:text="Status Project"
+                    android:textColor="#676464"
+                    android:textSize="14sp"
+                    android:typeface="sans" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:visibility="visible">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="10dp"
+                    android:text="Divisi "
+                    android:textColor="#676464"
+                    android:textSize="14sp"
+                    android:visibility="visible" />
+
+                <TextView
+                    android:id="@+id/txt_divisi_project"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:textAlignment="center"
+                    android:text="Divisi Project"
+                    android:textColor="#676464"
+                    android:textSize="14sp"
+                    android:typeface="sans" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/centerContent2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="4"
+                android:orientation="horizontal"
+                android:gravity="left"
+                android:layout_gravity="center_vertical"
+                android:visibility="visible">
+
+                <TextView
+                    android:id="@+id/lbl_kapasitas"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="10dp"
+                    android:text="Sub Project"
+                    android:textColor="#676464"
+                    android:textSize="14sp"
+                    android:layout_weight="1"
+                    android:visibility="visible" />
+
+                <TextView
+                    android:id="@+id/txt_jml_sub_project"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:textAlignment="center"
+                    android:text="0"
+                    android:textColor="@color/white"
+                    android:background="@color/boxdepanAtas"
+                    android:textSize="14sp"
+                    android:padding="3dp"
+                    android:layout_weight="3"
+                    android:typeface="sans" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="4"
+                android:orientation="horizontal"
+                android:gravity="left"
+                android:layout_gravity="center_vertical"
+                android:layout_marginTop="5dp"
+                android:visibility="visible">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="10dp"
+                    android:text="Task List"
+                    android:textColor="#676464"
+                    android:textSize="14sp"
+                    android:layout_weight="1"
+                    android:visibility="visible" />
+
+                <TextView
+                    android:id="@+id/txt_jml_task"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:textAlignment="center"
+                    android:text="0"
+                    android:textColor="@color/white"
+                    android:background="@color/boxdepanAtas"
+                    android:textSize="14sp"
+                    android:padding="3dp"
+                    android:layout_weight="3"
+                    android:typeface="sans" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+
+
+
+
+    </LinearLayout>
+</RelativeLayout>

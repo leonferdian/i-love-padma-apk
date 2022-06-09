@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- <item android:drawable="@color/main_blue"></item>
+     <item android:state_focused="false" android:drawable="@drawable/tab_selected_pressed_actionbar_tab_indicator"/>
+     <item android:state_pressed="true" android:drawable="@drawable/tab_selected_pressed_actionbar_tab_indicator" />-->
+
+    <!-- Focused states -->
+    <item android:drawable="@color/black_transparent"
+        android:state_pressed="true" />
+    <item android:drawable="@color/black_transparent"
+        android:state_focused="true" />
+    <item android:drawable="@android:color/transparent" />
+</selector>

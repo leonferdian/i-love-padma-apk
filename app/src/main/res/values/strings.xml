@@ -1,0 +1,189 @@
+<resources>
+    <string name="app_name">I Love Padma</string>
+
+    <string-array name="slc_klasifikasi_outlet">
+        <item>--Pilih Klasifikasi--</item>
+        <item>DIAMOND</item>
+        <item>GOLD</item>
+        <item>SILVER</item>
+        <item>BRONZE</item>
+        <item>WOOD</item>
+    </string-array>
+
+    <string-array name="slc_complain_filter">
+        <item>All</item>
+        <item>accept</item>
+        <item>open</item>
+        <item>proses</item>
+        <item>reject</item>
+        <item>finish</item>
+        <item>close</item>
+    </string-array>
+
+    <string-array name="slc_project_filter">
+        <item>All</item>
+        <item>Digitalisasi</item>
+        <item>Reguler</item>
+    </string-array>
+
+    <string-array name="slc_note_filter">
+        <item>all</item>
+        <item>task</item>
+        <item>notes</item>
+    </string-array>
+
+    <string-array name="slc_note_filter2">
+        <item>minute_of_meeting</item>
+    </string-array>
+
+    <string-array name="slc_jenis_timeline">
+        <item>All</item>
+        <item>agenda</item>
+        <item>tiket</item>
+    </string-array>
+
+    <string-array name="slc_filter_post_everything">
+        <item>All</item>
+        <item>my_post</item>
+    </string-array>
+
+    <string-array name="slc_complain_purpose">
+        <item>internal</item>
+        <item>external</item>
+    </string-array>
+
+    <string-array name="slc_jenis_project">
+        <item>Reguler</item>
+        <item>Digitalisasi</item>
+    </string-array>
+
+    <string-array name="slc_status_agenda">
+        <item>plan</item>
+        <item>plan not succeed</item>
+        <item>plan succeed</item>
+        <item>unplanned</item>
+    </string-array>
+
+    <string-array name="slc_jenis_complain">
+        <item>Reguler</item>
+        <item>Proak</item>
+        <item>Project</item>
+    </string-array>
+
+    <string-array name="slc_tipe_filter_timeline">
+        <item>By Preseller</item>
+        <item>By HOT</item>
+        <item>By HOS</item>
+    </string-array>
+
+    <string-array name="slc_qty">
+        <item>--Pilih QTY--</item>
+        <item>0</item>
+    </string-array>
+
+    <string-array name="slc_jns_confirm">
+        <item>--Pilih Kriteria--</item>
+        <item>Toko Tutup</item>
+        <item>Out Arena</item>
+    </string-array>
+
+    <string-array name="slc_type_outlet">
+        <item>--Pilih Tipe--</item>
+        <item>GENERAL TRADE</item>
+        <item>MINI NKA</item>
+        <item>MT NKA</item>
+        <item>LKA</item>
+        <item>IN HOME</item>
+        <item>2ND HOME</item>
+        <item>ON-PREMISE</item>
+        <item>E-BUSINESS</item>
+        <item>INTERN</item>
+    </string-array>
+
+    <string-array name="slc_saluran_disc">
+        <item>--Pilih Saluran Dist--</item>
+        <item>2ND HOME RTM</item>
+        <item>AFH-ROUTE TO MARKET</item>
+        <item>AHS</item>
+        <item>E-BUSINESS</item>
+        <item>EDUCATION</item>
+        <item>FOOD SERVICE</item>
+        <item>GT RETAIL</item>
+        <item>IN HOME RTM</item>
+        <item>INTERMEDIARIES</item>
+        <item>INTERN</item>
+        <item>IOD</item>
+        <item>LEISURE</item>
+        <item>LODGING</item>
+        <item>MANAGE INDIRECT</item>
+        <item>MINIMARKET-LKA</item>
+        <item>MINIMARKET-NKA</item>
+        <item>MODERN TRADE-NKA</item>
+        <item>MT HYPER/SUPER-LKA</item>
+        <item>OTHER HOME</item>
+        <item>SPECIAL EVENT</item>
+        <item>TRANSPORTATION</item>
+    </string-array>
+
+    <string-array name="slc_segment1">
+        <item>--Pilih Segment1--</item>
+        <item>2ND HOME RTM PARTNER</item>
+        <item>AFH-PARTNER DINING</item>
+        <item>AFH-PARTNER LEISURE</item>
+        <item>AFH-PARTNER TRANSPORTATION</item>
+        <item>AHS</item>
+        <item>AHS 2.0</item>
+        <item>AHS APARTMENT</item>
+        <item>APARTEMENT HIGH CLASS</item>
+        <item>APARTEMENT/RUMAH SUSUN</item>
+        <item>BAR, KARAOKE, PUBS &amp; CLUBS</item>
+        <item>BIOSKOP &amp; PUSAT PERMAINAN ANAK</item>
+        <item>BRICK N CLICK</item>
+        <item>BUSINESS TO BUSINESS</item>
+        <item>BUSINESS TO CUSTOMER</item>
+        <item>CASUAL DINING</item>
+        <item>CATERING SERVICE</item>
+        <item>CONVINIENCE STORE-NKA</item>
+        <item>EXTERNAL CONSUMPTION FOC</item>
+        <item>FAST FOOD/RESTORAN CEPAT SAJI</item>
+        <item>FOOD COURT</item>
+        <item>HOTEL BINTANG 3 KEBAWAH (Non Premium Hotel)</item>
+        <item>HOTEL BINTANG 4-5 KE ATAS (Premium Hotel)</item>
+        <item>HYPERMARKET-NKA</item>
+        <item>IN HOME RTM PARTNER</item>
+        <item>INDUSTRI/PABRIK</item>
+        <item>INTERNAL CONSUMPTION</item>
+        <item>INTERN-BRANCH</item>
+        <item>KANTOR/BANK</item>
+        <item>LOCAL DINING</item>
+        <item>MANAGE OUTLET (MO)</item>
+        <item>MINIMARKET</item>
+        <item>MINIMARKET-NKA</item>
+        <item>MODERN WHOLESALER</item>
+        <item>MODERN WHOLESALER-NKA</item>
+        <item>ONLINE TO OFFLINE</item>
+        <item>PROJECT</item>
+        <item>PROVISION STORE</item>
+        <item>PROVISION WARUNG</item>
+        <item>RESTORAN PREMIUM</item>
+        <item>RUMAH SAKIT/KLINIK/PRAKTEK DOKTER</item>
+        <item>RUMAH/KOST</item>
+        <item>SEKOLAH &amp; LEMBAGA KURSUS</item>
+        <item>SEMI PERMANENT SHOP (ROMBONG)</item>
+        <item>SPECIAL EVENT</item>
+        <item>SPECIAL STORE</item>
+        <item>SPORT &amp; FITNESS CENTER</item>
+        <item>STAR OUTLET</item>
+        <item>SUPERMARKET</item>
+        <item>SUPERMARKET-NKA</item>
+        <item>TEMPAT WISATA</item>
+        <item>TRANSPORTATION ACCOUNT</item>
+        <item>TRANSPORTATION HUB</item>
+        <item>UNIVERSITAS</item>
+        <item>VITSA</item>
+        <item>WHOLESALER</item>
+    </string-array>
+
+    <string name="google_maps_key">AIzaSyBtX8Zci5VlzaielTuX_0Y9t-8rhKL0An8</string>
+
+</resources>

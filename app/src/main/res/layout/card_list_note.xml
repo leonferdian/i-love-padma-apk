@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_marginBottom="@dimen/space_small"
+        android:layout_marginLeft="@dimen/space_medium"
+        android:layout_marginRight="@dimen/space_medium"
+        android:layout_marginTop="@dimen/space_small"
+        android:elevation="3dp"
+        card_view:cardCornerRadius="@dimen/radius_large">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="@dimen/space_small">
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="4"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="4"
+                android:layout_marginTop="0dp"
+                android:orientation="horizontal"
+                android:gravity="top"
+                android:visibility="visible">
+
+                <TextView
+                    android:id="@+id/text_note_from"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Note From"
+                    android:textColor="#676464"
+                    android:visibility="visible"
+                    android:maxLength="100"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:id="@+id/txt_tgl_project"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:textAlignment="center"
+                    android:text="tgl note"
+                    android:textColor="@color/page_main_sales"
+                    android:textSize="12sp"
+                    android:typeface="sans" />
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:orientation="horizontal"
+                android:gravity="top"
+                android:layout_weight="1"
+                android:visibility="visible">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/task_jenis_project"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="jenis note"
+                        android:textSize="8dp"
+                        android:textColor="@color/page_main_sales"
+                        android:visibility="visible"/>
+
+                    <TextView
+                        android:id="@+id/task_project_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Subject"
+                        android:textColor="@color/page_tbl_total"
+                        android:textSize="@dimen/text_size_small"
+                        android:textStyle="italic"
+                        android:maxLength="150"
+                        android:maxLines="3"
+                        android:visibility="visible" />
+
+                    <LinearLayout
+                        android:id="@+id/lay_status_tiket"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="#FFB7B7"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/txt_status_tiket"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Status Tiket"
+                            android:textColor="@color/jumbo"
+                            android:textSize="@dimen/text_size_small"
+                            android:visibility="visible"
+                            android:layout_gravity="center"
+                            android:paddingLeft="3dp"
+                            android:paddingRight="3dp"
+                            android:textStyle="bold"/>
+
+                    </LinearLayout>
+
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/lay_jml_tiket"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_gravity="center"
+                    android:background="@color/boxdepanAtas"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/text_6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="JML Tiket"
+                        android:textColor="@color/white"
+                        android:visibility="visible"
+                        android:layout_gravity="center"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:id="@+id/txt_jml_sub_project"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textColor="@color/white"
+                        android:visibility="visible"
+                        android:layout_gravity="center"
+                        android:textStyle="bold"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+
+        </LinearLayout>
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</LinearLayout>

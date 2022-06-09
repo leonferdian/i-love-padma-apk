@@ -1,0 +1,493 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_setting"
+        android:minHeight="?attr/actionBarSize"
+        android:background="@color/page_red"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:elevation="@dimen/elevation_medium"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <ScrollView
+        android:layout_below="@id/toolbar_setting"
+        android:layout_marginBottom="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_below="@id/toolbar_setting"
+            android:id="@+id/photo_toko_wrapper"
+            android:orientation="vertical"
+            android:layout_marginTop="0dp"
+            android:layout_marginBottom="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:layout_marginTop="7dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="3dp"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
+
+                    <TextView android:text="Jenis Project :"
+                        android:id="@+id/selection3"
+                        android:layout_marginTop="5dp"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content" />
+
+                    <Spinner android:id="@+id/spinner_jenis_project"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:drawSelectorOnTop="true"
+                        android:entries="@array/slc_jenis_project"/>
+
+                    <TextView android:text="Divisi :"
+                        android:layout_marginTop="5dp"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content" />
+
+                    <Spinner android:id="@+id/spinner_divisi"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:drawSelectorOnTop="true"/>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:visibility="visible"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp">
+
+                        <EditText
+                            android:id="@+id/txt_nama_project"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:ems="10"
+                            android:hint="Nama project"
+                            android:focusable="true"
+                            android:inputType="textPersonName" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:visibility="visible"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp">
+
+                        <EditText
+                            android:id="@+id/txt_main_project"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:ems="10"
+                            android:hint="Main project"
+                            android:focusable="true"
+                            android:inputType="textPersonName" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:visibility="visible"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp">
+
+                        <EditText
+                            android:id="@+id/txt_status_project"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:ems="10"
+                            android:hint="Status project"
+                            android:focusable="true"
+                            android:inputType="textPersonName" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:visibility="gone"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp">
+
+                        <EditText
+                            android:id="@+id/txt_sub_project"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:ems="10"
+                            android:hint="Sub project"
+                            android:focusable="true"
+                            android:inputType="textPersonName" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <TextView android:text="Member :"
+                        android:layout_marginTop="5dp"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content" />
+
+                    <MultiAutoCompleteTextView
+                        android:id="@+id/multi_member_project"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:layout_below="@+id/txt_sub_project"
+                        android:layout_alignLeft="@+id/txt_salesman"
+                        android:layout_alignStart="@+id/txt_salesman"
+                        android:hint="Add member " />
+
+                    <LinearLayout
+                        android:visibility="visible"
+                        android:id="@+id/layout_file"
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center" >
+
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center" >
+
+                            <TextView android:text="File Flow Menu"
+                                android:id="@+id/txt_file_flow_menu"
+                                android:layout_marginTop="5dp"
+                                android:textColor="@color/page_red"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+
+                            <Button
+                                android:layout_alignParentTop="false"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginTop="10dp"
+                                android:id="@+id/btn_flow_menu"
+                                android:text="Add Flow Menu"
+                                android:gravity="center"
+                                android:layout_gravity="center"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+
+                            <TextView android:text="Flow Menu"
+                                android:id="@+id/txt_flow_menu"
+                                android:layout_marginTop="5dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center" >
+
+                            <TextView android:text="File Flow Design"
+                                android:id="@+id/txt_file_flow_design"
+                                android:layout_marginTop="5dp"
+                                android:textColor="@color/page_red"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+
+                            <Button
+                                android:layout_alignParentTop="false"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginTop="10dp"
+                                android:id="@+id/btn_flow_design"
+                                android:text="Add Flow Design"
+                                android:gravity="center"
+                                android:layout_gravity="center"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+
+                            <TextView android:text="Flow Design"
+                                android:id="@+id/txt_flow_design"
+                                android:layout_marginTop="5dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:visibility="visible"
+                        android:id="@+id/layout_file2"
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center" >
+
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center" >
+
+                            <TextView android:text="File Flow Output"
+                                android:id="@+id/txt_file_flow_output"
+                                android:layout_marginTop="5dp"
+                                android:textColor="@color/page_red"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+
+                            <Button
+                                android:layout_alignParentTop="false"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginTop="10dp"
+                                android:id="@+id/btn_flow_output"
+                                android:text="Add Flow Output"
+                                android:gravity="center"
+                                android:layout_gravity="center"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+
+                            <TextView android:text="Flow Output"
+                                android:id="@+id/txt_flow_output"
+                                android:layout_marginTop="5dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center" >
+
+                            <TextView android:text="File Table Korelasi"
+                                android:id="@+id/txt_file_table_korelasi"
+                                android:layout_marginTop="5dp"
+                                android:textColor="@color/page_red"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+
+                            <Button
+                                android:layout_alignParentTop="false"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginTop="10dp"
+                                android:id="@+id/btn_korelasi_table"
+                                android:text="Add Korelasi Table"
+                                android:gravity="center"
+                                android:layout_gravity="center"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+
+                            <TextView android:text="Korelasi Table"
+                                android:id="@+id/txt_korelasi_table"
+                                android:layout_marginTop="5dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:visibility="visible"
+                        android:id="@+id/layout_file3"
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center" >
+
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center" >
+
+                            <TextView android:text="File Tujuan"
+                                android:id="@+id/txt_file_tujuan"
+                                android:layout_marginTop="5dp"
+                                android:textColor="@color/page_red"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+
+                            <Button
+                                android:layout_alignParentTop="false"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginTop="10dp"
+                                android:id="@+id/btn_tujuan"
+                                android:text="Add Tujuan"
+                                android:gravity="center"
+                                android:layout_gravity="center"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+
+                            <TextView android:text="Tujuan"
+                                android:id="@+id/txt_tujuan"
+                                android:layout_marginTop="5dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center" >
+
+                            <TextView android:text="File Fiat"
+                                android:id="@+id/txt_file_fiat"
+                                android:layout_marginTop="5dp"
+                                android:textColor="@color/page_red"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+
+                            <Button
+                                android:layout_alignParentTop="false"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginTop="10dp"
+                                android:id="@+id/btn_fiat"
+                                android:text="Add Fiat"
+                                android:gravity="center"
+                                android:layout_gravity="center"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+
+                            <TextView android:text="Fiat"
+                                android:id="@+id/txt_fiat"
+                                android:layout_marginTop="5dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:visibility="visible"
+                        android:id="@+id/layout_file4"
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center" >
+
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center" >
+
+                            <TextView android:text="File Flow"
+                                android:id="@+id/txt_file_flow"
+                                android:layout_marginTop="5dp"
+                                android:textColor="@color/page_red"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+
+                            <Button
+                                android:layout_alignParentTop="false"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginTop="10dp"
+                                android:id="@+id/btn_flow"
+                                android:text="Add Flow"
+                                android:gravity="center"
+                                android:layout_gravity="center"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+
+                            <TextView android:text="Flow"
+                                android:id="@+id/txt_flow"
+                                android:layout_marginTop="5dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center" >
+
+                            <TextView android:text="File Presentasi"
+                                android:id="@+id/txt_file_presentasi"
+                                android:layout_marginTop="5dp"
+                                android:textColor="@color/page_red"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+
+                            <Button
+                                android:layout_alignParentTop="false"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginTop="10dp"
+                                android:id="@+id/btn_presentasi"
+                                android:text="Add Presentasi"
+                                android:gravity="center"
+                                android:layout_gravity="center"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+
+                            <TextView android:text="Presentasi"
+                                android:id="@+id/txt_presentasi"
+                                android:layout_marginTop="5dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <Button
+                        android:visibility="gone"
+                        android:id="@+id/btn_change_status"
+                        android:text="Change Status"
+                        android:layout_marginTop="20dp"
+                        android:layout_gravity="right"
+                        android:background="@color/boxdepanAtas"
+                        android:textColor="@color/white"
+                        android:layout_marginLeft="0dp"
+                        android:layout_marginRight="0dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                    <Button
+                        android:visibility="gone"
+                        android:id="@+id/btn_del"
+                        android:text="Delete"
+                        android:layout_marginTop="10dp"
+                        android:layout_gravity="right"
+                        android:background="@color/boxdepanAtas"
+                        android:textColor="@color/white"
+                        android:layout_marginLeft="0dp"
+                        android:layout_marginRight="0dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</RelativeLayout>

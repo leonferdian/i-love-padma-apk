@@ -1,0 +1,647 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_setting"
+        android:minHeight="?attr/actionBarSize"
+        android:background="@color/page_red"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:elevation="@dimen/elevation_medium"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <ScrollView
+        android:layout_below="@id/toolbar_setting"
+        android:layout_marginBottom="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_below="@id/toolbar_setting"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:padding="3dip">
+
+                <HorizontalScrollView
+                    android:fillViewport="true"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content">
+
+                    <RadioGroup
+                        android:id="@+id/radio_group_layout"
+                        android:orientation="horizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal">
+
+                        <RadioButton
+                            android:id="@+id/radio_list_team"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checked="true"
+                            android:buttonTint="@color/page_cust_service"
+                            android:onClick="onRadioLBClicked"
+                            android:textSize="10sp"
+                            android:text="Team"/>
+
+                        <RadioButton
+                            android:id="@+id/radio_last_seen"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checked="false"
+                            android:buttonTint="@color/page_cust_service"
+                            android:onClick="onRadioLBClicked"
+                            android:textSize="10sp"
+                            android:text="Absen"/>
+
+                        <RadioButton
+                            android:visibility="visible"
+                            android:id="@+id/radio_app_version"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checked="false"
+                            android:buttonTint="@color/page_cust_service"
+                            android:onClick="onRadioLBClicked"
+                            android:textSize="10sp"
+                            android:text="App Version"/>
+
+                        <RadioButton
+                            android:visibility="visible"
+                            android:id="@+id/radio_tiket"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checked="false"
+                            android:buttonTint="@color/page_cust_service"
+                            android:onClick="onRadioLBClicked"
+                            android:textSize="10sp"
+                            android:text="Tiket"/>
+
+
+                    </RadioGroup>
+
+                </HorizontalScrollView>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:visibility="visible"
+                android:id="@+id/layout_team"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout android:orientation="horizontal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:gravity="center_horizontal"
+                    android:id="@+id/fillable_area">
+
+                    <TableLayout
+                        android:id="@+id/tabel_1a"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="0dp"
+                        android:layout_marginTop="0dp"
+                        android:layout_marginRight="0dp"
+                        android:layout_marginBottom="10dp"
+                        android:gravity="top">
+
+                        <TableRow
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:layout_margin="0dp"
+                            android:background="@color/white">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_column="0"
+                                android:layout_margin="1dp"
+                                android:background="@color/boxdepanAtas"
+                                android:gravity="center"
+                                android:text="No"
+                                android:paddingLeft="5dp"
+                                android:paddingRight="5dp"
+                                android:textAppearance="?android:attr/textAppearanceLarge"
+                                android:textColor="@color/white"
+                                android:textSize="10dp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/txt_nama"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_column="0"
+                                android:layout_margin="1dp"
+                                android:background="@color/boxdepanAtas"
+                                android:gravity="center"
+                                android:text="Nama User"
+                                android:paddingLeft="5dp"
+                                android:paddingRight="5dp"
+                                android:textAppearance="?android:attr/textAppearanceLarge"
+                                android:textColor="@color/white"
+                                android:textSize="10dp"
+                                android:textStyle="bold" />
+
+                        </TableRow>
+
+                    </TableLayout>
+
+                    <HorizontalScrollView
+                        android:fillViewport="true"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content">
+                        <TableLayout
+                            android:id="@+id/tabel_1b"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="0dp"
+                            android:layout_marginLeft="0dp"
+                            android:layout_marginRight="0dp"
+                            android:layout_marginBottom="10dp"
+                            android:stretchColumns="0,1,2"
+                            android:gravity="top">
+
+                            <TableRow
+                                android:background="@color/white"
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_margin="0dp">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:textAppearance="?android:attr/textAppearanceLarge"
+                                    android:text="Foto"
+                                    android:layout_margin="1dp"
+                                    android:layout_column="0"
+                                    android:background="@color/boxdepanAtas"
+                                    android:textColor="@color/white"
+                                    android:textStyle="bold"
+                                    android:textSize="10dp"
+                                    android:paddingLeft="5dp"
+                                    android:paddingRight="5dp"
+                                    android:gravity="center"
+                                    />
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:textAppearance="?android:attr/textAppearanceLarge"
+                                    android:text="Telp"
+                                    android:layout_margin="1dp"
+                                    android:layout_column="1"
+                                    android:background="@color/boxdepanAtas"
+                                    android:textColor="@color/white"
+                                    android:textStyle="bold"
+                                    android:textSize="10dp"
+                                    android:paddingLeft="5dp"
+                                    android:paddingRight="5dp"
+                                    android:gravity="center"
+                                    />
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:textAppearance="?android:attr/textAppearanceLarge"
+                                    android:text="TGL Lahir"
+                                    android:layout_margin="1dp"
+                                    android:layout_column="2"
+                                    android:background="@color/boxdepanAtas"
+                                    android:textColor="@color/white"
+                                    android:textStyle="bold"
+                                    android:textSize="10dp"
+                                    android:paddingLeft="5dp"
+                                    android:paddingRight="5dp"
+                                    android:gravity="center"
+                                    />
+
+
+                            </TableRow>
+                        </TableLayout>
+                    </HorizontalScrollView>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:visibility="gone"
+                android:id="@+id/layout_last_seen"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout android:orientation="horizontal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:gravity="center_horizontal">
+
+                    <TableLayout
+                        android:id="@+id/tabel_3a"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="0dp"
+                        android:layout_marginTop="0dp"
+                        android:layout_marginRight="0dp"
+                        android:layout_marginBottom="10dp"
+                        android:gravity="top">
+
+                        <TableRow
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:layout_margin="0dp"
+                            android:background="@color/white">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_column="0"
+                                android:layout_margin="1dp"
+                                android:background="@color/boxdepanAtas"
+                                android:gravity="center"
+                                android:text="No"
+                                android:paddingLeft="5dp"
+                                android:paddingRight="5dp"
+                                android:textAppearance="?android:attr/textAppearanceLarge"
+                                android:textColor="@color/white"
+                                android:textSize="10dp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_column="0"
+                                android:layout_margin="1dp"
+                                android:background="@color/boxdepanAtas"
+                                android:gravity="center"
+                                android:text="Nama User"
+                                android:paddingLeft="5dp"
+                                android:paddingRight="5dp"
+                                android:textAppearance="?android:attr/textAppearanceLarge"
+                                android:textColor="@color/white"
+                                android:textSize="10dp"
+                                android:textStyle="bold" />
+
+                        </TableRow>
+
+                    </TableLayout>
+
+                    <HorizontalScrollView
+                        android:fillViewport="true"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content">
+                        <TableLayout
+                            android:id="@+id/tabel_3b"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="0dp"
+                            android:layout_marginLeft="0dp"
+                            android:layout_marginRight="0dp"
+                            android:layout_marginBottom="10dp"
+                            android:stretchColumns="0,1,2"
+                            android:gravity="top">
+
+                            <TableRow
+                                android:background="@color/white"
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_margin="0dp">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:textAppearance="?android:attr/textAppearanceLarge"
+                                    android:text="Foto"
+                                    android:layout_margin="1dp"
+                                    android:layout_column="0"
+                                    android:background="@color/boxdepanAtas"
+                                    android:textColor="@color/white"
+                                    android:textStyle="bold"
+                                    android:textSize="10dp"
+                                    android:paddingLeft="5dp"
+                                    android:paddingRight="5dp"
+                                    android:gravity="center"
+                                    />
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:textAppearance="?android:attr/textAppearanceLarge"
+                                    android:text="Check In"
+                                    android:layout_margin="1dp"
+                                    android:layout_column="1"
+                                    android:background="@color/boxdepanAtas"
+                                    android:textColor="@color/white"
+                                    android:textStyle="bold"
+                                    android:textSize="10dp"
+                                    android:paddingLeft="5dp"
+                                    android:paddingRight="5dp"
+                                    android:gravity="center"
+                                    />
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:textAppearance="?android:attr/textAppearanceLarge"
+                                    android:text="Check Out"
+                                    android:layout_margin="1dp"
+                                    android:layout_column="1"
+                                    android:background="@color/boxdepanAtas"
+                                    android:textColor="@color/white"
+                                    android:textStyle="bold"
+                                    android:textSize="10dp"
+                                    android:paddingLeft="5dp"
+                                    android:paddingRight="5dp"
+                                    android:gravity="center"
+                                    />
+
+
+                            </TableRow>
+                        </TableLayout>
+                    </HorizontalScrollView>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:visibility="gone"
+                android:id="@+id/layout_version"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout android:orientation="horizontal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:gravity="center_horizontal">
+
+                    <TableLayout
+                        android:id="@+id/tabel_2a"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="0dp"
+                        android:layout_marginTop="0dp"
+                        android:layout_marginRight="0dp"
+                        android:layout_marginBottom="10dp"
+                        android:gravity="top">
+
+                        <TableRow
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:layout_margin="0dp"
+                            android:background="@color/white">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_column="0"
+                                android:layout_margin="1dp"
+                                android:background="@color/boxdepanAtas"
+                                android:gravity="center"
+                                android:text="No"
+                                android:paddingLeft="5dp"
+                                android:paddingRight="5dp"
+                                android:textAppearance="?android:attr/textAppearanceLarge"
+                                android:textColor="@color/white"
+                                android:textSize="10dp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_column="0"
+                                android:layout_margin="1dp"
+                                android:background="@color/boxdepanAtas"
+                                android:gravity="center"
+                                android:text="Nama User"
+                                android:paddingLeft="5dp"
+                                android:paddingRight="5dp"
+                                android:textAppearance="?android:attr/textAppearanceLarge"
+                                android:textColor="@color/white"
+                                android:textSize="10dp"
+                                android:textStyle="bold" />
+
+                        </TableRow>
+
+                    </TableLayout>
+
+                    <HorizontalScrollView
+                        android:fillViewport="true"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content">
+                        <TableLayout
+                            android:id="@+id/tabel_2b"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="0dp"
+                            android:layout_marginLeft="0dp"
+                            android:layout_marginRight="0dp"
+                            android:layout_marginBottom="10dp"
+                            android:stretchColumns="0,1"
+                            android:gravity="top">
+
+                            <TableRow
+                                android:background="@color/white"
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_margin="0dp">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:textAppearance="?android:attr/textAppearanceLarge"
+                                    android:text="Foto"
+                                    android:layout_margin="1dp"
+                                    android:layout_column="0"
+                                    android:background="@color/boxdepanAtas"
+                                    android:textColor="@color/white"
+                                    android:textStyle="bold"
+                                    android:textSize="10dp"
+                                    android:paddingLeft="5dp"
+                                    android:paddingRight="5dp"
+                                    android:gravity="center"
+                                    />
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:textAppearance="?android:attr/textAppearanceLarge"
+                                    android:text="Versi"
+                                    android:layout_margin="1dp"
+                                    android:layout_column="1"
+                                    android:background="@color/boxdepanAtas"
+                                    android:textColor="@color/white"
+                                    android:textStyle="bold"
+                                    android:textSize="10dp"
+                                    android:paddingLeft="5dp"
+                                    android:paddingRight="5dp"
+                                    android:gravity="center"
+                                    />
+
+
+
+
+                            </TableRow>
+                        </TableLayout>
+                    </HorizontalScrollView>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:visibility="gone"
+                android:id="@+id/layout_tiket"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout android:orientation="horizontal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:gravity="center_horizontal">
+
+                    <TableLayout
+                        android:id="@+id/tabel_4a"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="0dp"
+                        android:layout_marginTop="0dp"
+                        android:layout_marginRight="0dp"
+                        android:layout_marginBottom="10dp"
+                        android:gravity="top">
+
+                        <TableRow
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:layout_margin="0dp"
+                            android:background="@color/white">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_column="0"
+                                android:layout_margin="1dp"
+                                android:background="@color/boxdepanAtas"
+                                android:gravity="center"
+                                android:text="No"
+                                android:paddingLeft="5dp"
+                                android:paddingRight="5dp"
+                                android:textAppearance="?android:attr/textAppearanceLarge"
+                                android:textColor="@color/white"
+                                android:textSize="10dp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_column="0"
+                                android:layout_margin="1dp"
+                                android:background="@color/boxdepanAtas"
+                                android:gravity="center"
+                                android:text="Nama User"
+                                android:paddingLeft="5dp"
+                                android:paddingRight="5dp"
+                                android:textAppearance="?android:attr/textAppearanceLarge"
+                                android:textColor="@color/white"
+                                android:textSize="10dp"
+                                android:textStyle="bold" />
+
+                        </TableRow>
+
+                    </TableLayout>
+
+                    <HorizontalScrollView
+                        android:fillViewport="true"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content">
+                        <TableLayout
+                            android:id="@+id/tabel_4b"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="0dp"
+                            android:layout_marginLeft="0dp"
+                            android:layout_marginRight="0dp"
+                            android:layout_marginBottom="10dp"
+                            android:stretchColumns="0,1"
+                            android:gravity="top">
+
+                            <TableRow
+                                android:background="@color/white"
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_margin="0dp">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:textAppearance="?android:attr/textAppearanceLarge"
+                                    android:text="Foto"
+                                    android:layout_margin="1dp"
+                                    android:layout_column="0"
+                                    android:background="@color/boxdepanAtas"
+                                    android:textColor="@color/white"
+                                    android:textStyle="bold"
+                                    android:textSize="10dp"
+                                    android:paddingLeft="5dp"
+                                    android:paddingRight="5dp"
+                                    android:gravity="center"
+                                    />
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:textAppearance="?android:attr/textAppearanceLarge"
+                                    android:text="Tiket"
+                                    android:layout_margin="1dp"
+                                    android:layout_column="1"
+                                    android:background="@color/boxdepanAtas"
+                                    android:textColor="@color/white"
+                                    android:textStyle="bold"
+                                    android:textSize="10dp"
+                                    android:paddingLeft="5dp"
+                                    android:paddingRight="5dp"
+                                    android:gravity="center"
+                                    />
+
+
+
+
+                            </TableRow>
+                        </TableLayout>
+                    </HorizontalScrollView>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+
+</RelativeLayout>
