@@ -84,7 +84,7 @@ public class account_user extends AppCompatActivity {
     public static String url_image_upload = Server.URL2 +"image_upload/upload_foto_pribadi.php";
     private static String url_post_logout_user   = Server.URL + "survey_45/post_logout_user";
 
-    String id_user, username,bm,email,jenis_crop="";
+    String id_user, username,bm,email,jenis_crop="",id_company="",nama_company="";
     int success,last_id;
 
     EditText txt_reg_nama, txt_reg_email,txt_nik,txt_phone_user,txt_atasan,txt_address,txt_ktp,txt_kode_user,txt_tgl_lahir;
@@ -121,6 +121,10 @@ public class account_user extends AppCompatActivity {
         id_user = Api.sharedpreferences.getString(Api.TAG_ID, null);
         username = Api.sharedpreferences.getString(Api.TAG_USERNAME, null);
         email = Api.sharedpreferences.getString(Api.TAG_EMAIL, null);
+        id_company = Api.sharedpreferences.getString(Api.TAG_COMPANY_USER_ID, null);
+        nama_company = Api.sharedpreferences.getString(Api.TAG_COMPANY_USER_NAME, null);
+
+        //Toast.makeText(getApplicationContext(), "id_company "+id_company, Toast.LENGTH_LONG).show();
 
         txt_reg_nama = findViewById(R.id.txt_reg_nama);
         txt_reg_email = findViewById(R.id.txt_reg_email);
@@ -353,6 +357,8 @@ public class account_user extends AppCompatActivity {
             protected Map<String, String> getParams() {
                 // Posting parameters to login url
                 Map<String, String> params = new HashMap<String, String>();
+                params.put("id_company", id_company);
+                params.put("id_user", id_user);
                 params.put("nik", nik);
                 params.put("phone", phone);
                 params.put("email_atasan", email_atasan);
@@ -375,7 +381,7 @@ public class account_user extends AppCompatActivity {
     }
 
      private void get_detail_user(final String id_user){
-        String url_edit       = Server.URL + "get_detail_user/"+id_user;
+        String url_edit       = Server.URL + "get_detail_user2/"+id_user+"/"+id_company;
         Log.d("list_account", url_edit);
         StringRequest strReq = new StringRequest(Request.Method.GET, url_edit, new Response.Listener<String>() {
 

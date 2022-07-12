@@ -9,8 +9,8 @@ android {
         applicationId "com.project45.ilovepadma"
         minSdkVersion 21
         targetSdkVersion 31
-        versionCode 20
-        versionName "ILV1.20"
+        versionCode 21
+        versionName "ILV1.21"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
