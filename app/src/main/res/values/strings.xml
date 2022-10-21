@@ -184,6 +184,19 @@
         <item>WHOLESALER</item>
     </string-array>
 
+    <string-array name="slc_post_eveything">
+        <item>--Pilih Jenis Post--</item>
+        <item>Briefing Pagi</item>
+        <item>Briefing Sore</item>
+        <item>Visit Outlet (outlet RO)</item>
+        <item>Meeting</item>
+        <item>Sidak / Audit</item>
+        <item>Prospecting &amp; Dealing Outlet</item>
+        <item>Branding</item>
+        <item>Event</item>
+        <item>Other</item>
+    </string-array>
+
     <string name="google_maps_key">AIzaSyBtX8Zci5VlzaielTuX_0Y9t-8rhKL0An8</string>
 
 </resources>
