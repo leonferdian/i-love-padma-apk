@@ -42,6 +42,7 @@ import com.project45.ilovepadma.aktifitas.aktifitas_from_timeline;
 import com.project45.ilovepadma.app.AppController;
 import com.project45.ilovepadma.complain.list_complain_from_timeline;
 import com.project45.ilovepadma.data.Data_join_visit;
+import com.project45.ilovepadma.data.Data_pertanyaan_post_everything;
 import com.project45.ilovepadma.global.Api;
 import com.project45.ilovepadma.global.Scroller;
 import com.project45.ilovepadma.notes.edit_note;
@@ -76,6 +77,7 @@ public class list_timeline_post_everything2 extends AppCompatActivity implements
             filter_jenis_aktifitas="All";
 
     private static String url_get_timeline     = Server.URL + "timeline/list_timeline_post_everything/";
+    private static String url_get_timeline2     = Server.URL + "timeline/list_timeline_post_everything2/";
     private static String url_post_del_timeline     = Server.URL + "timeline/post_del_timeline";
 
     private static final String TAG = list_timeline_summary.class.getSimpleName();
@@ -150,9 +152,7 @@ public class list_timeline_post_everything2 extends AppCompatActivity implements
         swipe.post(new Runnable() {
                        @Override
                        public void run() {
-
                            callVolley(0,id_company,timeStamp);
-
                        }
                    }
         );
@@ -455,7 +455,7 @@ public class list_timeline_post_everything2 extends AppCompatActivity implements
 
 
         final String idUser = id_user+"-"+filter_jenis_aktifitas;
-        String url_server       = url_get_timeline + id_company + "/" + tanggal+"/"+idUser;
+        String url_server       = url_get_timeline2 + id_company + "/" + tanggal+"/"+idUser;
 
         Log.d("url_server", url_server);
         JsonArrayRequest jArr = new JsonArrayRequest(url_server, new Response.Listener<JSONArray>() {
@@ -477,6 +477,7 @@ public class list_timeline_post_everything2 extends AppCompatActivity implements
                             item.setId(obj.getString("nmr"));
                             item.setnmr_jv(obj.getString("id_timeline"));
                             item.setalamat_cust(obj.getString("kategori"));
+                            item.setjenis_post(obj.getString("jenis_post"));
                             item.setvol_tot_order(obj.getString("isi_timeline"));
                             item.setjml_brg_dijual(obj.getString("id_relasi"));
                             item.setnama_hot(obj.getString("id_company"));
@@ -491,6 +492,22 @@ public class list_timeline_post_everything2 extends AppCompatActivity implements
                             item.setjml_like(obj.getString("jml_like"));
                             item.setnilai_klik("0");
                             item.setjenis_file(obj.getString("jenis_file"));
+
+                            for(int x = 0; x < obj.getJSONArray("data_pertanyaan").length(); x++){
+                                JSONObject data_pertanyaan = obj.getJSONArray("data_pertanyaan").getJSONObject(x);
+                                Data_pertanyaan_post_everything pertanyaan = new Data_pertanyaan_post_everything();
+
+                                pertanyaan.setNomor(data_pertanyaan.getString("nmr"));
+                                pertanyaan.setId_timeline_jawaban(data_pertanyaan.getString("id_timeline_jawaban"));
+                                pertanyaan.setId_timeline(data_pertanyaan.getString("id_timeline"));
+                                pertanyaan.setKategori(data_pertanyaan.getString("kategori"));
+                                pertanyaan.setJenis_post(data_pertanyaan.getString("jenis_post"));
+                                pertanyaan.setId_timeline_pertanyaan(data_pertanyaan.getString("id_timeline_pertanyaan"));
+                                pertanyaan.setPertanyaan(data_pertanyaan.getString("pertanyaan"));
+                                pertanyaan.setJawaban(data_pertanyaan.getString("jawaban"));
+
+                                item.setPertanyaan_post_everything(pertanyaan);
+                            }
 
                             jml_klik[i]="";
                             // menambah item ke array
@@ -549,7 +566,7 @@ public class list_timeline_post_everything2 extends AppCompatActivity implements
         arrJoin.clear();
 
         final String idUser = id_user+"-"+filter_jenis_aktifitas;
-        String url_server       = url_get_timeline + id_company + "/" + tanggal+"/"+idUser;
+        String url_server       = url_get_timeline2 + id_company + "/" + tanggal+"/"+idUser;
 
         Log.d("url_ForBack", url_server);
         JsonArrayRequest jArr = new JsonArrayRequest(url_server, new Response.Listener<JSONArray>() {
@@ -569,6 +586,7 @@ public class list_timeline_post_everything2 extends AppCompatActivity implements
                             item.setId(obj.getString("nmr"));
                             item.setnmr_jv(obj.getString("id_timeline"));
                             item.setalamat_cust(obj.getString("kategori"));
+                            item.setjenis_post(obj.getString("jenis_post"));
                             item.setvol_tot_order(obj.getString("isi_timeline"));
                             item.setjml_brg_dijual(obj.getString("id_relasi"));
                             item.setnama_hot(obj.getString("id_company"));
@@ -584,6 +602,21 @@ public class list_timeline_post_everything2 extends AppCompatActivity implements
                             item.setnilai_klik("0");
                             item.setjenis_file(obj.getString("jenis_file"));
 
+                            for(int x = 0; x < obj.getJSONArray("data_pertanyaan").length(); x++){
+                                JSONObject data_pertanyaan = obj.getJSONArray("data_pertanyaan").getJSONObject(x);
+                                Data_pertanyaan_post_everything pertanyaan = new Data_pertanyaan_post_everything();
+
+                                pertanyaan.setNomor(data_pertanyaan.getString("nmr"));
+                                pertanyaan.setId_timeline_jawaban(data_pertanyaan.getString("id_timeline_jawaban"));
+                                pertanyaan.setId_timeline(data_pertanyaan.getString("id_timeline"));
+                                pertanyaan.setKategori(data_pertanyaan.getString("kategori"));
+                                pertanyaan.setJenis_post(data_pertanyaan.getString("jenis_post"));
+                                pertanyaan.setId_timeline_pertanyaan(data_pertanyaan.getString("id_timeline_pertanyaan"));
+                                pertanyaan.setPertanyaan(data_pertanyaan.getString("pertanyaan"));
+                                pertanyaan.setJawaban(data_pertanyaan.getString("jawaban"));
+
+                                item.setPertanyaan_post_everything(pertanyaan);
+                            }
 
                             // menambah item ke array
                             itemList.add(item);
@@ -672,7 +705,6 @@ public class list_timeline_post_everything2 extends AppCompatActivity implements
     public void onSuratOnClick(int position, Data_join_visit berita) {
 
         if(berita.getalamat_cust().equals("post_everything")) {
-
             if(berita.getjenis_file().equals("non_video")) {
                 //Intent intent = new Intent(list_timeline_post_everything2.this, add_timeline.class);
                 Intent intent = new Intent(list_timeline_post_everything2.this, detail_post_everything.class);
