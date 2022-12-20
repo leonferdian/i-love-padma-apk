@@ -50,6 +50,7 @@ import com.project45.ilovepadma.notes.list_note;
 import com.project45.ilovepadma.notifikasi.list_notification;
 import com.project45.ilovepadma.notifikasi.notification_service;
 import com.project45.ilovepadma.outlet.list_outlet;
+import com.project45.ilovepadma.outlet.list_outlet2;
 import com.project45.ilovepadma.project.list_project2;
 import com.project45.ilovepadma.setting.list_master_company;
 import com.project45.ilovepadma.setting.list_team_company;
@@ -482,7 +483,7 @@ public class MainActivity3 extends AppCompatActivity {
             @Override
             public void onClick(View v)
             {
-                Intent intent = new Intent(getApplicationContext(), list_outlet.class);
+                Intent intent = new Intent(getApplicationContext(), list_outlet2.class);
                 startActivity(intent);
             }
 

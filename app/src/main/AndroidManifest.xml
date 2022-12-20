@@ -1122,6 +1122,17 @@
         </activity>
 
         <activity
+            android:name=".outlet.list_outlet2"
+            android:label="Outlet Semesta"
+            android:parentActivityName=".MainActivity3"
+            android:exported="true"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.project45.ilovepadma.MainActivity3" />
+        </activity>
+
+        <activity
             android:name=".outlet.list_outlet"
             android:label="Outlet Semesta"
             android:parentActivityName=".MainActivity3"

@@ -28,7 +28,11 @@ public class Data_customer implements Serializable {
     //for dms3
     private String szPaymetTermId,bAllowToCredit,branch_id,dt_base;
     private String iId,intItemNumber,allow_credit,szDocSO,koreksi_alamat;
-    //for dms3
+
+
+
+    //for outlet semesta
+    private String status_general,status_detail;
 
     public Data_customer() {
 
@@ -857,5 +861,21 @@ public class Data_customer implements Serializable {
     }
     public void setid_survey(String id_survey) {
         this.id_survey = id_survey;
+    }
+
+    public String getStatus_detail() {
+        return status_detail;
+    }
+
+    public void setStatus_detail(String status_detail) {
+        this.status_detail = status_detail;
+    }
+
+    public String getStatus_general() {
+        return status_general;
+    }
+
+    public void setStatus_general(String status_general) {
+        this.status_general = status_general;
     }
 }
