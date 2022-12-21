@@ -12,6 +12,7 @@
     <uses-feature
         android:name="android.hardware.camera"
         android:required="false" />
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
@@ -30,8 +31,8 @@
     <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <application
-        android:allowBackup="true"
         android:name="com.project45.ilovepadma.bg_service.OurApplication"
+        android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:networkSecurityConfig="@xml/network_security_config"
@@ -42,6 +43,20 @@
         android:usesCleartextTraffic="true"
         android:versionCode="24"
         android:versionName="ILV1.24">
+        <activity
+            android:name=".add_listed_outlet"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".add_outlet_semesta2"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" />
@@ -54,7 +69,6 @@
             </intent-filter>
         </activity>
         -->
-
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
@@ -62,46 +76,50 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity android:name=".MainActivity2" android:exported="true">
+        <activity
+            android:name=".MainActivity2"
+            android:exported="true">
             <intent-filter>
                 <action android:name=".MainActivity2" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".MainActivity3" android:exported="true">
+        <activity
+            android:name=".MainActivity3"
+            android:exported="true">
             <intent-filter>
                 <action android:name=".MainActivity3" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
-
-            <intent-filter android:label="@string/app_name" android:autoVerify="true">
+            <intent-filter
+                android:autoVerify="true"
+                android:label="@string/app_name">
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
                 <!-- Accepts URIs that begin with "http://www.example.com/gizmos” -->
-                <data android:scheme="http"
+                <data
                     android:host="ilove.padmatirtagroup.com"
                     android:path="/pet"
-                    />
-                <!-- note that the leading "/" is required for pathPrefix-->
+                    android:scheme="http" />
+                <!-- note that the leading "/" is required for pathPrefix -->
             </intent-filter>
-
         </activity>
-
-        <activity android:name=".page_choice" android:exported="true">
+        <activity
+            android:name=".page_choice"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
-
         </activity>
-
-        <activity android:name=".page_choice2" android:exported="true">
+        <activity
+            android:name=".page_choice2"
+            android:exported="true">
             <intent-filter>
                 <action android:name=".page_choice2" />
 
@@ -110,14 +128,14 @@
         </activity>
         <activity
             android:name=".login_form"
-            android:label="@string/app_name"
             android:exported="true"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
+            android:label="@string/app_name"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name=".registration_form"
+            android:exported="true"
             android:label="Registration"
             android:parentActivityName=".page_choice"
-            android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -125,9 +143,9 @@
         </activity>
         <activity
             android:name=".verification_registration"
+            android:exported="true"
             android:label="Verifikasi"
             android:parentActivityName=".login_form"
-            android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -135,9 +153,9 @@
         </activity>
         <activity
             android:name=".verification_registration2"
+            android:exported="true"
             android:label="Verifikasi"
             android:parentActivityName=".login_form"
-            android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -145,9 +163,9 @@
         </activity>
         <activity
             android:name=".complain.menu_complain"
+            android:exported="true"
             android:label="Menu Ticketing"
             android:parentActivityName=".MainActivity2"
-            android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -155,9 +173,9 @@
         </activity>
         <activity
             android:name=".complain.list_complain"
+            android:exported="true"
             android:label="List Ticketing From You"
             android:parentActivityName=".complain.menu_complain"
-            android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -165,9 +183,9 @@
         </activity>
         <activity
             android:name=".complain.list_complain_from_you"
+            android:exported="true"
             android:label="List Ticketing From You"
             android:parentActivityName=".complain.menu_complain"
-            android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -175,9 +193,9 @@
         </activity>
         <activity
             android:name=".complain.list_complain_by_notif"
+            android:exported="true"
             android:label="New Ticket"
             android:parentActivityName=".complain.menu_complain"
-            android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -185,9 +203,9 @@
         </activity>
         <activity
             android:name=".complain.add_complain"
+            android:exported="true"
             android:label="Add Ticketing"
             android:parentActivityName=".complain.list_complain"
-            android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -195,9 +213,9 @@
         </activity>
         <activity
             android:name=".complain.add_deskripsi_complain"
+            android:exported="true"
             android:label="Deskripsi Ticketing"
             android:parentActivityName=".complain.add_complain"
-            android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -205,9 +223,9 @@
         </activity>
         <activity
             android:name=".complain.add_deskripsi_complain_multi_file"
+            android:exported="true"
             android:label="Deskripsi Ticketing"
             android:parentActivityName=".complain.add_complain"
-            android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -215,9 +233,9 @@
         </activity>
         <activity
             android:name=".complain.detail_deskripsi_complain_multi_file"
+            android:exported="true"
             android:label="Deskripsi Ticketing"
             android:parentActivityName=".complain.add_complain"
-            android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -225,9 +243,9 @@
         </activity>
         <activity
             android:name=".complain.detail_complain"
+            android:exported="true"
             android:label="Detail Ticketing"
             android:parentActivityName=".complain.list_complain"
-            android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -235,9 +253,9 @@
         </activity>
         <activity
             android:name=".complain.list_respon"
+            android:exported="true"
             android:label="List Respon"
             android:parentActivityName=".complain.list_complain"
-            android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -245,9 +263,9 @@
         </activity>
         <activity
             android:name=".complain.add_respon_complain"
+            android:exported="true"
             android:label="Add Respon"
             android:parentActivityName=".complain.list_complain"
-            android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -255,9 +273,9 @@
         </activity>
         <activity
             android:name=".complain.add_respon_complain_multi_file"
+            android:exported="true"
             android:label="Add Respon"
             android:parentActivityName=".complain.list_complain"
-            android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -265,9 +283,9 @@
         </activity>
         <activity
             android:name=".complain.detail_respon_complain_multi_file"
+            android:exported="true"
             android:label="Detail Respon"
             android:parentActivityName=".complain.list_complain"
-            android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -275,9 +293,9 @@
         </activity>
         <activity
             android:name=".complain.list_complain_for_you"
+            android:exported="true"
             android:label="List Ticketing For You"
             android:parentActivityName=".complain.menu_complain"
-            android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -285,9 +303,9 @@
         </activity>
         <activity
             android:name=".complain.list_complain_for_you2"
+            android:exported="true"
             android:label="List Ticketing For You"
             android:parentActivityName=".complain.menu_complain"
-            android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -295,9 +313,9 @@
         </activity>
         <activity
             android:name=".complain.list_complain_by_supervisi"
+            android:exported="true"
             android:label="List Ticketing From You"
             android:parentActivityName=".complain.menu_complain"
-            android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -305,9 +323,9 @@
         </activity>
         <activity
             android:name=".complain.detail_complain_for_you"
+            android:exported="true"
             android:label="Detail Ticketing"
             android:parentActivityName=".complain.list_complain"
-            android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -315,9 +333,9 @@
         </activity>
         <activity
             android:name=".complain.list_complain_from_timeline"
+            android:exported="true"
             android:label="List Ticketing"
             android:parentActivityName=".complain.menu_complain"
-            android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -325,9 +343,9 @@
         </activity>
         <activity
             android:name=".complain.report_complain"
+            android:exported="true"
             android:label="Report Ticketing"
             android:parentActivityName=".complain.menu_complain"
-            android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -335,9 +353,9 @@
         </activity>
         <activity
             android:name=".complain.report_complain_by_supervisi"
+            android:exported="true"
             android:label="Report Ticketing"
             android:parentActivityName=".complain.menu_complain"
-            android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -345,9 +363,9 @@
         </activity>
         <activity
             android:name=".timeline.detail_foto"
+            android:exported="true"
             android:label="View Foto"
             android:parentActivityName=".MainActivity2"
-            android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -355,9 +373,9 @@
         </activity>
         <activity
             android:name=".timeline.list_timeline_summary"
+            android:exported="true"
             android:label="Time Line"
             android:parentActivityName=".MainActivity2"
-            android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -365,9 +383,9 @@
         </activity>
         <activity
             android:name=".timeline.list_coordinat"
+            android:exported="true"
             android:label="List Coordinat"
             android:parentActivityName=".timeline.list_timeline_summary"
-            android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -375,9 +393,9 @@
         </activity>
         <activity
             android:name=".timeline.detail_timeline"
+            android:exported="true"
             android:label="Detail Timeline"
             android:parentActivityName=".timeline.list_timeline_summary"
-            android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -385,9 +403,9 @@
         </activity>
         <activity
             android:name=".timeline.timeline_comment"
+            android:exported="true"
             android:label="List Comment"
             android:parentActivityName=".timeline.list_timeline_summary"
-            android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -395,9 +413,9 @@
         </activity>
         <activity
             android:name=".timeline.timeline_like"
+            android:exported="true"
             android:label="User Like"
             android:parentActivityName=".timeline.list_timeline_summary"
-            android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -405,9 +423,9 @@
         </activity>
         <activity
             android:name=".aktifitas.list_aktifitas"
+            android:exported="true"
             android:label="List Aktifitas"
             android:parentActivityName=".MainActivity2"
-            android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -415,9 +433,9 @@
         </activity>
         <activity
             android:name=".aktifitas.add_aktifitas"
+            android:exported="true"
             android:label="Add Aktifitas"
             android:parentActivityName=".aktifitas.list_aktifitas"
-            android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -425,9 +443,9 @@
         </activity>
         <activity
             android:name=".aktifitas.add_deskripsi"
+            android:exported="true"
             android:label="Add Deskripsi"
             android:parentActivityName=".aktifitas.list_aktifitas"
-            android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -435,9 +453,9 @@
         </activity>
         <activity
             android:name=".aktifitas.edit_deskripsi"
+            android:exported="true"
             android:label="Edit Deskripsi"
             android:parentActivityName=".aktifitas.list_aktifitas"
-            android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -445,9 +463,9 @@
         </activity>
         <activity
             android:name=".aktifitas.aktifitas_perdate"
+            android:exported="true"
             android:label="Aktifitas Per Date"
             android:parentActivityName=".aktifitas.list_aktifitas"
-            android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -455,9 +473,9 @@
         </activity>
         <activity
             android:name=".aktifitas.aktifitas_from_timeline"
+            android:exported="true"
             android:label="Aktifitas Per Date"
             android:parentActivityName=".aktifitas.list_aktifitas"
-            android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -465,9 +483,9 @@
         </activity>
         <activity
             android:name=".setting.main_setting"
+            android:exported="true"
             android:label="Menu Setting"
             android:parentActivityName=".MainActivity2"
-            android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -475,9 +493,9 @@
         </activity>
         <activity
             android:name=".setting.list_master_company"
+            android:exported="true"
             android:label="List Company"
             android:parentActivityName=".setting.main_setting"
-            android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -485,9 +503,9 @@
         </activity>
         <activity
             android:name=".account_user"
+            android:exported="true"
             android:label="Detail Account"
             android:parentActivityName=".MainActivity2"
-            android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -495,9 +513,9 @@
         </activity>
         <activity
             android:name=".registration_photo_form"
+            android:exported="true"
             android:label="Photo User"
             android:parentActivityName=".registration_form"
-            android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -505,9 +523,9 @@
         </activity>
         <activity
             android:name=".setting.add_company"
+            android:exported="true"
             android:label="Add Company"
             android:parentActivityName=".page_choice2"
-            android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -515,9 +533,9 @@
         </activity>
         <activity
             android:name=".setting.form_join_company"
+            android:exported="true"
             android:label="Join Company"
             android:parentActivityName=".page_choice2"
-            android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -525,60 +543,56 @@
         </activity>
         <activity
             android:name=".timeline.add_timeline"
+            android:exported="true"
             android:label="Post Everything"
             android:parentActivityName=".timeline.list_timeline_ilv"
-            android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.project45.ilovepadma.timeline.list_timeline_ilv" />
         </activity>
-
         <activity
             android:name=".timeline.list_timeline_post_everything"
+            android:exported="true"
             android:label="List Post Everything"
             android:parentActivityName=".MainActivity2"
-            android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.project45.ilovepadma.MainActivity2" />
         </activity>
-
         <activity
             android:name=".timeline.list_timeline_post_everything2"
+            android:exported="true"
             android:label="List Post Everything"
             android:parentActivityName=".MainActivity2"
-            android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.project45.ilovepadma.MainActivity2" />
         </activity>
-
         <activity
             android:name=".timeline.list_timeline_by_notif"
+            android:exported="true"
             android:label="List Post Everything"
             android:parentActivityName=".MainActivity2"
-            android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.project45.ilovepadma.MainActivity2" />
         </activity>
-
         <activity
             android:name=".timeline.add_timeline2"
+            android:exported="true"
             android:label="Post Everything"
             android:parentActivityName=".timeline.list_timeline_ilv"
-            android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.project45.ilovepadma.timeline.list_timeline_ilv" />
         </activity>
-
-        <activity android:name=".timeline.detail_post_everything"
+        <activity
+            android:name=".timeline.detail_post_everything"
             android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
@@ -587,8 +601,8 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".timeline.add_post_everything"
+        <activity
+            android:name=".timeline.add_post_everything"
             android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
@@ -597,8 +611,8 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".timeline.edit_post_everything"
+        <activity
+            android:name=".timeline.edit_post_everything"
             android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
@@ -607,12 +621,11 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".timeline.list_timeline_ilv"
+            android:exported="true"
             android:label="Timeline"
             android:parentActivityName=".MainActivity2"
-            android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -620,9 +633,9 @@
         </activity>
         <activity
             android:name=".timeline.list_timeline_ilv2"
+            android:exported="true"
             android:label="Timeline"
             android:parentActivityName=".MainActivity2"
-            android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -630,9 +643,9 @@
         </activity>
         <activity
             android:name=".timeline.timeline_det_video"
+            android:exported="true"
             android:label="Post Everything"
             android:parentActivityName=".timeline.list_timeline_post_everything"
-            android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -640,9 +653,9 @@
         </activity>
         <activity
             android:name=".setting.list_team_company"
+            android:exported="true"
             android:label="Company Team"
             android:parentActivityName=".MainActivity2"
-            android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -650,9 +663,9 @@
         </activity>
         <activity
             android:name=".setting.detail_team_user"
+            android:exported="true"
             android:label="Detail Team User"
             android:parentActivityName=".setting.list_team_company"
-            android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -660,9 +673,9 @@
         </activity>
         <activity
             android:name=".setting.detail_absen_user"
+            android:exported="true"
             android:label="Detail Absen User"
             android:parentActivityName=".setting.list_team_company"
-            android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -670,9 +683,9 @@
         </activity>
         <activity
             android:name=".setting.detail_absen_user2"
+            android:exported="true"
             android:label="Detail Absen User"
             android:parentActivityName=".setting.list_team_company"
-            android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -680,9 +693,9 @@
         </activity>
         <activity
             android:name=".project.list_project"
+            android:exported="true"
             android:label="List project"
             android:parentActivityName=".MainActivity2"
-            android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -690,9 +703,9 @@
         </activity>
         <activity
             android:name=".project.list_project2"
+            android:exported="true"
             android:label="List project"
             android:parentActivityName=".MainActivity2"
-            android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -700,9 +713,9 @@
         </activity>
         <activity
             android:name=".project.list_complain_by_project"
+            android:exported="true"
             android:label="List Ticket"
             android:parentActivityName=".MainActivity2"
-            android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -710,9 +723,9 @@
         </activity>
         <activity
             android:name=".project.list_project_by_supervisi"
+            android:exported="true"
             android:label="List project"
             android:parentActivityName=".MainActivity2"
-            android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -720,9 +733,9 @@
         </activity>
         <activity
             android:name=".project.add_project"
+            android:exported="true"
             android:label="Add project"
             android:parentActivityName=".project.add_project"
-            android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -730,352 +743,321 @@
         </activity>
         <activity
             android:name=".project.edit_project"
+            android:exported="true"
             android:label="Edit project"
             android:parentActivityName=".project.add_project"
-            android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.project45.ilovepadma.project.add_project" />
         </activity>
-
         <activity
             android:name=".project.edit_project2"
+            android:exported="true"
             android:label="Detail project"
             android:parentActivityName=".project.add_project"
-            android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.project45.ilovepadma.project.add_project" />
         </activity>
-
         <activity
             android:name=".project.project_file_pendukung"
+            android:exported="true"
             android:label="File project"
             android:parentActivityName=".project.edit_project"
-            android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.project45.ilovepadma.project.edit_project" />
         </activity>
-
-        <activity android:name=".project.project_file_pendukung2" android:exported="true">
+        <activity
+            android:name=".project.project_file_pendukung2"
+            android:exported="true">
             <intent-filter>
                 <action android:name=".project.project_file_pendukung2" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".project.list_sub_project"
+            android:exported="true"
             android:label="List sub project"
             android:parentActivityName=".project.list_project"
-            android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.project45.ilovepadma.project.list_project" />
         </activity>
-
         <activity
             android:name=".project.add_sub_project"
+            android:exported="true"
             android:label="Add sub project"
             android:parentActivityName=".project.list_sub_project"
-            android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.project45.ilovepadma.project.list_sub_project" />
         </activity>
-
         <activity
             android:name=".project.edit_sub_project"
+            android:exported="true"
             android:label="Edit sub project"
             android:parentActivityName=".project.list_sub_project"
-            android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.project45.ilovepadma.project.list_sub_project" />
         </activity>
-
         <activity
             android:name=".project.edit_sub_project2"
+            android:exported="true"
             android:label="Detail sub project"
             android:parentActivityName=".project.list_sub_project"
-            android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.project45.ilovepadma.project.list_sub_project" />
         </activity>
-
         <activity
             android:name=".setting.user_web"
+            android:exported="true"
             android:label="Web User"
             android:parentActivityName=".setting.main_setting"
-            android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.project45.ilovepadma.setting.main_setting" />
         </activity>
-
         <activity
             android:name=".setting.structure_company"
+            android:exported="true"
             android:label="Structure Company"
             android:parentActivityName=".setting.main_setting"
-            android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.project45.ilovepadma.setting.main_setting" />
         </activity>
-
         <activity
             android:name=".notes.list_note"
+            android:exported="true"
             android:label="List Note"
             android:parentActivityName=".MainActivity2"
-            android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.project45.ilovepadma.MainActivity2" />
         </activity>
-
         <activity
             android:name=".notes.list_note_by_supervisi"
+            android:exported="true"
             android:label="List Note"
             android:parentActivityName=".MainActivity2"
-            android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.project45.ilovepadma.MainActivity2" />
         </activity>
-
         <activity
             android:name=".notes.add_note"
+            android:exported="true"
             android:label="Add Note"
             android:parentActivityName=".notes.list_note"
-            android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.project45.ilovepadma.notes.list_note" />
         </activity>
-
         <activity
             android:name=".notes.edit_note"
+            android:exported="true"
             android:label="Edit Note"
             android:parentActivityName=".notes.list_note"
-            android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.project45.ilovepadma.notes.list_note" />
         </activity>
-
         <activity
             android:name=".notes.note_editor1"
+            android:exported="true"
             android:label="Note Editor"
             android:parentActivityName=".notes.list_note"
-            android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.project45.ilovepadma.notes.list_note" />
         </activity>
-
         <activity
             android:name=".notes.detail_note"
+            android:exported="true"
             android:label="Detail Note"
             android:parentActivityName=".notes.list_note"
-            android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.project45.ilovepadma.notes.list_note" />
         </activity>
-
         <activity
             android:name=".notes.note_download_file"
+            android:exported="true"
             android:label="Download File Note"
             android:parentActivityName=".notes.edit_note"
-            android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.project45.ilovepadma.notes.edit_note" />
         </activity>
-
         <activity
             android:name=".complain.deskripsi_download_file"
+            android:exported="true"
             android:label="Download File Deskripsi"
             android:parentActivityName=".notes.edit_note"
-            android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.project45.ilovepadma.notes.edit_note" />
         </activity>
-
         <activity
             android:name=".complain.respon_download_file"
+            android:exported="true"
             android:label="Download File Respon"
             android:parentActivityName=".notes.edit_note"
-            android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.project45.ilovepadma.notes.edit_note" />
         </activity>
-
         <activity
             android:name=".notes.list_complain_by_note"
+            android:exported="true"
             android:label="List Ticket"
             android:parentActivityName=".notes.list_note"
-            android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.project45.ilovepadma.notes.list_note" />
         </activity>
-
         <activity
             android:name=".notes.add_note_ticket"
+            android:exported="true"
             android:label="Add Note Ticket"
             android:parentActivityName=".notes.list_complain_by_note"
-            android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.project45.ilovepadma.notes.list_complain_by_note" />
         </activity>
-
         <activity
             android:name=".notes.list_existing_ticket"
+            android:exported="true"
             android:label="List All Existing Ticket"
             android:parentActivityName=".notes.list_complain_by_note"
-            android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.project45.ilovepadma.notes.list_complain_by_note" />
         </activity>
-
         <activity
             android:name=".setting.menu_supervisi"
+            android:exported="true"
             android:label="Supervisi"
             android:parentActivityName=".setting.main_setting"
-            android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.project45.ilovepadma.setting.main_setting" />
         </activity>
-
         <activity
             android:name=".setting.supervisi_agenda"
+            android:exported="true"
             android:label="Supervisi Agenda"
             android:parentActivityName=".setting.menu_supervisi"
-            android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.project45.ilovepadma.setting.menu_supervisi" />
         </activity>
-
         <activity
             android:name=".setting.user_agenda"
+            android:exported="true"
             android:label="User Agenda"
             android:parentActivityName=".setting.supervisi_agenda"
-            android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.project45.ilovepadma.setting.supervisi_agenda" />
         </activity>
-
         <activity
             android:name=".setting.user_agenda2"
+            android:exported="true"
             android:label="User Agenda"
             android:parentActivityName=".setting.supervisi_agenda"
-            android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.project45.ilovepadma.setting.supervisi_agenda" />
         </activity>
-
         <activity
             android:name=".setting.detail_deskripsi"
+            android:exported="true"
             android:label="Detail Agenda"
             android:parentActivityName=".setting.user_agenda2"
-            android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.project45.ilovepadma.setting.user_agenda2" />
         </activity>
-
         <activity
             android:name=".setting.supervisi_note"
+            android:exported="true"
             android:label="Supervisi Note"
             android:parentActivityName=".setting.menu_supervisi"
-            android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.project45.ilovepadma.setting.menu_supervisi" />
         </activity>
-
         <activity
             android:name=".setting.supervisi_tiket"
+            android:exported="true"
             android:label="Supervisi Tiket"
             android:parentActivityName=".setting.menu_supervisi"
-            android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.project45.ilovepadma.setting.menu_supervisi" />
         </activity>
-
         <activity
             android:name=".setting.supervisi_project"
+            android:exported="true"
             android:label="Supervisi Project"
             android:parentActivityName=".setting.menu_supervisi"
-            android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.project45.ilovepadma.setting.menu_supervisi" />
         </activity>
-
         <activity
             android:name=".notifikasi.list_notification"
+            android:exported="true"
             android:label="Notification"
             android:parentActivityName=".MainActivity3"
-            android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.project45.ilovepadma.MainActivity3" />
         </activity>
-
         <activity
             android:name=".timeline.uploadVideo"
-            android:screenOrientation="portrait" >
-        </activity>
-
+            android:screenOrientation="portrait" />
         <activity
             android:name=".timeline.list_timeline_by_share"
+            android:exported="true"
             android:label="Post Everything"
             android:parentActivityName=".MainActivity3"
-            android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -1095,12 +1077,12 @@
         -->
         <activity
             android:name=".berita.list_berita"
+            android:exported="true"
             android:parentActivityName=".MainActivity3"
-            android:exported="true"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            android:screenOrientation="portrait" />
-
-        <activity android:name=".berita.detail_berita"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
+            android:name=".berita.detail_berita"
             android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
@@ -1109,10 +1091,10 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".absensi.list_absen"
+        <activity
+            android:name=".absensi.list_absen"
+            android:exported="true"
             android:label="List Absen"
-            android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name=".berita.list_berita" />
@@ -1120,67 +1102,81 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".outlet.list_outlet2"
+            android:exported="true"
             android:label="Outlet Semesta"
             android:parentActivityName=".MainActivity3"
-            android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.project45.ilovepadma.MainActivity3" />
         </activity>
-
+        <activity
+            android:name=".outlet.add_outlet_semesta2"
+            android:exported="true"
+            android:label="Add Outlet Semesta"
+            android:parentActivityName=".outlet.list_outlet2"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.project45.ilovepadma.outlet.list_outlet2" />
+        </activity>
+        <activity
+            android:name=".outlet.add_listed_outlet"
+            android:exported="true"
+            android:label="Add Listed Outlet"
+            android:parentActivityName=".outlet.add_outlet_semesta2"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.project45.ilovepadma.outlet.add_outlet_semesta2" />
+        </activity>
         <activity
             android:name=".outlet.list_outlet"
+            android:exported="true"
             android:label="Outlet Semesta"
             android:parentActivityName=".MainActivity3"
-            android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.project45.ilovepadma.MainActivity3" />
         </activity>
-
         <activity
             android:name=".outlet.add_outlet_semesta"
+            android:exported="true"
             android:label="Add Outlet Semesta"
             android:parentActivityName=".outlet.list_outlet"
-            android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.project45.ilovepadma.outlet.list_outlet" />
         </activity>
-
         <activity
             android:name=".outlet.get_address"
-            android:label="Get Address"
             android:exported="true"
+            android:label="Get Address"
             android:parentActivityName=".outlet.add_outlet_semesta"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".outlet.add_outlet_semesta" />
         </activity>
-
         <activity
             android:name=".outlet.detail_outlet_semesta"
+            android:exported="true"
             android:label="Det Outlet Semesta"
             android:parentActivityName=".outlet.list_outlet"
-            android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.project45.ilovepadma.outlet.list_outlet" />
         </activity>
-
         <activity
             android:name=".setting.reservasi_meeting"
+            android:exported="true"
             android:label="Reservasi Meeting"
             android:parentActivityName=".setting.main_setting"
-            android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -1188,17 +1184,19 @@
         </activity>
 
         <meta-data
-            android:exported="true"
             android:name="com.google.android.actions"
+            android:exported="true"
             android:resource="@xml/filepaths" />
 
         <uses-library
-            android:exported="true"
             android:name="org.apache.http.legacy"
+            android:exported="true"
             android:required="false" />
 
-        <service android:name="com.project45.ilovepadma.notifikasi.notification_service"  android:enabled="true"  android:exported="true"/>
-
+        <service
+            android:name="com.project45.ilovepadma.notifikasi.notification_service"
+            android:enabled="true"
+            android:exported="true" />
         <!--
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -1210,7 +1208,6 @@
                 android:resource="@xml/filepaths"/>
         </provider>
         -->
-
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.provider"
@@ -1220,10 +1217,6 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/filepaths" />
         </provider>
-
-    </application> <!-- tambahan -->
-
-
-
+    </application>
 
 </manifest>

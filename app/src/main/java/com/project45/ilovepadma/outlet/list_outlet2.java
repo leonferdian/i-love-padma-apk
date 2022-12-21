@@ -258,10 +258,13 @@ public class list_outlet2 extends AppCompatActivity implements SwipeRefreshLayou
 
         if (id == R.id.add_item) {
 
-            Intent intent = new Intent(list_outlet2.this, add_outlet_semesta.class);
-            intent.putExtra("act", "add_outlet");
-            //startActivity(intent);
-            startActivityForResult(intent, 1);
+//            Intent intent = new Intent(list_outlet2.this, add_outlet_semesta.class);
+//            intent.putExtra("act", "add_outlet");
+//            //startActivity(intent);
+//            startActivityForResult(intent, 1);
+
+            Intent intent = new Intent(list_outlet2.this, add_outlet_semesta2.class);
+            startActivity(intent);
             return true;
         } else if (id == R.id.filter_lokasi_outlet) {
             Toast.makeText(getApplicationContext(), "Lokasi outlet belum bisa digunakan",Toast.LENGTH_LONG).show();

@@ -11,9 +11,10 @@ public class Data_customer implements Serializable {
             owner_kecamatan, owner_zipcode, owner_city, owner_province, owner_country, owner_religion, owner_status,
             owner_work, owner_nationality, owner_nik, owner_phone, owner_email;
     private double credit_limit, payment_tempo, omzet;
-    private int total_employee, total_carrier;
+    private int total_employee, total_carrier, id_segmentasi;
     private String invoice_processing, product_selling, sell_area, type_carrier;
-    private String saluran_distribusi, segment_level_1, segment_level_2, outlet_type, chain_store, division,code_customer;
+    private String saluran_distribusi, segment_level_1, segment_level_2, outlet_type, chain_store, division,code_customer, channel, segment, subsegment, segment_tiv;
+
     private String LastAudit = "";
     private boolean can_credit;
     private double lat, lng;
@@ -877,5 +878,40 @@ public class Data_customer implements Serializable {
 
     public void setStatus_general(String status_general) {
         this.status_general = status_general;
+    }
+
+    public int getId_segmentasi() {
+        return id_segmentasi;
+    }
+    public void setId_segmentasi(int id_segmentasi) {
+        this.id_segmentasi = id_segmentasi;
+    }
+
+    public String getChannel() {
+        return channel;
+    }
+    public void setChannel(String channel) {
+        this.channel = channel;
+    }
+
+    public String getSegment() {
+        return segment;
+    }
+    public void setSegment(String segment) {
+        this.segment = segment;
+    }
+
+    public String getSubsegment() {
+        return subsegment;
+    }
+    public void setSubsegment(String subsegment) {
+        this.subsegment = subsegment;
+    }
+
+    public String getSegment_tiv() {
+        return segment_tiv;
+    }
+    public void setSegment_tiv(String segment_tiv) {
+        this.segment_tiv = segment_tiv;
     }
 }
