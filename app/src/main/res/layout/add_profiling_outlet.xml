@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".outlet.add_profiling_outlet">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_list_jv"
+        android:minHeight="?attr/actionBarSize"
+        android:background="@color/black_purple"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:elevation="@dimen/elevation_medium"
+        app:titleTextAppearance="@style/ToolbarTitleText"
+        android:theme="@style/AppTheme.AppBarOverlay"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/btn_save_outlet"
+        android:layout_below="@id/toolbar_list_jv">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/toolbar_list_jv"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+            android:clipToPadding="false"
+            android:gravity="left"
+            android:orientation="vertical">
+
+            <TableLayout
+                android:id="@+id/tabel_pertanyaan"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
+                android:gravity="top"
+                android:stretchColumns="1,2">
+
+
+            </TableLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <Button
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/btn_save_outlet"
+        android:text="Save"
+        android:layout_marginLeft="0dp"
+        android:layout_marginRight="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</RelativeLayout>

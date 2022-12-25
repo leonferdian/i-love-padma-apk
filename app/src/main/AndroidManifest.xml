@@ -44,6 +44,20 @@
         android:versionCode="24"
         android:versionName="ILV1.24">
         <activity
+            android:name=".add_profiling_outlet"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".list_listed_outlet"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".add_listed_outlet"
             android:exported="false">
             <meta-data
@@ -1131,6 +1145,26 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.project45.ilovepadma.outlet.add_outlet_semesta2" />
+        </activity>
+        <activity
+            android:name=".outlet.list_listed_outlet"
+            android:exported="true"
+            android:label="List Listed Outlet"
+            android:parentActivityName=".outlet.add_outlet_semesta2"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.project45.ilovepadma.outlet.add_outlet_semesta2" />
+        </activity>
+        <activity
+            android:name=".outlet.add_profiling_outlet"
+            android:exported="true"
+            android:label="Add Profiling Outlet"
+            android:parentActivityName=".outlet.list_listed_outlet"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.project45.ilovepadma.outlet.list_listed_outlet" />
         </activity>
         <activity
             android:name=".outlet.list_outlet"
