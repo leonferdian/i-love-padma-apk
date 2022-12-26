@@ -44,6 +44,13 @@
         android:versionCode="24"
         android:versionName="ILV1.24">
         <activity
+            android:name=".list_result_outlet"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".list_being_dealing_outlet"
             android:exported="false">
             <meta-data
@@ -1194,6 +1201,16 @@
             android:name=".outlet.list_being_dealing_outlet"
             android:exported="true"
             android:label="List Dealing Outlet"
+            android:parentActivityName=".outlet.add_outlet_semesta2"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.project45.ilovepadma.outlet.add_outlet_semesta2" />
+        </activity>
+        <activity
+            android:name=".outlet.list_result_outlet"
+            android:exported="true"
+            android:label="List Approved Outlet"
             android:parentActivityName=".outlet.add_outlet_semesta2"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
