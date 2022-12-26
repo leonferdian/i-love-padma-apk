@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".outlet.list_profiling_reject_outlet">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_list_jv"
+        android:minHeight="?attr/actionBarSize"
+        android:background="@color/black_purple"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:elevation="@dimen/elevation_medium"
+        app:titleTextAppearance="@style/ToolbarTitleText"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <LinearLayout
+        android:layout_below="@id/toolbar_list_jv"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginTop="0dp"
+        android:background="@color/windowBackgroundDark"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#ffffff"
+            android:orientation="horizontal"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
+
+            <EditText
+                android:id="@+id/edt_search"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="8dp"
+                android:layout_weight="1"
+                android:hint="Search Outlet"
+                android:textSize="14sp" />
+
+            <ImageView
+                android:id="@+id/im_search"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:adjustViewBounds="true"
+                android:padding="7dp"
+                app:srcCompat="@drawable/places_ic_search" />
+
+        </LinearLayout>
+
+        <FrameLayout
+            android:id="@+id/frame"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:id="@+id/text_no_data"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="No data..." />
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipe_refresh_layout"
+            android:layout_below="@id/toolbar_list_jv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <ListView
+                android:id="@+id/list_report"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:divider="@color/list_divider"
+                android:listSelector="@drawable/list_row_selector"
+                android:dividerHeight="0dp" />
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

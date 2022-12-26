@@ -19,7 +19,7 @@ import com.project45.ilovepadma.complain.list_complain_from_you;
 import com.project45.ilovepadma.global.Api;
 
 public class add_outlet_semesta2 extends AppCompatActivity {
-    CardView cv_add_listed_outlet, cv_add_profiling_outlet;
+    CardView cv_add_listed_outlet, cv_add_profiling_outlet, cv_add_dealing_outlet, cv_add_result_dealing;
     String id_user,username,email,jabatan,id_company="",nama_company="";
 
     @Override
@@ -47,6 +47,7 @@ public class add_outlet_semesta2 extends AppCompatActivity {
 
         cv_add_listed_outlet = findViewById(R.id.cv_add_listed_outlet);
         cv_add_profiling_outlet = findViewById(R.id.cv_add_profiling_outlet);
+        cv_add_dealing_outlet = findViewById(R.id.cv_add_dealing_outlet);
 
         cv_add_listed_outlet.setOnClickListener(new View.OnClickListener() {
 
@@ -73,6 +74,32 @@ public class add_outlet_semesta2 extends AppCompatActivity {
                 startActivityForResult(intent, 1);
             }
         });
+
+        cv_add_dealing_outlet.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                // update login session ke FALSE dan mengosongkan nilai id dan username
+
+                Intent intent = new Intent(add_outlet_semesta2.this, list_profiling_reject_outlet.class);
+//                intent.putExtra("act", "add_outlet");
+                startActivityForResult(intent, 1);
+            }
+        });
+
+//        cv_add_result_dealing.setOnClickListener(new View.OnClickListener() {
+//
+//            @Override
+//            public void onClick(View v) {
+//                // TODO Auto-generated method stub
+//                // update login session ke FALSE dan mengosongkan nilai id dan username
+//
+//                Intent intent = new Intent(add_outlet_semesta2.this, list_being_dealing_outlet.class);
+////                intent.putExtra("act", "add_outlet");
+//                startActivityForResult(intent, 1);
+//            }
+//        });
     }
 
     public boolean onSupportNavigateUp(){
