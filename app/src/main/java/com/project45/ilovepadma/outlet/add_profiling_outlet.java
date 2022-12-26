@@ -433,6 +433,7 @@ public class add_profiling_outlet extends AppCompatActivity {
                     // Check for error node in json
                     if (success == 1) {
                         Log.e("Success save survey", jObj.toString());
+                        Toast.makeText(getApplicationContext(), "Sukses Add Profiling Outlet", Toast.LENGTH_LONG).show();
                         save_profiling_outlet_item(progressDialog);
                         onBackPressedWithProcess();
                     } else {

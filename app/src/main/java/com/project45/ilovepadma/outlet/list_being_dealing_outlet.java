@@ -20,12 +20,12 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AbsListView;
-import android.widget.AdapterView;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,7 +45,6 @@ import com.project45.ilovepadma.app.AppController;
 import com.project45.ilovepadma.data.Data_customer;
 import com.project45.ilovepadma.global.Api;
 import com.project45.ilovepadma.global.Scroller;
-import com.project45.ilovepadma.timeline.list_timeline_post_everything2;
 import com.project45.ilovepadma.util.Server;
 
 import org.json.JSONArray;
@@ -61,16 +60,14 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-public class list_profiling_reject_outlet extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener,adapter_customer3.AdapterCallback{
+public class list_being_dealing_outlet extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener,adapter_customer3.AdapterCallback{
     private static final String TAG = list_profiling_reject_outlet.class.getSimpleName();
     private static final String TAG_SUCCESS = "success";
     private static final String TAG_MESSAGE = "message";
-    private static String url_select_profiling_reject_oultet = Server.URL + "outlet/list_profiling_reject_outlet/";
-    private static String url_post_save_being_dealing_outlet = Server.URL + "outlet/post_save_being_dealing_outlet";
-    private DatePickerDialog datePickerDialog;
-    private SimpleDateFormat dateFormatter;
+    private static String url_select_being_dealing_oultet = Server.URL + "outlet/list_being_dealing_outlet/";
+    private static String url_post_save_result_dealing_outlet = Server.URL + "outlet/post_save_result_dealing_outlet";
     AlertDialog.Builder dialog;
-    EditText edt_search,txt_id_outlet, txt_tgl, txt_nama_pic, txt_tgl_plan_feedback;
+    EditText edt_search, txt_reason_reject, txt_id_outlet;
     FrameLayout mFrameLayout;
     ImageView im_search;
     LayoutInflater inflater;
@@ -78,18 +75,19 @@ public class list_profiling_reject_outlet extends AppCompatActivity implements S
     View dialogView;
     adapter_customer3 adapter;
     GPSTracker gps;
+    Spinner spinner_reason_dealing;
     List<Data_customer> itemList = new ArrayList<Data_customer>();
     ListView list;
     SwipeRefreshLayout swipe;
     boolean onLoading = true;
     double latitude,longitude;
     int success;
-    String id_user,username,email,jabatan,id_company="",nama_company="",alamat="", filter_outlet = "All", timeStamp;
+    String id_user,username,email,jabatan,id_company="",nama_company="",alamat="", filter_outlet = "All";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.list_profiling_reject_outlet);
+        setContentView(R.layout.list_being_dealing_outlet);
 
         //menerapkan tool bar sesuai id toolbar | ToolBarAtas adalah variabel buatan sndiri
         Toolbar ToolBarAtasaccount_user = (Toolbar) findViewById(R.id.toolbar_list_jv);
@@ -109,9 +107,6 @@ public class list_profiling_reject_outlet extends AppCompatActivity implements S
         id_company = Api.sharedpreferences.getString(Api.TAG_COMPANY_USER_ID, null);
         nama_company = Api.sharedpreferences.getString(Api.TAG_COMPANY_USER_NAME, null);
 
-        timeStamp = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
-        dateFormatter = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
-
         edt_search = findViewById(R.id.edt_search);
         im_search = findViewById(R.id.im_search);
         mFrameLayout = findViewById(R.id.frame);
@@ -124,7 +119,7 @@ public class list_profiling_reject_outlet extends AppCompatActivity implements S
 
         Iconify.with(new FontAwesomeModule());
 
-        gps = new GPSTracker(list_profiling_reject_outlet.this, list_profiling_reject_outlet.this);
+        gps = new GPSTracker(list_being_dealing_outlet.this, list_being_dealing_outlet.this);
         if (gps.canGetLocation()) {
             latitude = gps.getLatitude();
             longitude = gps.getLongitude();
@@ -140,7 +135,7 @@ public class list_profiling_reject_outlet extends AppCompatActivity implements S
             longitude = 0;
         }
 
-        adapter = new adapter_customer3(list_profiling_reject_outlet.this,itemList, list_profiling_reject_outlet.this);
+        adapter = new adapter_customer3(list_being_dealing_outlet.this,itemList, list_being_dealing_outlet.this);
         list.setAdapter(adapter);
 
         // menamilkan widget refresh
@@ -201,7 +196,7 @@ public class list_profiling_reject_outlet extends AppCompatActivity implements S
 
     @Override
     public void onCustomerOnClick(int position, Data_customer customer) {
-        add_dealing_dialog(customer.getcode_customer());
+        add_result_dealing_dialog(customer.getcode_customer());
     }
 
     private SwipeRefreshLayout.OnRefreshListener swipeRefreshDo = new SwipeRefreshLayout.OnRefreshListener() {
@@ -245,7 +240,7 @@ public class list_profiling_reject_outlet extends AppCompatActivity implements S
         //swipe.setRefreshing(true);
         //Toast.makeText(getApplicationContext(), String.valueOf(start),Toast.LENGTH_LONG).show();
 
-        final ProgressDialog progressDialog = new ProgressDialog(list_profiling_reject_outlet.this,
+        final ProgressDialog progressDialog = new ProgressDialog(list_being_dealing_outlet.this,
                 R.style.AppTheme_Dark_Dialog);
         progressDialog.setIndeterminate(true);
         progressDialog.setMessage("Loading");
@@ -254,7 +249,7 @@ public class list_profiling_reject_outlet extends AppCompatActivity implements S
             progressDialog.show();
 
 
-            String url_server = url_select_profiling_reject_oultet + String.valueOf(start)+"/"+lt+"/"+lg + "/" + filterOutlet;
+            String url_server = url_select_being_dealing_oultet + String.valueOf(start)+"/"+lt+"/"+lg + "/" + filterOutlet;
             Log.d("url_server", url_server);
             //Toast.makeText(getApplicationContext(), String.valueOf(url_server),Toast.LENGTH_LONG).show();
             // membuat request JSON
@@ -308,7 +303,7 @@ public class list_profiling_reject_outlet extends AppCompatActivity implements S
                         } else {
 
                             if (onLoading == true) {
-                                Toast.makeText(list_profiling_reject_outlet.this, "No More Items Available For ", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(list_being_dealing_outlet.this, "No More Items Available For ", Toast.LENGTH_SHORT).show();
                             }
                             onLoading = false;
                         }
@@ -329,7 +324,7 @@ public class list_profiling_reject_outlet extends AppCompatActivity implements S
                     VolleyLog.d(TAG, "Error: " + error.getMessage());
                     swipe.setRefreshing(false);
                     progressDialog.dismiss();
-                    Toast.makeText(list_profiling_reject_outlet.this, "No More Items Available", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(list_being_dealing_outlet.this, "No More Items Available", Toast.LENGTH_SHORT).show();
                 }
             });
 
@@ -341,7 +336,7 @@ public class list_profiling_reject_outlet extends AppCompatActivity implements S
 
     private void showDialog(){
         android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(
-                list_profiling_reject_outlet.this);
+                list_being_dealing_outlet.this);
 
         // set title dialog
         alertDialogBuilder.setTitle("Warning");
@@ -383,33 +378,20 @@ public class list_profiling_reject_outlet extends AppCompatActivity implements S
         }
     }
 
-    private void add_dealing_dialog(String id_outlet) {
-        dialog = new AlertDialog.Builder(list_profiling_reject_outlet.this);
+    private void add_result_dealing_dialog(String id_outlet) {
+        dialog = new AlertDialog.Builder(list_being_dealing_outlet.this);
         inflater = getLayoutInflater();
-        dialogView = inflater.inflate(R.layout.add_dealing_outlet, null);
+        dialogView = inflater.inflate(R.layout.add_result_dealing_outlet, null);
         dialog.setView(dialogView);
         dialog.setCancelable(true);
         dialog.setIcon(R.drawable.ic_web_asset_black_24);
-        dialog.setTitle("Add Dealing");
+        dialog.setTitle("Add Result Dealing");
 
         txt_id_outlet = dialogView.findViewById(R.id.txt_id_outlet);
-        txt_tgl = dialogView.findViewById(R.id.txt_tgl);
-        txt_nama_pic = dialogView.findViewById(R.id.txt_nama_pic);
-        txt_tgl_plan_feedback = dialogView.findViewById(R.id.txt_tgl_plan_feedback);
+        spinner_reason_dealing = dialogView.findViewById(R.id.spinner_reason_dealing);
+        txt_reason_reject = dialogView.findViewById(R.id.txt_reason_reject);
 
         txt_id_outlet.setText(id_outlet);
-        txt_tgl.setText(timeStamp);
-
-        txt_tgl_plan_feedback.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                // TODO Auto-generated method stub
-                // update login session ke FALSE dan mengosongkan nilai id dan username
-                String tgl_absen = "filter1";
-                showDateDialog(tgl_absen,txt_tgl_plan_feedback);
-            }
-        });
 
         dialog.setPositiveButton("Save", new DialogInterface.OnClickListener() {
 
@@ -434,67 +416,24 @@ public class list_profiling_reject_outlet extends AppCompatActivity implements S
             @Override
             public void onClick(View v)
             {
-                if(TextUtils.isEmpty(txt_nama_pic.getText()) || TextUtils.isEmpty(txt_tgl_plan_feedback.getText())){
-                    Toast.makeText(getApplicationContext(), "Pastikan Nama PIC dan Tanggal Plan Feedback terisi!", Toast.LENGTH_LONG).show();
+                if(spinner_reason_dealing.getSelectedItem().toString().equals("Reject") && TextUtils.isEmpty(txt_reason_reject.getText())){
+                    Toast.makeText(getApplicationContext(), "Wajib mengisi Reason Reject!", Toast.LENGTH_LONG).show();
                 } else {
-                    save_dealing_outlet(txt_id_outlet.getText().toString(),txt_tgl.getText().toString(),txt_nama_pic.getText().toString(),txt_tgl_plan_feedback.getText().toString());
+                    save_result_dealing_outlet(txt_id_outlet.getText().toString(),spinner_reason_dealing.getSelectedItem().toString(),txt_reason_reject.getText().toString());
                     dialog2.dismiss();
                 }
             }
         });
     }
 
-    private void showDateDialog(final String absen, final EditText txt_tgl_plan_feedback){
-
-        /**
-         * Calendar untuk mendapatkan tanggal sekarang
-         */
-        Calendar newCalendar = Calendar.getInstance();
-
-        /**
-         * Initiate DatePicker dialog
-         */
-        datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
-
-            @Override
-            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-
-                /**
-                 * Method ini dipanggil saat kita selesai memilih tanggal di DatePicker
-                 */
-
-                /**
-                 * Set Calendar untuk menampung tanggal yang dipilih
-                 */
-                Calendar newDate = Calendar.getInstance();
-                newDate.set(year, monthOfYear, dayOfMonth);
-
-                /**
-                 * Update TextView dengan tanggal yang kita pilih
-                 */
-                if(absen.equals("filter1"))
-                {
-                    txt_tgl_plan_feedback.setText(dateFormatter.format(newDate.getTime()));
-                }
-
-            }
-
-        },newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
-
-        /**
-         * Tampilkan DatePicker dialog
-         */
-        datePickerDialog.show();
-    }
-
-    private void save_dealing_outlet(String id_outlet,String tanggal,String nama_pic,String tanggal_feedback){
-        final ProgressDialog progressDialog = new ProgressDialog(list_profiling_reject_outlet.this,
+    private void save_result_dealing_outlet(String id_outlet,String result_dealing,String reason){
+        final ProgressDialog progressDialog = new ProgressDialog(list_being_dealing_outlet.this,
                 R.style.AppTheme_Dark_Dialog);
         progressDialog.setIndeterminate(true);
         progressDialog.setMessage("Please Wait...");
         progressDialog.show();
 
-        StringRequest strReq = new StringRequest(Request.Method.POST, url_post_save_being_dealing_outlet , new Response.Listener<String>() {
+        StringRequest strReq = new StringRequest(Request.Method.POST, url_post_save_result_dealing_outlet , new Response.Listener<String>() {
 
             @Override
             public void onResponse(String response) {
@@ -507,8 +446,8 @@ public class list_profiling_reject_outlet extends AppCompatActivity implements S
                     // Check for error node in json
                     if (success == 1) {
                         Log.e("Success dealing outlet", jObj.toString());
+                        Toast.makeText(getApplicationContext(), "Sukses Save Result Dealing Outlet", Toast.LENGTH_LONG).show();
                         progressDialog.dismiss();
-                        Toast.makeText(getApplicationContext(), "Sukses Dealing Outlet", Toast.LENGTH_LONG).show();
                         callVolley(0,latitude,longitude,filter_outlet);
                     } else {
                         Toast.makeText(getApplicationContext(), jObj.getString(TAG_MESSAGE), Toast.LENGTH_LONG).show();
@@ -532,8 +471,8 @@ public class list_profiling_reject_outlet extends AppCompatActivity implements S
                 // Posting parameters to url
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("id_outlet", id_outlet);
-                params.put("tanggal_feedback", tanggal_feedback);
-                params.put("nama_pic", nama_pic);
+                params.put("result_dealing", result_dealing);
+                params.put("reason", reason);
                 params.put("id_user", id_user);
 
                 return params;
