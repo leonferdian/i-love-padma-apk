@@ -3,7 +3,7 @@ package com.project45.ilovepadma.data;
 import java.io.Serializable;
 
 public class Data_pertanyaan_post_everything implements Serializable {
-    private String nomor,id_timeline_jawaban,id_timeline,kategori,jenis_post,id_timeline_pertanyaan,pertanyaan, jawaban;
+    private String nomor,id_timeline_jawaban,id_timeline,kategori,jenis_post,id_timeline_pertanyaan,pertanyaan, jawaban,tipe_pertanyaan,keterangan_system;
 
     public String getNomor() {
         return nomor;
@@ -67,5 +67,21 @@ public class Data_pertanyaan_post_everything implements Serializable {
 
     public void setJawaban(String jawaban) {
         this.jawaban = jawaban;
+    }
+
+    public String getTipe_pertanyaan() {
+        return tipe_pertanyaan;
+    }
+
+    public void setTipe_pertanyaan(String tipe_pertanyaan) {
+        this.tipe_pertanyaan = tipe_pertanyaan;
+    }
+
+    public String getKeterangan_system() {
+        return keterangan_system;
+    }
+
+    public void setKeterangan_system(String keterangan_system) {
+        this.keterangan_system = keterangan_system;
     }
 }

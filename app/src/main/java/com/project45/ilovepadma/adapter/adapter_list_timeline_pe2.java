@@ -165,12 +165,12 @@ public class adapter_list_timeline_pe2 extends BaseAdapter {
             params3.span = 2;
 
             TableRow row = new TableRow(context);
-            row.setBackgroundColor(R.color.white);
+            row.setBackgroundColor(Color.WHITE);
 
             TextView txt_pertanyaan = new TextView(context);
             txt_pertanyaan.setText("Jenis Post");
             txt_pertanyaan.setBackgroundResource(R.color.holo_blue_light);
-            txt_pertanyaan.setTextColor(R.color.white);
+            txt_pertanyaan.setTextColor(Color.WHITE);
             txt_pertanyaan.setTextSize(15);
             txt_pertanyaan.setGravity(Gravity.LEFT);
             txt_pertanyaan.setTypeface(null, Typeface.BOLD);
@@ -180,7 +180,7 @@ public class adapter_list_timeline_pe2 extends BaseAdapter {
             final TextView txt_jawaban = new TextView(context);
             txt_jawaban.setText(data.getjenis_post());
             txt_jawaban.setBackgroundResource(R.color.holo_blue_light);
-            txt_jawaban.setTextColor(R.color.white);
+            txt_jawaban.setTextColor(Color.WHITE);
             txt_jawaban.setTextSize(15);
             txt_jawaban.setGravity(Gravity.LEFT);
             txt_jawaban.setTypeface(null, Typeface.BOLD);
@@ -189,29 +189,60 @@ public class adapter_list_timeline_pe2 extends BaseAdapter {
             holder.table_pertanyaan.addView(row);
 
             for(int x = 0;x < data.getPertanyaan_post_everything().size();x++){
-                TableRow row2 = new TableRow(context);
-                row2.setBackgroundColor(R.color.white);
+                if((data.getjenis_post().equals("soe_rr_kunjungan") || data.getjenis_post().equals("soe_mv_delivery")) && data.getPertanyaan_post_everything().get(x).getTipe_pertanyaan().equals("spinner")){
+                    TableRow row2 = new TableRow(context);
+                    row2.setBackgroundColor(Color.WHITE);
 
-                TextView txt_pertanyaan2 = new TextView(context);
-                txt_pertanyaan2.setText(data.getPertanyaan_post_everything().get(x).getPertanyaan());
-                txt_pertanyaan2.setBackgroundResource(R.color.holo_blue_light);
-                txt_pertanyaan2.setTextColor(R.color.white);
-                txt_pertanyaan2.setTextSize(15);
-                txt_pertanyaan2.setGravity(Gravity.LEFT);
-                txt_pertanyaan2.setTypeface(null, Typeface.BOLD);
-                // add to row
-                row2.addView(txt_pertanyaan2, params2);
+                    TextView txt_pertanyaan2 = new TextView(context);
+                    txt_pertanyaan2.setText("- "+data.getPertanyaan_post_everything().get(x).getPertanyaan()+" :");
+                    txt_pertanyaan2.setBackgroundResource(R.color.holo_blue_light);
+                    txt_pertanyaan2.setTextColor(Color.WHITE);
+                    txt_pertanyaan2.setTextSize(15);
+                    txt_pertanyaan2.setGravity(Gravity.LEFT);
+                    txt_pertanyaan2.setTypeface(null, Typeface.BOLD);
+                    // add to row
+                    row2.addView(txt_pertanyaan2, params3);
+                    holder.table_pertanyaan.addView(row2);
 
-                final TextView txt_jawaban2 = new TextView(context);
-                txt_jawaban2.setText(data.getPertanyaan_post_everything().get(x).getJawaban());
-                txt_jawaban2.setBackgroundResource(R.color.holo_blue_light);
-                txt_jawaban2.setTextColor(R.color.white);
-                txt_jawaban2.setTextSize(15);
-                txt_jawaban2.setGravity(Gravity.LEFT);
-                txt_jawaban2.setTypeface(null, Typeface.BOLD);
-                // add to row
-                row2.addView(txt_jawaban2, params3);
-                holder.table_pertanyaan.addView(row2);
+                    TableRow row3 = new TableRow(context);
+                    row3.setBackgroundColor(Color.WHITE);
+
+                    final TextView txt_jawaban2 = new TextView(context);
+                    txt_jawaban2.setText(data.getPertanyaan_post_everything().get(x).getJawaban());
+                    txt_jawaban2.setBackgroundResource(R.color.holo_blue_light);
+                    txt_jawaban2.setTextColor(Color.WHITE);
+                    txt_jawaban2.setTextSize(15);
+                    txt_jawaban2.setGravity(Gravity.LEFT);
+                    txt_jawaban2.setTypeface(null, Typeface.BOLD);
+                    // add to row
+                    row3.addView(txt_jawaban2, params3);
+                    holder.table_pertanyaan.addView(row3);
+                }
+                else {
+                    TableRow row2 = new TableRow(context);
+                    row2.setBackgroundColor(Color.WHITE);
+
+                    TextView txt_pertanyaan2 = new TextView(context);
+                    txt_pertanyaan2.setText(data.getPertanyaan_post_everything().get(x).getPertanyaan());
+                    txt_pertanyaan2.setBackgroundResource(R.color.holo_blue_light);
+                    txt_pertanyaan2.setTextColor(Color.WHITE);
+                    txt_pertanyaan2.setTextSize(15);
+                    txt_pertanyaan2.setGravity(Gravity.LEFT);
+                    txt_pertanyaan2.setTypeface(null, Typeface.BOLD);
+                    // add to row
+                    row2.addView(txt_pertanyaan2, params2);
+
+                    final TextView txt_jawaban2 = new TextView(context);
+                    txt_jawaban2.setText(data.getPertanyaan_post_everything().get(x).getJawaban());
+                    txt_jawaban2.setBackgroundResource(R.color.holo_blue_light);
+                    txt_jawaban2.setTextColor(Color.WHITE);
+                    txt_jawaban2.setTextSize(15);
+                    txt_jawaban2.setGravity(Gravity.LEFT);
+                    txt_jawaban2.setTypeface(null, Typeface.BOLD);
+                    // add to row
+                    row2.addView(txt_jawaban2, params3);
+                    holder.table_pertanyaan.addView(row2);
+                }
             }
         }
         else {
@@ -226,12 +257,12 @@ public class adapter_list_timeline_pe2 extends BaseAdapter {
             params3.span = 2;
 
             TableRow row = new TableRow(context);
-            row.setBackgroundColor(R.color.white);
+            row.setBackgroundColor(Color.WHITE);
 
             TextView txt_pertanyaan = new TextView(context);
             txt_pertanyaan.setText("Jenis Post");
             txt_pertanyaan.setBackgroundResource(R.color.holo_blue_light);
-            txt_pertanyaan.setTextColor(R.color.white);
+            txt_pertanyaan.setTextColor(Color.WHITE);
             txt_pertanyaan.setTextSize(15);
             txt_pertanyaan.setGravity(Gravity.LEFT);
             txt_pertanyaan.setTypeface(null, Typeface.BOLD);
@@ -241,7 +272,7 @@ public class adapter_list_timeline_pe2 extends BaseAdapter {
             final TextView txt_jawaban = new TextView(context);
             txt_jawaban.setText(data.getjenis_post());
             txt_jawaban.setBackgroundResource(R.color.holo_blue_light);
-            txt_jawaban.setTextColor(R.color.white);
+            txt_jawaban.setTextColor(Color.WHITE);
             txt_jawaban.setTextSize(15);
             txt_jawaban.setGravity(Gravity.LEFT);
             txt_jawaban.setTypeface(null, Typeface.BOLD);

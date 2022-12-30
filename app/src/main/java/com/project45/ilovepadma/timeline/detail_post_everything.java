@@ -233,29 +233,60 @@ public class detail_post_everything extends AppCompatActivity {
                             params3.span = 2;
 
                             for(int x = 0;x < jObj.getJSONArray("data_pertanyaan").length();x++){
-                                TableRow row = new TableRow(detail_post_everything.this);
-                                row.setBackgroundColor(getResources().getColor(R.color.white));
+                                if((jObj.getString("jenis_post").equals("soe_rr_kunjungan") || jObj.getString("jenis_post").equals("soe_mv_delivery")) && jObj.getJSONArray("data_pertanyaan").getJSONObject(x).getString("tipe_pertanyaan").equals("spinner")){
+                                    TableRow row2 = new TableRow(detail_post_everything.this);
+                                    row2.setBackgroundColor(getResources().getColor(R.color.white));
 
-                                TextView txt_pertanyaan = new TextView(detail_post_everything.this);
-                                txt_pertanyaan.setText(jObj.getJSONArray("data_pertanyaan").getJSONObject(x).getString("pertanyaan"));
-                                txt_pertanyaan.setBackgroundResource(R.color.holo_blue_light);
-                                txt_pertanyaan.setTextColor(getResources().getColor(R.color.white));
-                                txt_pertanyaan.setTextSize(15);
-                                txt_pertanyaan.setGravity(Gravity.LEFT);
-                                txt_pertanyaan.setTypeface(null, Typeface.BOLD);
-                                // add to row
-                                row.addView(txt_pertanyaan, params2);
+                                    TextView txt_pertanyaan2 = new TextView(detail_post_everything.this);
+                                    txt_pertanyaan2.setText("- "+jObj.getJSONArray("data_pertanyaan").getJSONObject(x).getString("pertanyaan")+" :");
+                                    txt_pertanyaan2.setBackgroundResource(R.color.holo_blue_light);
+                                    txt_pertanyaan2.setTextColor(getResources().getColor(R.color.white));
+                                    txt_pertanyaan2.setTextSize(15);
+                                    txt_pertanyaan2.setGravity(Gravity.LEFT);
+                                    txt_pertanyaan2.setTypeface(null, Typeface.BOLD);
+                                    // add to row
+                                    row2.addView(txt_pertanyaan2, params3);
+                                    table_pertanyaan.addView(row2);
 
-                                final TextView txt_jawaban = new TextView(detail_post_everything.this);
-                                txt_jawaban.setText(jObj.getJSONArray("data_pertanyaan").getJSONObject(x).getString("jawaban"));
-                                txt_jawaban.setBackgroundResource(R.color.holo_blue_light);
-                                txt_jawaban.setTextColor(getResources().getColor(R.color.white));
-                                txt_jawaban.setTextSize(15);
-                                txt_jawaban.setGravity(Gravity.LEFT);
-                                txt_jawaban.setTypeface(null, Typeface.BOLD);
-                                // add to row
-                                row.addView(txt_jawaban, params3);
-                                table_pertanyaan.addView(row);
+                                    TableRow row3 = new TableRow(detail_post_everything.this);
+                                    row3.setBackgroundColor(getResources().getColor(R.color.white));
+
+                                    final TextView txt_jawaban2 = new TextView(detail_post_everything.this);
+                                    txt_jawaban2.setText(jObj.getJSONArray("data_pertanyaan").getJSONObject(x).getString("jawaban"));
+                                    txt_jawaban2.setBackgroundResource(R.color.holo_blue_light);
+                                    txt_jawaban2.setTextColor(getResources().getColor(R.color.white));
+                                    txt_jawaban2.setTextSize(15);
+                                    txt_jawaban2.setGravity(Gravity.LEFT);
+                                    txt_jawaban2.setTypeface(null, Typeface.BOLD);
+                                    // add to row
+                                    row3.addView(txt_jawaban2, params3);
+                                    table_pertanyaan.addView(row3);
+                                }
+                                else {
+                                    TableRow row = new TableRow(detail_post_everything.this);
+                                    row.setBackgroundColor(getResources().getColor(R.color.white));
+
+                                    TextView txt_pertanyaan = new TextView(detail_post_everything.this);
+                                    txt_pertanyaan.setText(jObj.getJSONArray("data_pertanyaan").getJSONObject(x).getString("pertanyaan"));
+                                    txt_pertanyaan.setBackgroundResource(R.color.holo_blue_light);
+                                    txt_pertanyaan.setTextColor(getResources().getColor(R.color.white));
+                                    txt_pertanyaan.setTextSize(15);
+                                    txt_pertanyaan.setGravity(Gravity.LEFT);
+                                    txt_pertanyaan.setTypeface(null, Typeface.BOLD);
+                                    // add to row
+                                    row.addView(txt_pertanyaan, params2);
+
+                                    final TextView txt_jawaban = new TextView(detail_post_everything.this);
+                                    txt_jawaban.setText(jObj.getJSONArray("data_pertanyaan").getJSONObject(x).getString("jawaban"));
+                                    txt_jawaban.setBackgroundResource(R.color.holo_blue_light);
+                                    txt_jawaban.setTextColor(getResources().getColor(R.color.white));
+                                    txt_jawaban.setTextSize(15);
+                                    txt_jawaban.setGravity(Gravity.LEFT);
+                                    txt_jawaban.setTypeface(null, Typeface.BOLD);
+                                    // add to row
+                                    row.addView(txt_jawaban, params3);
+                                    table_pertanyaan.addView(row);
+                                }
                             }
                         }
 
