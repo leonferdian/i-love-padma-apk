@@ -41,8 +41,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ILovePadma"
         android:usesCleartextTraffic="true"
-        android:versionCode="25"
-        android:versionName="ILV1.25">
+        android:versionCode="26"
+        android:versionName="ILV1.26">
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" />
