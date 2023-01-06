@@ -258,9 +258,10 @@ public class list_listed_outlet extends AppCompatActivity implements SwipeRefres
                                 item.setProvince(obj.getString("province"));
                                 item.setCountry(obj.getString("country"));
                                 item.setkoreksi_alamat(obj.getString("koreksi_alamat"));
-//                                item.setOutlet_type(obj.getString("channel_outlet"));
-//                                item.setSaluran_distribusi(obj.getString("segment"));
-//                                item.setSegment_level_1(obj.getString("sub_segment"));
+                                item.setSegment_tiv(obj.getString("segment_tiv"));
+                                item.setOutlet_type(obj.getString("channel_outlet"));
+                                item.setSaluran_distribusi(obj.getString("segment"));
+                                item.setSegment_level_1(obj.getString("sub_segment"));
                                 item.setimage_customer(obj.getString("foto_outlet"));
                                 item.setStatus_general(obj.getString("status_general"));
                                 item.setStatus_detail(obj.getString("status_detail"));

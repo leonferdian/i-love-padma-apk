@@ -368,9 +368,10 @@ public class list_outlet2 extends AppCompatActivity implements SwipeRefreshLayou
                                 item.setProvince(obj.getString("province"));
                                 item.setCountry(obj.getString("country"));
                                 item.setkoreksi_alamat(obj.getString("koreksi_alamat"));
-//                                item.setOutlet_type(obj.getString("channel_outlet"));
-//                                item.setSaluran_distribusi(obj.getString("segment"));
-//                                item.setSegment_level_1(obj.getString("sub_segment"));
+                                item.setSegment_tiv(obj.getString("segment_tiv"));
+                                item.setOutlet_type(obj.getString("channel_outlet"));
+                                item.setSaluran_distribusi(obj.getString("segment"));
+                                item.setSegment_level_1(obj.getString("sub_segment"));
                                 item.setimage_customer(obj.getString("foto_outlet"));
                                 item.setStatus_general(obj.getString("status_general"));
                                 item.setStatus_detail(obj.getString("status_detail"));
@@ -478,7 +479,11 @@ public class list_outlet2 extends AppCompatActivity implements SwipeRefreshLayou
     }
 
     void showEditCustomerDialog2(final Data_customer customer,final int position){
-        Toast.makeText(getApplicationContext(), "Detail Outlet belum bisa digunakan",Toast.LENGTH_LONG).show();
+//        Toast.makeText(getApplicationContext(), "Detail Outlet belum bisa digunakan",Toast.LENGTH_LONG).show();
+        Intent intent = new Intent(list_outlet2.this, detail_outlet_semesta.class);
+        intent.putExtra("act", "detail_outlet");
+        intent.putExtra("Data", customer);
+        startActivityForResult(intent,1);
     }
 
     @Override

@@ -1201,7 +1201,7 @@
         <activity
             android:name=".outlet.detail_outlet_semesta"
             android:exported="true"
-            android:label="Det Outlet Semesta"
+            android:label="Detail Outlet Semesta"
             android:parentActivityName=".outlet.list_outlet"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
