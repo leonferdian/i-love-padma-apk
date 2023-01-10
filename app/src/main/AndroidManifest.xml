@@ -1099,6 +1099,16 @@
                 android:value="com.project45.ilovepadma.MainActivity3" />
         </activity>
         <activity
+            android:name=".outlet.show_coordinat_outlet_semesta"
+            android:exported="true"
+            android:label="Peta Outlet Semesta"
+            android:parentActivityName=".outlet.list_outlet2"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.project45.ilovepadma.outlet.list_outlet2" />
+        </activity>
+        <activity
             android:name=".outlet.add_outlet_semesta2"
             android:exported="true"
             android:label="Add Outlet Semesta"

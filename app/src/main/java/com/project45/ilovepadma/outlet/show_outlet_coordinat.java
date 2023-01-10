@@ -381,7 +381,6 @@ public class show_outlet_coordinat extends AppCompatActivity implements OnMapRea
             };
 
     private void get_coordinat_dms(){
-
         itemList.clear();
         final ProgressDialog progressDialog = new ProgressDialog(show_outlet_coordinat.this,
                 R.style.AppTheme_Dark_Dialog);

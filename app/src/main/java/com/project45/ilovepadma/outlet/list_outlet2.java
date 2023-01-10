@@ -16,10 +16,13 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -69,8 +72,9 @@ public class list_outlet2 extends AppCompatActivity implements SwipeRefreshLayou
 
     private static String url_select_oultet     = Server.URL + "outlet/list_outlet_semesta/";
     private static String url_select_oultet2     = Server.URL + "outlet/list_outlet_semesta2/";
+    private static String url_list_segment = Server.URL + "outlet/get_list_segmentasi";
 
-    EditText edt_search;
+    EditText edt_search, txt_jml_outlet, txt_radius;
     ImageView im_search;
 
     ListView list;
@@ -93,7 +97,10 @@ public class list_outlet2 extends AppCompatActivity implements SwipeRefreshLayou
 
     GPSTracker gps;
     double latitude,longitude;
-    String alamat="";
+    String alamat="", selected_segment_tiv = "", radius="", jml_outlet;
+    Spinner spinner_segment_tiv;
+    private ArrayList<Data_customer> list_id_segment;
+    Data_customer segmentasi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -267,7 +274,8 @@ public class list_outlet2 extends AppCompatActivity implements SwipeRefreshLayou
             startActivity(intent);
             return true;
         } else if (id == R.id.filter_lokasi_outlet) {
-            Toast.makeText(getApplicationContext(), "Lokasi outlet belum bisa digunakan",Toast.LENGTH_LONG).show();
+//            Toast.makeText(getApplicationContext(), "Lokasi outlet belum bisa digunakan",Toast.LENGTH_LONG).show();
+            DialogFilter("Filter");
             return true;
         } else
             return super.onOptionsItemSelected(item);
@@ -500,5 +508,164 @@ public class list_outlet2 extends AppCompatActivity implements SwipeRefreshLayou
                 //Write your code if there's no result
             }
         }
+    }
+
+    private void DialogFilter(String button) {
+        dialog = new AlertDialog.Builder(list_outlet2.this);
+        inflater = getLayoutInflater();
+        dialogView = inflater.inflate(R.layout.filter_peta_outlet_semesta, null);
+        dialog.setView(dialogView);
+        dialog.setCancelable(true);
+        dialog.setIcon(R.drawable.ic_web_asset_black_24);
+        dialog.setTitle("Filter Outlet Semesta");
+
+        spinner_segment_tiv =  dialogView.findViewById(R.id.spinner_segment_tiv);
+        txt_jml_outlet = dialogView.findViewById(R.id.txt_jml_outlet);
+        txt_radius = dialogView.findViewById(R.id.txt_radius);
+
+        txt_jml_outlet.setText("10");
+        txt_radius.setText("10");
+
+        list_id_segment = new ArrayList<Data_customer>();
+
+        spinner_segment_tiv.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view,
+                                       int position, long id) {
+                Object item = adapterView.getItemAtPosition(position);
+                if (item != null) {
+                    selected_segment_tiv = spinner_segment_tiv.getSelectedItem().toString();
+//                    Toast.makeText(getApplicationContext(), "segment_tiv  "+String.valueOf(selected_segment_tiv), Toast.LENGTH_LONG).show();
+                }
+
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                // TODO Auto-generated method stub
+
+            }
+        });
+
+        getListSegmentasi();
+
+        dialog.setPositiveButton(button, new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                if(txt_radius.getText().toString().equals(""))
+                {
+                    radius = "10";
+                }
+                else {
+                    radius = txt_radius.getText().toString();
+                }
+
+                if(txt_jml_outlet.getText().toString().equals(""))
+                {
+                    jml_outlet = "10";
+                }
+                else {
+                    jml_outlet = txt_jml_outlet.getText().toString();
+                }
+
+                Intent intent = new Intent(list_outlet2.this, show_coordinat_outlet_semesta.class);
+                intent.putExtra("radius", radius);
+                intent.putExtra("jml_outlet", jml_outlet);
+                intent.putExtra("segment_tiv", selected_segment_tiv);
+                intent.putExtra("latitude", String.valueOf(latitude));
+                intent.putExtra("longitude", String.valueOf(longitude));
+                startActivity(intent);
+            }
+        });
+
+        dialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                //kosong();
+            }
+        });
+
+        dialog.show();
+    }
+
+    private void getListSegmentasi(){
+        final ProgressDialog progressDialog = new ProgressDialog(list_outlet2.this,
+                R.style.AppTheme_Dark_Dialog);
+        progressDialog.setIndeterminate(true);
+        progressDialog.setMessage("Loading Segment...");
+        progressDialog.show();
+
+        String url_server = url_list_segment;
+        Log.d("url segment", url_server);
+        JsonArrayRequest jArr = new JsonArrayRequest(url_server, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                Log.d(TAG, response.toString());
+
+                if(response.length()>0) {
+                    // Parsing json
+                    for (int i = 0; i < response.length(); i++) {
+                        try {
+                            JSONObject obj = response.getJSONObject(i);
+                            segmentasi = new Data_customer();
+                            segmentasi.setId_segmentasi(obj.getInt("id"));
+                            segmentasi.setChannel(obj.getString("channel"));
+                            segmentasi.setSegment(obj.getString("segment"));
+                            segmentasi.setSubsegment(obj.getString("subsegment"));
+                            segmentasi.setSegment_tiv(obj.getString("segment_tiv"));
+                            list_id_segment.add(segmentasi);
+//                            Toast.makeText(add_new_customer_survey.this, Integer.toString(selected_id_segment), Toast.LENGTH_LONG).show();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    //Toast.makeText(add_complain.this, "size "+String.valueOf(jenis_complainList.size()), Toast.LENGTH_LONG).show();
+                    addItemsOnSpinnerRoute();
+                    //end proses
+                    progressDialog.dismiss();
+                }
+                else{
+                    //end proses
+                    progressDialog.dismiss();
+                }
+                // notifikasi adanya perubahan data pada adapter
+                //photoAdapter.notifyDataSetChanged();
+
+
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                VolleyLog.d(TAG, "Error: " + error.getMessage());
+                //end proses
+                progressDialog.dismiss();
+            }
+        });
+
+        // menambah request ke request queue
+        AppController.getInstance(this).addToRequestQueue(jArr);
+    }
+
+    public void addItemsOnSpinnerRoute() {
+        List<String> list = new ArrayList<String>();
+        //Toast.makeText(add_complain.this, "size "+String.valueOf(jenis_complainList.size()), Toast.LENGTH_LONG).show();
+        for (int i = 0; i < list_id_segment.size(); i++) {
+            if(!list.contains(list_id_segment.get(i).getSegment_tiv())){
+                list.add(list_id_segment.get(i).getSegment_tiv());
+            }
+            //Toast.makeText(add_complain.this, "name "+jenis_complainList.get(i).getName(), Toast.LENGTH_LONG).show();
+        }
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, list);
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner_segment_tiv.setAdapter(dataAdapter);
     }
 }

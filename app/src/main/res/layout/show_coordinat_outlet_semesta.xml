@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".outlet.show_coordinat_outlet_semesta">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_list_jv"
+        android:minHeight="?attr/actionBarSize"
+        android:background="@color/black_purple"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:elevation="@dimen/elevation_medium"
+        app:titleTextAppearance="@style/ToolbarTitleText"
+        android:theme="@style/AppTheme.AppBarOverlay">
+    </androidx.appcompat.widget.Toolbar>
+
+    <LinearLayout
+        android:layout_below="@id/toolbar_list_jv"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginTop="2dp"
+        android:background="@color/windowBackgroundDark"
+        android:orientation="vertical">
+
+        <fragment
+            android:id="@+id/googleMap"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            tools:layout="@layout/place_autocomplete_fragment" />
+
+    </LinearLayout>
+
+</RelativeLayout>
