@@ -22,6 +22,7 @@ import android.os.Environment;
 import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.text.Html;
+import android.text.InputType;
 import android.util.Base64;
 import android.util.Log;
 import android.view.Gravity;
@@ -29,6 +30,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -95,7 +97,7 @@ import androidx.core.content.ContextCompat;
 public class edit_post_everything extends AppCompatActivity {
 
     String id_user, username,bm,email,jabatan,company_create="",id_company="",nama_company="",act="",content_timeline="",photo_timeline="",act_form="",id_timeline="",
-           imagePost = "";
+           imagePost = "", judul_pertanyaan = "";
 
     public static final String TAG_ID = "id";
     public static final String TAG_USERNAME = "username";
@@ -109,7 +111,7 @@ public class edit_post_everything extends AppCompatActivity {
     public static String url_image_upload = Server.URL2 +"image_upload/upload_foto_timeline.php";
     private static String url_get_pertanyaan_timeline   = Server.URL + "timeline/get_pertanyaan_timeline/";
     private static String url_post_timeline2_jawaban_detail    = Server.URL + "timeline/post_timeline2_jawaban_detail";
-    int success;
+    int success, id_summary_score = 0;
 
     EditText txt_post;
     TextView txt_nama_user;
@@ -128,6 +130,7 @@ public class edit_post_everything extends AppCompatActivity {
     private boolean first_load = true;
 
     List<EditText> list_edit_text_jawaban = new ArrayList<EditText>();
+    List<JSONArray> list_edit_text_jawaban_score = new ArrayList<JSONArray>();
     private String[] jawaban_pertanyaan;
 
     GPSTracker gps;
@@ -237,6 +240,13 @@ public class edit_post_everything extends AppCompatActivity {
             list_jenis_post.add("prospecting_dealing_outlet");
             list_jenis_post.add("branding");
             list_jenis_post.add("event");
+            list_jenis_post.add("ops_loading");
+            list_jenis_post.add("ops_unloading");
+            list_jenis_post.add("ops_badstock");
+            list_jenis_post.add("ops_gwp");
+            list_jenis_post.add("ams_kendaraan");
+            list_jenis_post.add("soe_rr_kunjungan");
+            list_jenis_post.add("soe_mv_delivery");
             list_jenis_post.add("other");
 
             spinner_jenis_post.setSelection(list_jenis_post.indexOf(detPost.getjenis_post()));
@@ -280,6 +290,34 @@ public class edit_post_everything extends AppCompatActivity {
                     else if(item.equals("Event")){
                         jenis_post = "event";
                         get_pertanyaan("event");
+                    }
+                    else if(item.equals("OPS - Loading")){
+                        jenis_post = "ops_loading";
+                        get_pertanyaan("ops_loading");
+                    }
+                    else if(item.equals("OPS - Unloading")){
+                        jenis_post = "ops_unloading";
+                        get_pertanyaan("ops_unloading");
+                    }
+                    else if(item.equals("OPS - Badstock")){
+                        jenis_post = "ops_badstock";
+                        get_pertanyaan("ops_badstock");
+                    }
+                    else if(item.equals("OPS - GWP")){
+                        jenis_post = "ops_gwp";
+                        get_pertanyaan("ops_gwp");
+                    }
+                    else if(item.equals("AMS - Kendaraan")){
+                        jenis_post = "ams_kendaraan";
+                        get_pertanyaan("ams_kendaraan");
+                    }
+                    else if(item.equals("SOE - RR Kunjungan")){
+                        jenis_post = "soe_rr_kunjungan";
+                        get_pertanyaan("soe_rr_kunjungan");
+                    }
+                    else if(item.equals("SOE - MV Delivery")){
+                        jenis_post = "soe_mv_delivery";
+                        get_pertanyaan("soe_mv_delivery");
                     }
                     else if(item.equals("Other")){
                         jenis_post = "other";
@@ -523,8 +561,7 @@ public class edit_post_everything extends AppCompatActivity {
         AppController.getInstance(this).addToRequestQueue(strReq);
     }
 
-    private void pilihImageByCamera()
-    {
+    private void pilihImageByCamera() {
         String IMAGE_DIRECTORY = "ILV";
         File file =  new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
                 + "/" + IMAGE_DIRECTORY);
@@ -667,8 +704,7 @@ public class edit_post_everything extends AppCompatActivity {
         //CropImage.startPickImageActivity(this);
     }
 
-    public String getPath(Uri uri)
-    {
+    public String getPath(Uri uri) {
         String[] projection = { MediaStore.Images.Media.DATA };
         Cursor cursor = getContentResolver().query(uri, projection, null, null, null);
         if (cursor == null) return null;
@@ -1108,6 +1144,7 @@ public class edit_post_everything extends AppCompatActivity {
                             final HashMap<String,Object> dataPertanyaan = new HashMap<String,Object>();
                             dataPertanyaan.put("nomor",String.valueOf(penomoran));
                             dataPertanyaan.put("id_pertanyaan",obj.getInt("id_pertanyaan"));
+                            dataPertanyaan.put("judul_pertanyaan",obj.getString("judul_pertanyaan"));
                             dataPertanyaan.put("pertanyaan",obj.getString("pertanyaan"));
                             dataPertanyaan.put("keterangan_system",obj.getString("keterangan_system"));
 
@@ -1134,18 +1171,50 @@ public class edit_post_everything extends AppCompatActivity {
                             params3.weight = 1;
                             params3.span = 2;
 
+                            if(jenis_post.equals("ops_gwp") && !obj.getString("judul_pertanyaan").equals(judul_pertanyaan) && !obj.getString("judul_pertanyaan").equals("")){
+                                judul_pertanyaan = obj.getString("judul_pertanyaan");
+                                TableRow row_judul = new TableRow(edit_post_everything.this);
+                                row_judul.setBackgroundColor(getResources().getColor(R.color.white));
+
+                                TextView txt_judul_pertanyaan = new TextView(edit_post_everything.this);
+                                txt_judul_pertanyaan.setText(obj.getString("judul_pertanyaan"));
+                                txt_judul_pertanyaan.setBackgroundResource(R.color.orange_800);
+                                txt_judul_pertanyaan.setTextColor(getResources().getColor(R.color.white));
+                                txt_judul_pertanyaan.setTextSize(15);
+                                txt_judul_pertanyaan.setGravity(Gravity.LEFT);
+                                txt_judul_pertanyaan.setTypeface(null, Typeface.BOLD);
+                                row_judul.addView(txt_judul_pertanyaan, params3);
+                                table_pertanyaan.addView(row_judul);
+                            }
+
                             TableRow row = new TableRow(edit_post_everything.this);
                             row.setBackgroundColor(getResources().getColor(R.color.white));
 
                             TextView txt_pertanyaan = new TextView(edit_post_everything.this);
                             txt_pertanyaan.setText(obj.getString("pertanyaan"));
-                            txt_pertanyaan.setBackgroundResource(R.color.holo_blue_light);
+                            if(obj.getString("keterangan_system").equals("sum_score_akhir")){
+                                txt_pertanyaan.setBackgroundResource(R.color.orange_800);
+                            } else {
+                                txt_pertanyaan.setBackgroundResource(R.color.holo_blue_light);
+                            }
                             txt_pertanyaan.setTextColor(getResources().getColor(R.color.white));
                             txt_pertanyaan.setTextSize(15);
                             txt_pertanyaan.setGravity(Gravity.LEFT);
                             txt_pertanyaan.setTypeface(null, Typeface.BOLD);
                             // add to row
                             if(obj.getString("keterangan_system").equals("sistem_lokasi")){
+                                row.addView(txt_pertanyaan, params3);
+                                table_pertanyaan.addView(row);
+                            }
+                            else if(obj.getString("keterangan_system").equals("no_yes_question")){
+                                row.addView(txt_pertanyaan, params3);
+                                table_pertanyaan.addView(row);
+                            }
+                            else if(obj.getString("keterangan_system").equals("ada_tidak_question")){
+                                row.addView(txt_pertanyaan, params3);
+                                table_pertanyaan.addView(row);
+                            }
+                            else if(obj.getString("keterangan_system").equals("n_p_y_na_question")){
                                 row.addView(txt_pertanyaan, params3);
                                 table_pertanyaan.addView(row);
                             }
@@ -1230,6 +1299,187 @@ public class edit_post_everything extends AppCompatActivity {
                                     list_edit_text_jawaban.add(txt_jawaban);
                                 }
                             }
+                            else if (tipe_pertanyaan.equals("numeric")) {
+                                if(obj.getString("keterangan_system").equals("sum_score_akhir")){
+                                    EditText txt_jawaban = new EditText(edit_post_everything.this);
+                                    txt_jawaban.setInputType(InputType.TYPE_CLASS_NUMBER);
+                                    txt_jawaban.setSingleLine(true);
+                                    txt_jawaban.setBackgroundResource(R.color.orange_800);
+                                    txt_jawaban.setFocusable(false);
+                                    txt_jawaban.setTextSize(15);
+                                    txt_jawaban.setGravity(Gravity.CENTER);
+                                    txt_jawaban.setText(detPost.getPertanyaan_post_everything().get(i).getJawaban());
+                                    // add to row
+                                    row.addView(txt_jawaban, params3);
+
+                                    table_pertanyaan.addView(row);
+                                    list_edit_text_jawaban.add(txt_jawaban);
+                                    id_summary_score = list_edit_text_jawaban.size()-1;
+                                }
+                                else {
+                                    EditText txt_jawaban = new EditText(edit_post_everything.this);
+                                    txt_jawaban.setInputType(InputType.TYPE_CLASS_NUMBER);
+                                    txt_jawaban.setSingleLine(true);
+                                    txt_jawaban.setBackgroundResource(R.drawable.edittext_border);
+                                    txt_jawaban.setTextSize(15);
+                                    txt_jawaban.setGravity(Gravity.CENTER);
+                                    txt_jawaban.setText(detPost.getPertanyaan_post_everything().get(i).getJawaban());
+                                    // add to row
+                                    row.addView(txt_jawaban, params3);
+
+                                    table_pertanyaan.addView(row);
+                                    list_edit_text_jawaban.add(txt_jawaban);
+                                }
+                            }
+                            else if (tipe_pertanyaan.equals("spinner")){
+                                if(obj.getString("keterangan_system").equals("no_yes_question")){
+                                    TableRow row2 = new TableRow(edit_post_everything.this);
+                                    row2.setBackgroundColor(getResources().getColor(R.color.white));
+
+                                    final EditText txt_jawaban = new EditText(edit_post_everything.this);
+                                    txt_jawaban.setBackgroundResource(R.drawable.edittext_border);
+                                    txt_jawaban.setTextSize(15);
+                                    txt_jawaban.setGravity(Gravity.LEFT);
+                                    txt_jawaban.setSingleLine(true);
+                                    txt_jawaban.setLines(1);
+                                    txt_jawaban.setEnabled(false);
+                                    txt_jawaban.setVisibility(View.GONE);
+                                    txt_jawaban.setText(detPost.getPertanyaan_post_everything().get(i).getJawaban());
+                                    // add to row
+                                    row2.addView(txt_jawaban, params3);
+
+                                    Spinner spinner = new Spinner(edit_post_everything.this);
+                                    ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(edit_post_everything.this, android.R.layout.simple_spinner_dropdown_item, getResources().getStringArray(R.array.slc_no_yes_question));
+                                    spinner.setAdapter(spinnerArrayAdapter);
+
+                                    String[] spinner_jawaban = getResources().getStringArray(R.array.slc_no_yes_question);
+                                    for(int v = 0; v < spinner_jawaban.length;v++){
+                                        if(spinner_jawaban[v].equals(detPost.getPertanyaan_post_everything().get(i).getJawaban())){
+                                            spinner.setSelection(v);
+                                        }
+                                    }
+
+                                    spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                        @Override
+                                        public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                                            txt_jawaban.setText(adapterView.getItemAtPosition(i).toString());
+                                        }
+
+                                        @Override
+                                        public void onNothingSelected(AdapterView<?> adapterView) {
+
+                                        }
+                                    });
+
+                                    row2.addView(spinner, params3);
+                                    table_pertanyaan.addView(row2);
+                                    list_edit_text_jawaban.add(txt_jawaban);
+                                }
+                                else if(obj.getString("keterangan_system").equals("ada_tidak_question")){
+                                    TableRow row2 = new TableRow(edit_post_everything.this);
+                                    row2.setBackgroundColor(getResources().getColor(R.color.white));
+
+                                    final EditText txt_jawaban = new EditText(edit_post_everything.this);
+                                    txt_jawaban.setBackgroundResource(R.drawable.edittext_border);
+                                    txt_jawaban.setTextSize(15);
+                                    txt_jawaban.setGravity(Gravity.LEFT);
+                                    txt_jawaban.setSingleLine(true);
+                                    txt_jawaban.setLines(1);
+                                    txt_jawaban.setEnabled(false);
+                                    txt_jawaban.setVisibility(View.GONE);
+                                    txt_jawaban.setText(detPost.getPertanyaan_post_everything().get(i).getJawaban());
+                                    // add to row
+                                    row2.addView(txt_jawaban, params3);
+
+                                    Spinner spinner = new Spinner(edit_post_everything.this);
+                                    ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(edit_post_everything.this, android.R.layout.simple_spinner_dropdown_item, getResources().getStringArray(R.array.slc_ada_tidak_question));
+                                    spinner.setAdapter(spinnerArrayAdapter);
+
+                                    String[] spinner_jawaban = getResources().getStringArray(R.array.slc_ada_tidak_question);
+                                    for(int v = 0; v < spinner_jawaban.length;v++){
+                                        if(spinner_jawaban[v].equals(detPost.getPertanyaan_post_everything().get(i).getJawaban())){
+                                            spinner.setSelection(v);
+                                        }
+                                    }
+
+                                    spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                        @Override
+                                        public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                                            txt_jawaban.setText(adapterView.getItemAtPosition(i).toString());
+                                        }
+
+                                        @Override
+                                        public void onNothingSelected(AdapterView<?> adapterView) {
+
+                                        }
+                                    });
+
+                                    row2.addView(spinner, params3);
+                                    table_pertanyaan.addView(row2);
+                                    list_edit_text_jawaban.add(txt_jawaban);
+                                }
+                                else if(obj.getString("keterangan_system").equals("n_p_y_na_question")){
+                                    JSONArray jsonSub = obj.getJSONArray("sub_question");
+
+                                    TableRow row2 = new TableRow(edit_post_everything.this);
+                                    row2.setBackgroundColor(getResources().getColor(R.color.white));
+
+                                    final EditText txt_jawaban = new EditText(edit_post_everything.this);
+                                    txt_jawaban.setBackgroundResource(R.drawable.edittext_border);
+                                    txt_jawaban.setTextSize(15);
+                                    txt_jawaban.setGravity(Gravity.LEFT);
+                                    txt_jawaban.setSingleLine(true);
+                                    txt_jawaban.setLines(1);
+                                    txt_jawaban.setEnabled(false);
+                                    txt_jawaban.setVisibility(View.GONE);
+                                    txt_jawaban.setText(detPost.getPertanyaan_post_everything().get(i).getJawaban());
+                                    // add to row
+                                    row2.addView(txt_jawaban, params3);
+
+                                    Spinner spinner = new Spinner(edit_post_everything.this);
+                                    ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(edit_post_everything.this, android.R.layout.simple_spinner_dropdown_item, getResources().getStringArray(R.array.slc_n_p_y_na_question));
+                                    spinner.setAdapter(spinnerArrayAdapter);
+
+                                    String[] spinner_jawaban = getResources().getStringArray(R.array.slc_n_p_y_na_question);
+                                    for(int v = 0; v < spinner_jawaban.length;v++){
+                                        if(spinner_jawaban[v].equals(detPost.getPertanyaan_post_everything().get(i).getJawaban())){
+                                            spinner.setSelection(v);
+                                        }
+                                    }
+
+                                    spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                        @Override
+                                        public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                                            txt_jawaban.setText(adapterView.getItemAtPosition(i).toString());
+
+                                            double total_score = 0;
+                                            for(int x = 0; x < list_edit_text_jawaban_score.size();x++){
+                                                for(int y = 0; y < list_edit_text_jawaban_score.get(x).length(); y++){
+                                                    try {
+                                                        JSONObject objChild = list_edit_text_jawaban_score.get(x).getJSONObject(y);
+                                                        if(list_edit_text_jawaban.get(x).getText().toString().equals(objChild.getString("jawaban"))){
+                                                            total_score += Double.valueOf(objChild.getString("score"));
+                                                        }
+                                                    } catch (JSONException e) {
+                                                        e.printStackTrace();
+                                                    }
+                                                }
+                                            }
+                                            list_edit_text_jawaban.get(id_summary_score).setText(String.valueOf(total_score));
+                                        }
+
+                                        @Override
+                                        public void onNothingSelected(AdapterView<?> adapterView) {
+
+                                        }
+                                    });
+
+                                    row2.addView(spinner, params3);
+                                    table_pertanyaan.addView(row2);
+                                    list_edit_text_jawaban.add(txt_jawaban);
+                                    list_edit_text_jawaban_score.add(jsonSub);
+                                }
+                            }
 
                             nomor++;
                         } catch (JSONException e) {
@@ -1269,7 +1519,8 @@ public class edit_post_everything extends AppCompatActivity {
         if(first_load){
             first_load = false;
             get_pertanyaan_jawaban(jenis_post);
-        } else {
+        }
+        else {
             final ProgressDialog progressDialog = new ProgressDialog(edit_post_everything.this,
                     R.style.AppTheme_Dark_Dialog);
             progressDialog.setIndeterminate(true);
@@ -1297,6 +1548,7 @@ public class edit_post_everything extends AppCompatActivity {
                                 final HashMap<String,Object> dataPertanyaan = new HashMap<String,Object>();
                                 dataPertanyaan.put("nomor",String.valueOf(penomoran));
                                 dataPertanyaan.put("id_pertanyaan",obj.getInt("id_pertanyaan"));
+                                dataPertanyaan.put("judul_pertanyaan",obj.getString("judul_pertanyaan"));
                                 dataPertanyaan.put("pertanyaan",obj.getString("pertanyaan"));
                                 dataPertanyaan.put("keterangan_system",obj.getString("keterangan_system"));
 
@@ -1323,18 +1575,50 @@ public class edit_post_everything extends AppCompatActivity {
                                 params3.weight = 1;
                                 params3.span = 2;
 
+                                if(jenis_post.equals("ops_gwp") && !obj.getString("judul_pertanyaan").equals(judul_pertanyaan) && !obj.getString("judul_pertanyaan").equals("")){
+                                    judul_pertanyaan = obj.getString("judul_pertanyaan");
+                                    TableRow row_judul = new TableRow(edit_post_everything.this);
+                                    row_judul.setBackgroundColor(getResources().getColor(R.color.white));
+
+                                    TextView txt_judul_pertanyaan = new TextView(edit_post_everything.this);
+                                    txt_judul_pertanyaan.setText(obj.getString("judul_pertanyaan"));
+                                    txt_judul_pertanyaan.setBackgroundResource(R.color.orange_800);
+                                    txt_judul_pertanyaan.setTextColor(getResources().getColor(R.color.white));
+                                    txt_judul_pertanyaan.setTextSize(15);
+                                    txt_judul_pertanyaan.setGravity(Gravity.LEFT);
+                                    txt_judul_pertanyaan.setTypeface(null, Typeface.BOLD);
+                                    row_judul.addView(txt_judul_pertanyaan, params3);
+                                    table_pertanyaan.addView(row_judul);
+                                }
+
                                 TableRow row = new TableRow(edit_post_everything.this);
                                 row.setBackgroundColor(getResources().getColor(R.color.white));
 
                                 TextView txt_pertanyaan = new TextView(edit_post_everything.this);
                                 txt_pertanyaan.setText(obj.getString("pertanyaan"));
-                                txt_pertanyaan.setBackgroundResource(R.color.holo_blue_light);
+                                if(obj.getString("keterangan_system").equals("sum_score_akhir")){
+                                    txt_pertanyaan.setBackgroundResource(R.color.orange_800);
+                                } else {
+                                    txt_pertanyaan.setBackgroundResource(R.color.holo_blue_light);
+                                }
                                 txt_pertanyaan.setTextColor(getResources().getColor(R.color.white));
                                 txt_pertanyaan.setTextSize(15);
                                 txt_pertanyaan.setGravity(Gravity.LEFT);
                                 txt_pertanyaan.setTypeface(null, Typeface.BOLD);
                                 // add to row
                                 if(obj.getString("keterangan_system").equals("sistem_lokasi")){
+                                    row.addView(txt_pertanyaan, params3);
+                                    table_pertanyaan.addView(row);
+                                }
+                                else if(obj.getString("keterangan_system").equals("no_yes_question")){
+                                    row.addView(txt_pertanyaan, params3);
+                                    table_pertanyaan.addView(row);
+                                }
+                                else if(obj.getString("keterangan_system").equals("ada_tidak_question")){
+                                    row.addView(txt_pertanyaan, params3);
+                                    table_pertanyaan.addView(row);
+                                }
+                                else if(obj.getString("keterangan_system").equals("n_p_y_na_question")){
                                     row.addView(txt_pertanyaan, params3);
                                     table_pertanyaan.addView(row);
                                 }
@@ -1421,6 +1705,166 @@ public class edit_post_everything extends AppCompatActivity {
                                         row.addView(txt_jawaban, params3);
                                         table_pertanyaan.addView(row);
                                         list_edit_text_jawaban.add(txt_jawaban);
+                                    }
+                                }
+                                else if (tipe_pertanyaan.equals("numeric")) {
+                                    if(obj.getString("keterangan_system").equals("sum_score_akhir")){
+                                        EditText txt_jawaban = new EditText(edit_post_everything.this);
+                                        txt_jawaban.setInputType(InputType.TYPE_CLASS_NUMBER);
+                                        txt_jawaban.setSingleLine(true);
+                                        txt_jawaban.setBackgroundResource(R.color.orange_800);
+                                        txt_jawaban.setFocusable(false);
+                                        txt_jawaban.setTextSize(15);
+                                        txt_jawaban.setGravity(Gravity.CENTER);
+                                        txt_jawaban.setText("0");
+                                        // add to row
+                                        row.addView(txt_jawaban, params3);
+
+                                        table_pertanyaan.addView(row);
+                                        list_edit_text_jawaban.add(txt_jawaban);
+                                        id_summary_score = list_edit_text_jawaban.size()-1;
+                                    }
+                                    else {
+                                        EditText txt_jawaban = new EditText(edit_post_everything.this);
+                                        txt_jawaban.setInputType(InputType.TYPE_CLASS_NUMBER);
+                                        txt_jawaban.setSingleLine(true);
+                                        txt_jawaban.setBackgroundResource(R.drawable.edittext_border);
+                                        txt_jawaban.setTextSize(15);
+                                        txt_jawaban.setGravity(Gravity.CENTER);
+                                        txt_jawaban.setText("0");
+                                        // add to row
+                                        row.addView(txt_jawaban, params3);
+
+                                        table_pertanyaan.addView(row);
+                                        list_edit_text_jawaban.add(txt_jawaban);
+                                    }
+                                }
+                                else if (tipe_pertanyaan.equals("spinner")){
+                                    if(obj.getString("keterangan_system").equals("no_yes_question")){
+                                        TableRow row2 = new TableRow(edit_post_everything.this);
+                                        row2.setBackgroundColor(getResources().getColor(R.color.white));
+
+                                        final EditText txt_jawaban = new EditText(edit_post_everything.this);
+                                        txt_jawaban.setBackgroundResource(R.drawable.edittext_border);
+                                        txt_jawaban.setTextSize(15);
+                                        txt_jawaban.setGravity(Gravity.LEFT);
+                                        txt_jawaban.setSingleLine(true);
+                                        txt_jawaban.setLines(1);
+                                        txt_jawaban.setEnabled(false);
+                                        txt_jawaban.setVisibility(View.GONE);
+                                        txt_jawaban.setText("No");
+                                        // add to row
+                                        row2.addView(txt_jawaban, params3);
+
+                                        Spinner spinner = new Spinner(edit_post_everything.this);
+                                        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(edit_post_everything.this, android.R.layout.simple_spinner_dropdown_item, getResources().getStringArray(R.array.slc_no_yes_question));
+                                        spinner.setAdapter(spinnerArrayAdapter);
+
+                                        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                            @Override
+                                            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                                                txt_jawaban.setText(adapterView.getItemAtPosition(i).toString());
+                                            }
+
+                                            @Override
+                                            public void onNothingSelected(AdapterView<?> adapterView) {
+
+                                            }
+                                        });
+
+                                        row2.addView(spinner, params3);
+                                        table_pertanyaan.addView(row2);
+                                        list_edit_text_jawaban.add(txt_jawaban);
+                                    }
+                                    else if(obj.getString("keterangan_system").equals("ada_tidak_question")){
+                                        TableRow row2 = new TableRow(edit_post_everything.this);
+                                        row2.setBackgroundColor(getResources().getColor(R.color.white));
+
+                                        final EditText txt_jawaban = new EditText(edit_post_everything.this);
+                                        txt_jawaban.setBackgroundResource(R.drawable.edittext_border);
+                                        txt_jawaban.setTextSize(15);
+                                        txt_jawaban.setGravity(Gravity.LEFT);
+                                        txt_jawaban.setSingleLine(true);
+                                        txt_jawaban.setLines(1);
+                                        txt_jawaban.setEnabled(false);
+                                        txt_jawaban.setVisibility(View.GONE);
+                                        txt_jawaban.setText("No");
+                                        // add to row
+                                        row2.addView(txt_jawaban, params3);
+
+                                        Spinner spinner = new Spinner(edit_post_everything.this);
+                                        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(edit_post_everything.this, android.R.layout.simple_spinner_dropdown_item, getResources().getStringArray(R.array.slc_ada_tidak_question));
+                                        spinner.setAdapter(spinnerArrayAdapter);
+
+                                        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                            @Override
+                                            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                                                txt_jawaban.setText(adapterView.getItemAtPosition(i).toString());
+                                            }
+
+                                            @Override
+                                            public void onNothingSelected(AdapterView<?> adapterView) {
+
+                                            }
+                                        });
+
+                                        row2.addView(spinner, params3);
+                                        table_pertanyaan.addView(row2);
+                                        list_edit_text_jawaban.add(txt_jawaban);
+                                    }
+                                    else if(obj.getString("keterangan_system").equals("n_p_y_na_question")){
+                                        JSONArray jsonSub = obj.getJSONArray("sub_question");
+
+                                        TableRow row2 = new TableRow(edit_post_everything.this);
+                                        row2.setBackgroundColor(getResources().getColor(R.color.white));
+
+                                        final EditText txt_jawaban = new EditText(edit_post_everything.this);
+                                        txt_jawaban.setBackgroundResource(R.drawable.edittext_border);
+                                        txt_jawaban.setTextSize(15);
+                                        txt_jawaban.setGravity(Gravity.LEFT);
+                                        txt_jawaban.setSingleLine(true);
+                                        txt_jawaban.setLines(1);
+                                        txt_jawaban.setEnabled(false);
+                                        txt_jawaban.setVisibility(View.GONE);
+                                        txt_jawaban.setText("N/A");
+                                        // add to row
+                                        row2.addView(txt_jawaban, params3);
+
+                                        Spinner spinner = new Spinner(edit_post_everything.this);
+                                        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(edit_post_everything.this, android.R.layout.simple_spinner_dropdown_item, getResources().getStringArray(R.array.slc_n_p_y_na_question));
+                                        spinner.setAdapter(spinnerArrayAdapter);
+
+                                        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                            @Override
+                                            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                                                txt_jawaban.setText(adapterView.getItemAtPosition(i).toString());
+
+                                                double total_score = 0;
+                                                for(int x = 0; x < list_edit_text_jawaban_score.size();x++){
+                                                    for(int y = 0; y < list_edit_text_jawaban_score.get(x).length(); y++){
+                                                        try {
+                                                            JSONObject objChild = list_edit_text_jawaban_score.get(x).getJSONObject(y);
+                                                            if(list_edit_text_jawaban.get(x).getText().toString().equals(objChild.getString("jawaban"))){
+                                                                total_score += Double.valueOf(objChild.getString("score"));
+                                                            }
+                                                        } catch (JSONException e) {
+                                                            e.printStackTrace();
+                                                        }
+                                                    }
+                                                }
+                                                list_edit_text_jawaban.get(id_summary_score).setText(String.valueOf(total_score));
+                                            }
+
+                                            @Override
+                                            public void onNothingSelected(AdapterView<?> adapterView) {
+
+                                            }
+                                        });
+
+                                        row2.addView(spinner, params3);
+                                        table_pertanyaan.addView(row2);
+                                        list_edit_text_jawaban.add(txt_jawaban);
+                                        list_edit_text_jawaban_score.add(jsonSub);
                                     }
                                 }
                                 nomor++;

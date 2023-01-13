@@ -219,6 +219,13 @@
         <item>Ada</item>
     </string-array>
 
+    <string-array name="slc_n_p_y_na_question">
+        <item>N/A</item>
+        <item>N</item>
+        <item>P</item>
+        <item>Y</item>
+    </string-array>
+
     <string name="google_maps_key">AIzaSyBtX8Zci5VlzaielTuX_0Y9t-8rhKL0An8</string>
 
 </resources>

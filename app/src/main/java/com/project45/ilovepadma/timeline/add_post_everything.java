@@ -81,6 +81,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -95,62 +96,47 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 public class add_post_everything extends AppCompatActivity {
-
-    String id_user, username,bm,email,jabatan,company_create="",id_company="",nama_company="",act="",content_timeline="",photo_timeline="";
-
-    public static final String TAG_ID = "id";
-    public static final String TAG_USERNAME = "username";
-    public static final String TAG_EMAIL = "email";
+    //private static final int CAMERA_REQUEST = 1888;
     private static final String TAG = add_post_everything.class.getSimpleName();
-    private static final String TAG_SUCCESS = "success";
     private static final String TAG_MESSAGE = "message";
-
+    private static final String TAG_SUCCESS = "success";
+    public static final int CAMERA_REQUEST = 100;
+    public static final int STORAGE_REQUEST = 101;
+    public static final String TAG_ID = "id";
+    public static final String TAG_EMAIL = "email";
+    public static final String TAG_USERNAME = "username";
     private static String url_post_timeline    = Server.URL + "timeline/post_timeline";
     private static String url_post_timeline2    = Server.URL + "timeline/post_timeline2";
     private static String url_post_timeline2_jawaban_detail    = Server.URL + "timeline/post_timeline2_jawaban_detail";
-    public static String url_image_upload = Server.URL2 +"image_upload/upload_foto_timeline.php";
     private static String url_get_pertanyaan_timeline   = Server.URL + "timeline/get_pertanyaan_timeline/";
-    int success;
-
-    EditText txt_post;
-    TextView txt_nama_user;
-    CircularImageView image_user_post;
-    AppCompatButton btn_submit;
-    ImageView img_post;
-    Button btn_camera_foto,btn_galery_foto,btn_camera_video,btn_galery_video;
-
-    Spinner spinner_jenis_post;
-    LinearLayout id_layout_caption_media_post_everything,id_layout_pertanyaan;
-    TableLayout table_pertanyaan;
-    ArrayList<HashMap<String,Object>> dataDaftarPertanyaan = new ArrayList<HashMap<String,Object>>();
-    private Calendar calendar;
-    private SimpleDateFormat dateFormat;
-    private String date, jenis_post;
-
-    GPSTracker gps;
-    double latitude,longitude;
-    String alamat="";
-    private Matrix matrix;
-    private Bitmap bitmapLast;
-
-    List<EditText> list_edit_text_jawaban = new ArrayList<EditText>();
-    private String[] jawaban_pertanyaan;
-
-    //private static final int CAMERA_REQUEST = 1888;
+    public static String url_image_upload = Server.URL2 +"image_upload/upload_foto_timeline.php";
     private Bitmap bitmap;
-    private String fileImagePath,image_name = "",url_foto_stok="",pathFoto;
+    private Bitmap bitmapLast;
+    private Calendar calendar;
     private File destFile;
-    Uri imageCaptureUri,mCropImageUri;
-
-    public static final int CAMERA_REQUEST = 100;
-    public static final int STORAGE_REQUEST = 101;
-    String cameraPermission[];
-    String storagePermission[];
-
-    int RESULT_LOAD_IMG = 9;
-
+    private Matrix matrix;
+    private SimpleDateFormat dateFormat;
+    private String date, jenis_post,fileImagePath,image_name = "",url_foto_stok="",pathFoto;
+    private String[] jawaban_pertanyaan;
     android.app.AlertDialog.Builder alertDialogBuilder;
     android.app.AlertDialog alertDialog;
+    AppCompatButton btn_submit;
+    CircularImageView image_user_post;
+    GPSTracker gps;
+    LinearLayout id_layout_caption_media_post_everything,id_layout_pertanyaan;
+    TableLayout table_pertanyaan;
+    Button btn_camera_foto,btn_galery_foto,btn_camera_video,btn_galery_video;
+    EditText txt_post;
+    ImageView img_post;
+    Spinner spinner_jenis_post;
+    TextView txt_nama_user;
+    ArrayList<HashMap<String,Object>> dataDaftarPertanyaan = new ArrayList<HashMap<String,Object>>();
+    double latitude,longitude;
+    int success, RESULT_LOAD_IMG = 9, id_summary_score = 0;
+    List<EditText> list_edit_text_jawaban = new ArrayList<EditText>();
+    List<JSONArray> list_edit_text_jawaban_score = new ArrayList<JSONArray>();
+    String id_user, username,bm,email,jabatan,company_create="",id_company="",nama_company="",act="",content_timeline="",photo_timeline="",alamat="", cameraPermission[], storagePermission[], judul_pertanyaan;
+    Uri imageCaptureUri,mCropImageUri;
 
     /*  for upload video from camera*/
     private static final int CAMERA_CAPTURE_VIDEO_REQUEST_CODE = 200;
@@ -269,6 +255,11 @@ public class add_post_everything extends AppCompatActivity {
                     else if(item.equals("OPS - Badstock")){
                         jenis_post = "ops_badstock";
                         get_pertanyaan("ops_badstock");
+                        id_layout_caption_media_post_everything.setVisibility(View.VISIBLE);
+                    }
+                    else if(item.equals("OPS - GWP")){
+                        jenis_post = "ops_gwp";
+                        get_pertanyaan("ops_gwp");
                         id_layout_caption_media_post_everything.setVisibility(View.VISIBLE);
                     }
                     else if(item.equals("AMS - Kendaraan")){
@@ -1085,6 +1076,7 @@ public class add_post_everything extends AppCompatActivity {
     private void clean_pertanyaan(){
         table_pertanyaan.removeAllViews();
         dataDaftarPertanyaan.clear();
+        judul_pertanyaan = "";
     }
 
     private void get_pertanyaan(String jenis_post) {
@@ -1115,6 +1107,7 @@ public class add_post_everything extends AppCompatActivity {
                             final HashMap<String,Object> dataPertanyaan = new HashMap<String,Object>();
                             dataPertanyaan.put("nomor",String.valueOf(penomoran));
                             dataPertanyaan.put("id_pertanyaan",obj.getInt("id_pertanyaan"));
+                            dataPertanyaan.put("judul_pertanyaan",obj.getString("judul_pertanyaan"));
                             dataPertanyaan.put("pertanyaan",obj.getString("pertanyaan"));
                             dataPertanyaan.put("keterangan_system",obj.getString("keterangan_system"));
 
@@ -1141,12 +1134,32 @@ public class add_post_everything extends AppCompatActivity {
                             params3.weight = 1;
                             params3.span = 2;
 
+                            if(jenis_post.equals("ops_gwp") && !obj.getString("judul_pertanyaan").equals(judul_pertanyaan) && !obj.getString("judul_pertanyaan").equals("")){
+                                judul_pertanyaan = obj.getString("judul_pertanyaan");
+                                TableRow row_judul = new TableRow(add_post_everything.this);
+                                row_judul.setBackgroundColor(getResources().getColor(R.color.white));
+
+                                TextView txt_judul_pertanyaan = new TextView(add_post_everything.this);
+                                txt_judul_pertanyaan.setText(obj.getString("judul_pertanyaan"));
+                                txt_judul_pertanyaan.setBackgroundResource(R.color.orange_800);
+                                txt_judul_pertanyaan.setTextColor(getResources().getColor(R.color.white));
+                                txt_judul_pertanyaan.setTextSize(15);
+                                txt_judul_pertanyaan.setGravity(Gravity.LEFT);
+                                txt_judul_pertanyaan.setTypeface(null, Typeface.BOLD);
+                                row_judul.addView(txt_judul_pertanyaan, params3);
+                                table_pertanyaan.addView(row_judul);
+                            }
+
                             TableRow row = new TableRow(add_post_everything.this);
                             row.setBackgroundColor(getResources().getColor(R.color.white));
 
                             TextView txt_pertanyaan = new TextView(add_post_everything.this);
                             txt_pertanyaan.setText(obj.getString("pertanyaan"));
-                            txt_pertanyaan.setBackgroundResource(R.color.holo_blue_light);
+                            if(obj.getString("keterangan_system").equals("sum_score_akhir")){
+                                txt_pertanyaan.setBackgroundResource(R.color.orange_800);
+                            } else {
+                                txt_pertanyaan.setBackgroundResource(R.color.holo_blue_light);
+                            }
                             txt_pertanyaan.setTextColor(getResources().getColor(R.color.white));
                             txt_pertanyaan.setTextSize(15);
                             txt_pertanyaan.setGravity(Gravity.LEFT);
@@ -1161,6 +1174,10 @@ public class add_post_everything extends AppCompatActivity {
                                 table_pertanyaan.addView(row);
                             }
                             else if(obj.getString("keterangan_system").equals("ada_tidak_question")){
+                                row.addView(txt_pertanyaan, params3);
+                                table_pertanyaan.addView(row);
+                            }
+                            else if(obj.getString("keterangan_system").equals("n_p_y_na_question")){
                                 row.addView(txt_pertanyaan, params3);
                                 table_pertanyaan.addView(row);
                             }
@@ -1251,18 +1268,36 @@ public class add_post_everything extends AppCompatActivity {
                                 }
                             }
                             else if (tipe_pertanyaan.equals("numeric")) {
-                                EditText txt_jawaban = new EditText(add_post_everything.this);
-                                txt_jawaban.setInputType(InputType.TYPE_CLASS_NUMBER);
-                                txt_jawaban.setSingleLine(true);
-                                txt_jawaban.setBackgroundResource(R.drawable.edittext_border);
-                                txt_jawaban.setTextSize(15);
-                                txt_jawaban.setGravity(Gravity.CENTER);
-                                txt_jawaban.setText("0");
-                                // add to row
-                                row.addView(txt_jawaban, params3);
+                                if(obj.getString("keterangan_system").equals("sum_score_akhir")){
+                                    EditText txt_jawaban = new EditText(add_post_everything.this);
+                                    txt_jawaban.setInputType(InputType.TYPE_CLASS_NUMBER);
+                                    txt_jawaban.setSingleLine(true);
+                                    txt_jawaban.setBackgroundResource(R.color.orange_800);
+                                    txt_jawaban.setFocusable(false);
+                                    txt_jawaban.setTextSize(15);
+                                    txt_jawaban.setGravity(Gravity.CENTER);
+                                    txt_jawaban.setText("0");
+                                    // add to row
+                                    row.addView(txt_jawaban, params3);
 
-                                table_pertanyaan.addView(row);
-                                list_edit_text_jawaban.add(txt_jawaban);
+                                    table_pertanyaan.addView(row);
+                                    list_edit_text_jawaban.add(txt_jawaban);
+                                    id_summary_score = list_edit_text_jawaban.size()-1;
+                                }
+                                else {
+                                    EditText txt_jawaban = new EditText(add_post_everything.this);
+                                    txt_jawaban.setInputType(InputType.TYPE_CLASS_NUMBER);
+                                    txt_jawaban.setSingleLine(true);
+                                    txt_jawaban.setBackgroundResource(R.drawable.edittext_border);
+                                    txt_jawaban.setTextSize(15);
+                                    txt_jawaban.setGravity(Gravity.CENTER);
+                                    txt_jawaban.setText("0");
+                                    // add to row
+                                    row.addView(txt_jawaban, params3);
+
+                                    table_pertanyaan.addView(row);
+                                    list_edit_text_jawaban.add(txt_jawaban);
+                                }
                             }
                             else if (tipe_pertanyaan.equals("spinner")){
                                 if(obj.getString("keterangan_system").equals("no_yes_question")){
@@ -1336,6 +1371,60 @@ public class add_post_everything extends AppCompatActivity {
                                     row2.addView(spinner, params3);
                                     table_pertanyaan.addView(row2);
                                     list_edit_text_jawaban.add(txt_jawaban);
+                                }
+                                else if(obj.getString("keterangan_system").equals("n_p_y_na_question")){
+                                    JSONArray jsonSub = obj.getJSONArray("sub_question");
+
+                                    TableRow row2 = new TableRow(add_post_everything.this);
+                                    row2.setBackgroundColor(getResources().getColor(R.color.white));
+
+                                    final EditText txt_jawaban = new EditText(add_post_everything.this);
+                                    txt_jawaban.setBackgroundResource(R.drawable.edittext_border);
+                                    txt_jawaban.setTextSize(15);
+                                    txt_jawaban.setGravity(Gravity.LEFT);
+                                    txt_jawaban.setSingleLine(true);
+                                    txt_jawaban.setLines(1);
+                                    txt_jawaban.setEnabled(false);
+                                    txt_jawaban.setVisibility(View.GONE);
+                                    txt_jawaban.setText("N/A");
+                                    // add to row
+                                    row2.addView(txt_jawaban, params3);
+
+                                    Spinner spinner = new Spinner(add_post_everything.this);
+                                    ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(add_post_everything.this, android.R.layout.simple_spinner_dropdown_item, getResources().getStringArray(R.array.slc_n_p_y_na_question));
+                                    spinner.setAdapter(spinnerArrayAdapter);
+
+                                    spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                        @Override
+                                        public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                                            txt_jawaban.setText(adapterView.getItemAtPosition(i).toString());
+
+                                            double total_score = 0;
+                                            for(int x = 0; x < list_edit_text_jawaban_score.size();x++){
+                                                for(int y = 0; y < list_edit_text_jawaban_score.get(x).length(); y++){
+                                                    try {
+                                                        JSONObject objChild = list_edit_text_jawaban_score.get(x).getJSONObject(y);
+                                                        if(list_edit_text_jawaban.get(x).getText().toString().equals(objChild.getString("jawaban"))){
+                                                            total_score += Double.valueOf(objChild.getString("score"));
+                                                        }
+                                                    } catch (JSONException e) {
+                                                        e.printStackTrace();
+                                                    }
+                                                }
+                                            }
+                                            list_edit_text_jawaban.get(id_summary_score).setText(String.valueOf(total_score));
+                                        }
+
+                                        @Override
+                                        public void onNothingSelected(AdapterView<?> adapterView) {
+
+                                        }
+                                    });
+
+                                    row2.addView(spinner, params3);
+                                    table_pertanyaan.addView(row2);
+                                    list_edit_text_jawaban.add(txt_jawaban);
+                                    list_edit_text_jawaban_score.add(jsonSub);
                                 }
                             }
                             nomor++;

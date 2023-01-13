@@ -3,6 +3,7 @@ package com.project45.ilovepadma.timeline;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
@@ -43,7 +44,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class detail_post_everything extends AppCompatActivity {
 
     String id_user, username,bm,email,jabatan,company_create="",id_company="",nama_company="",act="",content_timeline="",photo_timeline="",id_timeline="",
-            date_post="",nama_user="",foto_user="",jml_komen="",jml_like="";
+            date_post="",nama_user="",foto_user="",jml_komen="",jml_like="", judul_pertanyaan="";
 
     public static final String TAG_ID = "id";
     public static final String TAG_USERNAME = "username";
@@ -233,7 +234,23 @@ public class detail_post_everything extends AppCompatActivity {
                             params3.span = 2;
 
                             for(int x = 0;x < jObj.getJSONArray("data_pertanyaan").length();x++){
-                                if((jObj.getString("jenis_post").equals("soe_rr_kunjungan") || jObj.getString("jenis_post").equals("soe_mv_delivery")) && jObj.getJSONArray("data_pertanyaan").getJSONObject(x).getString("tipe_pertanyaan").equals("spinner")){
+                                if(jObj.getString("jenis_post").equals("ops_gwp") && !jObj.getJSONArray("data_pertanyaan").getJSONObject(x).getString("judul_pertanyaan").equals(judul_pertanyaan) && !jObj.getJSONArray("data_pertanyaan").getJSONObject(x).getString("judul_pertanyaan").equals("")){
+                                    judul_pertanyaan = jObj.getJSONArray("data_pertanyaan").getJSONObject(x).getString("judul_pertanyaan");
+                                    TableRow row_judul = new TableRow(detail_post_everything.this);
+                                    row_judul.setBackgroundColor(Color.WHITE);
+
+                                    TextView txt_judul_pertanyaan = new TextView(detail_post_everything.this);
+                                    txt_judul_pertanyaan.setText(jObj.getJSONArray("data_pertanyaan").getJSONObject(x).getString("judul_pertanyaan"));
+                                    txt_judul_pertanyaan.setBackgroundResource(R.color.orange_800);
+                                    txt_judul_pertanyaan.setTextColor(Color.WHITE);
+                                    txt_judul_pertanyaan.setTextSize(15);
+                                    txt_judul_pertanyaan.setGravity(Gravity.LEFT);
+                                    txt_judul_pertanyaan.setTypeface(null, Typeface.BOLD);
+                                    row_judul.addView(txt_judul_pertanyaan, params3);
+                                    table_pertanyaan.addView(row_judul);
+                                }
+
+                                if((jObj.getString("jenis_post").equals("soe_rr_kunjungan") || jObj.getString("jenis_post").equals("soe_mv_delivery") || jObj.getString("jenis_post").equals("ops_gwp")) && jObj.getJSONArray("data_pertanyaan").getJSONObject(x).getString("tipe_pertanyaan").equals("spinner")){
                                     TableRow row2 = new TableRow(detail_post_everything.this);
                                     row2.setBackgroundColor(getResources().getColor(R.color.white));
 
@@ -261,6 +278,31 @@ public class detail_post_everything extends AppCompatActivity {
                                     // add to row
                                     row3.addView(txt_jawaban2, params3);
                                     table_pertanyaan.addView(row3);
+                                }
+                                else if((jObj.getString("jenis_post").equals("ops_gwp")) && jObj.getJSONArray("data_pertanyaan").getJSONObject(x).getString("keterangan_system").equals("sum_score_akhir")){
+                                    TableRow row2 = new TableRow(detail_post_everything.this);
+                                    row2.setBackgroundColor(Color.WHITE);
+
+                                    TextView txt_pertanyaan2 = new TextView(detail_post_everything.this);
+                                    txt_pertanyaan2.setText(jObj.getJSONArray("data_pertanyaan").getJSONObject(x).getString("pertanyaan"));
+                                    txt_pertanyaan2.setBackgroundResource(R.color.orange_800);
+                                    txt_pertanyaan2.setTextColor(Color.WHITE);
+                                    txt_pertanyaan2.setTextSize(15);
+                                    txt_pertanyaan2.setGravity(Gravity.LEFT);
+                                    txt_pertanyaan2.setTypeface(null, Typeface.BOLD);
+                                    // add to row
+                                    row2.addView(txt_pertanyaan2, params2);
+
+                                    final TextView txt_jawaban2 = new TextView(detail_post_everything.this);
+                                    txt_jawaban2.setText(jObj.getJSONArray("data_pertanyaan").getJSONObject(x).getString("jawaban"));
+                                    txt_jawaban2.setBackgroundResource(R.color.orange_800);
+                                    txt_jawaban2.setTextColor(Color.WHITE);
+                                    txt_jawaban2.setTextSize(15);
+                                    txt_jawaban2.setGravity(Gravity.LEFT);
+                                    txt_jawaban2.setTypeface(null, Typeface.BOLD);
+                                    // add to row
+                                    row2.addView(txt_jawaban2, params3);
+                                    table_pertanyaan.addView(row2);
                                 }
                                 else {
                                     TableRow row = new TableRow(detail_post_everything.this);

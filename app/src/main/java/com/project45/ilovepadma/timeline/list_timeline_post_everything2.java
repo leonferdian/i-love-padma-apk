@@ -503,6 +503,7 @@ public class list_timeline_post_everything2 extends AppCompatActivity implements
                                 pertanyaan.setKategori(data_pertanyaan.getString("kategori"));
                                 pertanyaan.setJenis_post(data_pertanyaan.getString("jenis_post"));
                                 pertanyaan.setId_timeline_pertanyaan(data_pertanyaan.getString("id_timeline_pertanyaan"));
+                                pertanyaan.setJudulPertanyaan(data_pertanyaan.getString("judul_pertanyaan"));
                                 pertanyaan.setPertanyaan(data_pertanyaan.getString("pertanyaan"));
                                 pertanyaan.setTipe_pertanyaan(data_pertanyaan.getString("tipe_pertanyaan"));
                                 pertanyaan.setKeterangan_system(data_pertanyaan.getString("keterangan_system"));
@@ -614,7 +615,10 @@ public class list_timeline_post_everything2 extends AppCompatActivity implements
                                 pertanyaan.setKategori(data_pertanyaan.getString("kategori"));
                                 pertanyaan.setJenis_post(data_pertanyaan.getString("jenis_post"));
                                 pertanyaan.setId_timeline_pertanyaan(data_pertanyaan.getString("id_timeline_pertanyaan"));
+                                pertanyaan.setJudulPertanyaan(data_pertanyaan.getString("judul_pertanyaan"));
                                 pertanyaan.setPertanyaan(data_pertanyaan.getString("pertanyaan"));
+                                pertanyaan.setTipe_pertanyaan(data_pertanyaan.getString("tipe_pertanyaan"));
+                                pertanyaan.setKeterangan_system(data_pertanyaan.getString("keterangan_system"));
                                 pertanyaan.setJawaban(data_pertanyaan.getString("jawaban"));
 
                                 item.setPertanyaan_post_everything(pertanyaan);
@@ -806,12 +810,12 @@ public class list_timeline_post_everything2 extends AppCompatActivity implements
                 //Toast.makeText(list_timeline_post_everything2.this, "del Clicked.. "+berita.getnmr_jv(), Toast.LENGTH_SHORT).show();bottomSheetDialog.dismiss();
                 bottomSheetDialog.dismiss();
                 if(berita.getjenis_file().equals("non_video")) {
-//                    final String PARAM_DATA = "Data";
-//                    Intent intent = new Intent(list_timeline_post_everything2.this, edit_post_everything.class);
-//                    intent.putExtra("act", "detail_pe");
-//                    intent.putExtra(PARAM_DATA, berita);
-//                    startActivityForResult(intent, 3);
-                    Toast.makeText(list_timeline_post_everything2.this, "Edit Post Everything belum bisa dilakukan", Toast.LENGTH_LONG).show();
+                    final String PARAM_DATA = "Data";
+                    Intent intent = new Intent(list_timeline_post_everything2.this, edit_post_everything.class);
+                    intent.putExtra("act", "detail_pe");
+                    intent.putExtra(PARAM_DATA, berita);
+                    startActivityForResult(intent, 3);
+//                    Toast.makeText(list_timeline_post_everything2.this, "Edit Post Everything belum bisa dilakukan", Toast.LENGTH_LONG).show();
                 }
                 else{
                     Toast.makeText(list_timeline_post_everything2.this, "Post dengan video tidak bisa diedit ", Toast.LENGTH_SHORT).show();

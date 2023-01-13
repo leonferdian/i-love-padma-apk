@@ -50,7 +50,7 @@ public class adapter_list_timeline_pe2 extends BaseAdapter {
     private int[] jml_klik1;
     private int[] jml_klik2;
 
-    private String id_user;
+    private String id_user, judul_pertanyaan = "";
 
     public adapter_list_timeline_pe2(Activity activity, List<Data_join_visit> items) {
         //super(context, 0, new ArrayList<Data_customer>());
@@ -189,7 +189,23 @@ public class adapter_list_timeline_pe2 extends BaseAdapter {
             holder.table_pertanyaan.addView(row);
 
             for(int x = 0;x < data.getPertanyaan_post_everything().size();x++){
-                if((data.getjenis_post().equals("soe_rr_kunjungan") || data.getjenis_post().equals("soe_mv_delivery")) && data.getPertanyaan_post_everything().get(x).getTipe_pertanyaan().equals("spinner")){
+                if(data.getjenis_post().equals("ops_gwp") && !data.getPertanyaan_post_everything().get(x).getJudulPertanyaan().equals(judul_pertanyaan) && !data.getPertanyaan_post_everything().get(x).getJudulPertanyaan().equals("")){
+                    judul_pertanyaan = data.getPertanyaan_post_everything().get(x).getJudulPertanyaan();
+                    TableRow row_judul = new TableRow(context);
+                    row_judul.setBackgroundColor(Color.WHITE);
+
+                    TextView txt_judul_pertanyaan = new TextView(context);
+                    txt_judul_pertanyaan.setText(data.getPertanyaan_post_everything().get(x).getJudulPertanyaan());
+                    txt_judul_pertanyaan.setBackgroundResource(R.color.orange_800);
+                    txt_judul_pertanyaan.setTextColor(Color.WHITE);
+                    txt_judul_pertanyaan.setTextSize(15);
+                    txt_judul_pertanyaan.setGravity(Gravity.LEFT);
+                    txt_judul_pertanyaan.setTypeface(null, Typeface.BOLD);
+                    row_judul.addView(txt_judul_pertanyaan, params3);
+                    holder.table_pertanyaan.addView(row_judul);
+                }
+
+                if((data.getjenis_post().equals("soe_rr_kunjungan") || data.getjenis_post().equals("soe_mv_delivery") || data.getjenis_post().equals("ops_gwp")) && data.getPertanyaan_post_everything().get(x).getTipe_pertanyaan().equals("spinner")){
                     TableRow row2 = new TableRow(context);
                     row2.setBackgroundColor(Color.WHITE);
 
@@ -217,6 +233,31 @@ public class adapter_list_timeline_pe2 extends BaseAdapter {
                     // add to row
                     row3.addView(txt_jawaban2, params3);
                     holder.table_pertanyaan.addView(row3);
+                }
+                else if((data.getjenis_post().equals("ops_gwp")) && data.getPertanyaan_post_everything().get(x).getKeterangan_system().equals("sum_score_akhir")){
+                    TableRow row2 = new TableRow(context);
+                    row2.setBackgroundColor(Color.WHITE);
+
+                    TextView txt_pertanyaan2 = new TextView(context);
+                    txt_pertanyaan2.setText(data.getPertanyaan_post_everything().get(x).getPertanyaan());
+                    txt_pertanyaan2.setBackgroundResource(R.color.orange_800);
+                    txt_pertanyaan2.setTextColor(Color.WHITE);
+                    txt_pertanyaan2.setTextSize(15);
+                    txt_pertanyaan2.setGravity(Gravity.LEFT);
+                    txt_pertanyaan2.setTypeface(null, Typeface.BOLD);
+                    // add to row
+                    row2.addView(txt_pertanyaan2, params2);
+
+                    final TextView txt_jawaban2 = new TextView(context);
+                    txt_jawaban2.setText(data.getPertanyaan_post_everything().get(x).getJawaban());
+                    txt_jawaban2.setBackgroundResource(R.color.orange_800);
+                    txt_jawaban2.setTextColor(Color.WHITE);
+                    txt_jawaban2.setTextSize(15);
+                    txt_jawaban2.setGravity(Gravity.LEFT);
+                    txt_jawaban2.setTypeface(null, Typeface.BOLD);
+                    // add to row
+                    row2.addView(txt_jawaban2, params3);
+                    holder.table_pertanyaan.addView(row2);
                 }
                 else {
                     TableRow row2 = new TableRow(context);
