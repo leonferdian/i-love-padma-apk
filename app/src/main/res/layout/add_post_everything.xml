@@ -103,6 +103,52 @@
                 android:elevation="60dp"
                 android:orientation="vertical">
 
+                <TextView android:text="Jenis Post :"
+                    android:layout_marginTop="5dp"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content" />
+
+                <Spinner
+                    android:id="@+id/spinner_jenis_post"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:drawSelectorOnTop="true"
+                    android:entries="@array/slc_post_eveything"
+                    android:minHeight="48dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/id_layout_pertanyaan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:elevation="60dp"
+                android:orientation="vertical">
+
+                <TableLayout
+                    android:id="@+id/table_pertanyaan"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginTop="5dp"
+                    android:gravity="top"
+                    android:stretchColumns="1,2">
+                </TableLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/id_layout_caption_media_post_everything"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:elevation="60dp"
+                android:orientation="vertical"
+                android:visibility="gone">
+
                 <EditText
                     android:id="@+id/txt_post"
                     android:layout_width="match_parent"

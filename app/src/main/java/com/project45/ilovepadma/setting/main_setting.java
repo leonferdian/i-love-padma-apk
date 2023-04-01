@@ -17,7 +17,7 @@ import com.project45.ilovepadma.global.Api;
 public class main_setting extends AppCompatActivity {
 
     String id_user, username,bm,email,jabatan,kategori_user;
-    CardView cv_company,cv_web_user,cv_karyawan,cv_supervisi,cv_reservasi_meeting,linimasa;
+    CardView cv_company,cv_web_user,cv_karyawan,cv_supervisi,cv_reservasi_meeting;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_setting);
@@ -44,7 +44,6 @@ public class main_setting extends AppCompatActivity {
         cv_karyawan = findViewById(R.id.cv_karyawan);
         cv_supervisi = findViewById(R.id.cv_supervisi);
         cv_reservasi_meeting = findViewById(R.id.cv_reservasi_meeting);
-        linimasa = findViewById(R.id.linimasa);
 
         cv_company.setOnClickListener(new View.OnClickListener() {
 
@@ -97,14 +96,6 @@ public class main_setting extends AppCompatActivity {
                 // update login session ke FALSE dan mengosongkan nilai id dan username
                 //Toast.makeText(getApplicationContext(), "Setting tes ", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(getApplicationContext(), reservasi_meeting.class);
-                startActivity(intent);
-            }
-        });
-
-        linimasa.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), linimasa.class);
                 startActivity(intent);
             }
         });

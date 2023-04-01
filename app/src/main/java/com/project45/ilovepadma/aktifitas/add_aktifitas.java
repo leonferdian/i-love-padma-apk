@@ -1,26 +1,18 @@
 package com.project45.ilovepadma.aktifitas;
 
-import android.Manifest;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
-import android.location.Address;
-import android.location.Geocoder;
-import android.location.Location;
-import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.app.ActivityCompat;
-
 import android.text.Html;
 import android.util.Log;
 import android.view.Gravity;
@@ -49,14 +41,12 @@ import com.project45.ilovepadma.R;
 import com.project45.ilovepadma.app.AppController;
 import com.project45.ilovepadma.data.Data_work_report;
 import com.project45.ilovepadma.global.Api;
-import com.project45.ilovepadma.timeline.add_post_everything;
 import com.project45.ilovepadma.util.Server;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -158,6 +148,9 @@ public class add_aktifitas extends AppCompatActivity {
                 //Toast.makeText(getApplicationContext(), "tes hr "+hari, Toast.LENGTH_LONG).show();
             }
         });
+
+
+
     }
 
     public boolean onSupportNavigateUp(){
@@ -469,36 +462,11 @@ public class add_aktifitas extends AppCompatActivity {
     private void postAktifitas(){
         final String tanggal = txt_tgl_aktifitas.getText().toString();
 
-        final ProgressDialog progressDialog = new ProgressDialog(add_aktifitas.this,R.style.AppTheme_Dark_Dialog);
+        final ProgressDialog progressDialog = new ProgressDialog(add_aktifitas.this,
+                R.style.AppTheme_Dark_Dialog);
         progressDialog.setIndeterminate(true);
         progressDialog.setMessage("Loading ...");
         progressDialog.show();
-
-        // Get the device's current location and address
-        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
-        }
-
-        Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-        double latitude = location.getLatitude();
-        double longitude = location.getLongitude();
-
-        Geocoder geocoder = new Geocoder(add_aktifitas.this, Locale.getDefault());
-        List<Address> addresses = null;
-        try {
-            addresses = geocoder.getFromLocation(latitude, longitude, 1);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        String address = addresses.get(0).getAddressLine(0);
 
         //proses save to database using api
         StringRequest strReq = new StringRequest(Request.Method.POST, url_post_aktifitas, new Response.Listener<String>() {
@@ -558,9 +526,6 @@ public class add_aktifitas extends AppCompatActivity {
                 params.put("tanggal", tanggal);
                 params.put("id_company", id_company);
                 params.put("create_by", id_user);
-                params.put("latitude", String.valueOf(latitude));
-                params.put("longitude", String.valueOf(longitude));
-                params.put("address", address);
 
                 return params;
             }

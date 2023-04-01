@@ -91,7 +91,7 @@ public class add_outlet_semesta extends AppCompatActivity {
 
     private static final String TAG = add_deskripsi.class.getSimpleName();
 
-    private static String url_post_outlet     = Server.URL + "outlet/post_add_outlet_semesta";
+    private static String url_post_outlet = Server.URL + "outlet/post_add_outlet_semesta";
     public static String url_image_upload = Server.URL2 +"image_upload/upload_foto_outlet.php";
 
     ImageView img_outlet;

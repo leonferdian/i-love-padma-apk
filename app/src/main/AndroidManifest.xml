@@ -3,10 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.project45.ilovepadma">
 
-    <meta-data
-        android:name="com.google.android.geo.API_KEY"
-        android:value="@string/google_maps_key" />
-
     <uses-feature
         android:name="android.hardware.camera"
         android:required="false" />
@@ -45,8 +41,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ILovePadma"
         android:usesCleartextTraffic="true"
-        android:versionCode="21"
-        android:versionName="ILV1.21">
+        android:versionCode="26"
+        android:versionName="ILV1.26">
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" />
@@ -1042,7 +1038,7 @@
         </activity>
         <activity
             android:name=".timeline.uploadVideo"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".timeline.list_timeline_by_share"
             android:exported="true"
@@ -1093,6 +1089,96 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".outlet.list_outlet2"
+            android:exported="true"
+            android:label="Outlet Semesta"
+            android:parentActivityName=".MainActivity3"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.project45.ilovepadma.MainActivity3" />
+        </activity>
+        <activity
+            android:name=".outlet.show_coordinat_outlet_semesta"
+            android:exported="true"
+            android:label="Peta Outlet Semesta"
+            android:parentActivityName=".outlet.list_outlet2"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.project45.ilovepadma.outlet.list_outlet2" />
+        </activity>
+        <activity
+            android:name=".outlet.add_outlet_semesta2"
+            android:exported="true"
+            android:label="Add Outlet Semesta"
+            android:parentActivityName=".outlet.list_outlet2"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.project45.ilovepadma.outlet.list_outlet2" />
+        </activity>
+        <activity
+            android:name=".outlet.add_listed_outlet"
+            android:exported="true"
+            android:label="Add Listed Outlet"
+            android:parentActivityName=".outlet.add_outlet_semesta2"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.project45.ilovepadma.outlet.add_outlet_semesta2" />
+        </activity>
+        <activity
+            android:name=".outlet.list_listed_outlet"
+            android:exported="true"
+            android:label="List Listed Outlet"
+            android:parentActivityName=".outlet.add_outlet_semesta2"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.project45.ilovepadma.outlet.add_outlet_semesta2" />
+        </activity>
+        <activity
+            android:name=".outlet.add_profiling_outlet"
+            android:exported="true"
+            android:label="Add Profiling Outlet"
+            android:parentActivityName=".outlet.list_listed_outlet"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.project45.ilovepadma.outlet.list_listed_outlet" />
+        </activity>
+        <activity
+            android:name=".outlet.list_profiling_reject_outlet"
+            android:exported="true"
+            android:label="List Profiling Reject Outlet"
+            android:parentActivityName=".outlet.add_outlet_semesta2"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.project45.ilovepadma.outlet.add_outlet_semesta2" />
+        </activity>
+        <activity
+            android:name=".outlet.list_being_dealing_outlet"
+            android:exported="true"
+            android:label="List Dealing Outlet"
+            android:parentActivityName=".outlet.add_outlet_semesta2"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.project45.ilovepadma.outlet.add_outlet_semesta2" />
+        </activity>
+        <activity
+            android:name=".outlet.list_result_outlet"
+            android:exported="true"
+            android:label="List Approved Outlet"
+            android:parentActivityName=".outlet.add_outlet_semesta2"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.project45.ilovepadma.outlet.add_outlet_semesta2" />
+        </activity>
+        <activity
             android:name=".outlet.list_outlet"
             android:exported="true"
             android:label="Outlet Semesta"
@@ -1125,7 +1211,7 @@
         <activity
             android:name=".outlet.detail_outlet_semesta"
             android:exported="true"
-            android:label="Det Outlet Semesta"
+            android:label="Detail Outlet Semesta"
             android:parentActivityName=".outlet.list_outlet"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
@@ -1136,16 +1222,6 @@
             android:name=".setting.reservasi_meeting"
             android:exported="true"
             android:label="Reservasi Meeting"
-            android:parentActivityName=".setting.main_setting"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.project45.ilovepadma.setting.main_setting" />
-        </activity>
-        <activity
-            android:name=".setting.linimasa"
-            android:exported="true"
-            android:label="Linimasa"
             android:parentActivityName=".setting.main_setting"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data

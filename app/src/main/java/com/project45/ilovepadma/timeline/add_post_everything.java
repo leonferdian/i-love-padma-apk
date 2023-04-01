@@ -14,10 +14,6 @@ import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Typeface;
-import android.location.Address;
-import android.location.Geocoder;
-import android.location.Location;
-import android.location.LocationManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -25,14 +21,22 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.StrictMode;
 import android.provider.MediaStore;
+import android.text.InputType;
 import android.util.Base64;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.Spinner;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,6 +44,8 @@ import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.mikhaellopez.circularimageview.CircularImageView;
 import com.project45.ilovepadma.R;
@@ -48,6 +54,7 @@ import com.project45.ilovepadma.adapter.GPSTracker;
 import com.project45.ilovepadma.app.AppController;
 import com.project45.ilovepadma.global.Api;
 import com.project45.ilovepadma.global.Util;
+import com.project45.ilovepadma.outlet.add_profiling_outlet;
 import com.project45.ilovepadma.setting.add_company;
 import com.project45.ilovepadma.util.Server;
 import com.squareup.picasso.Picasso;
@@ -62,6 +69,7 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -73,6 +81,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -86,48 +96,47 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 public class add_post_everything extends AppCompatActivity {
-
-    String id_user, username,bm,email,jabatan,company_create="",id_company="",nama_company="",act="",content_timeline="",photo_timeline="";
-
-    public static final String TAG_ID = "id";
-    public static final String TAG_USERNAME = "username";
-    public static final String TAG_EMAIL = "email";
-    private static final String TAG = add_post_everything.class.getSimpleName();
-    private static final String TAG_SUCCESS = "success";
-    private static final String TAG_MESSAGE = "message";
-
-    private static String url_post_timeline    = Server.URL + "timeline/post_timeline";
-    public static String url_image_upload = Server.URL2 +"image_upload/upload_foto_timeline.php";
-    int success;
-
-    EditText txt_post;
-    TextView txt_nama_user;
-    CircularImageView image_user_post;
-    AppCompatButton btn_submit;
-    ImageView img_post;
-    Button btn_camera_foto,btn_galery_foto,btn_camera_video,btn_galery_video;
-
-    GPSTracker gps;
-    double latitude,longitude;
-    String alamat="";
-    private Matrix matrix;
-    private Bitmap bitmapLast;
-
     //private static final int CAMERA_REQUEST = 1888;
-    private Bitmap bitmap;
-    private String fileImagePath,image_name = "",url_foto_stok="",pathFoto;
-    private File destFile;
-    Uri imageCaptureUri,mCropImageUri;
-
+    private static final String TAG = add_post_everything.class.getSimpleName();
+    private static final String TAG_MESSAGE = "message";
+    private static final String TAG_SUCCESS = "success";
     public static final int CAMERA_REQUEST = 100;
     public static final int STORAGE_REQUEST = 101;
-    String cameraPermission[];
-    String storagePermission[];
-
-    int RESULT_LOAD_IMG = 9;
-
+    public static final String TAG_ID = "id";
+    public static final String TAG_EMAIL = "email";
+    public static final String TAG_USERNAME = "username";
+    private static String url_post_timeline    = Server.URL + "timeline/post_timeline";
+    private static String url_post_timeline2    = Server.URL + "timeline/post_timeline2";
+    private static String url_post_timeline2_jawaban_detail    = Server.URL + "timeline/post_timeline2_jawaban_detail";
+    private static String url_get_pertanyaan_timeline   = Server.URL + "timeline/get_pertanyaan_timeline/";
+    public static String url_image_upload = Server.URL2 +"image_upload/upload_foto_timeline.php";
+    private Bitmap bitmap;
+    private Bitmap bitmapLast;
+    private Calendar calendar;
+    private File destFile;
+    private Matrix matrix;
+    private SimpleDateFormat dateFormat;
+    private String date, jenis_post,fileImagePath,image_name = "",url_foto_stok="",pathFoto;
+    private String[] jawaban_pertanyaan;
     android.app.AlertDialog.Builder alertDialogBuilder;
     android.app.AlertDialog alertDialog;
+    AppCompatButton btn_submit;
+    CircularImageView image_user_post;
+    GPSTracker gps;
+    LinearLayout id_layout_caption_media_post_everything,id_layout_pertanyaan;
+    TableLayout table_pertanyaan;
+    Button btn_camera_foto,btn_galery_foto,btn_camera_video,btn_galery_video;
+    EditText txt_post;
+    ImageView img_post;
+    Spinner spinner_jenis_post;
+    TextView txt_nama_user;
+    ArrayList<HashMap<String,Object>> dataDaftarPertanyaan = new ArrayList<HashMap<String,Object>>();
+    double latitude,longitude;
+    int success, RESULT_LOAD_IMG = 9, id_summary_score = 0;
+    List<EditText> list_edit_text_jawaban = new ArrayList<EditText>();
+    List<JSONArray> list_edit_text_jawaban_score = new ArrayList<JSONArray>();
+    String id_user, username,bm,email,jabatan,company_create="",id_company="",nama_company="",act="",content_timeline="",photo_timeline="",alamat="", cameraPermission[], storagePermission[], judul_pertanyaan;
+    Uri imageCaptureUri,mCropImageUri;
 
     /*  for upload video from camera*/
     private static final int CAMERA_CAPTURE_VIDEO_REQUEST_CODE = 200;
@@ -165,6 +174,11 @@ public class add_post_everything extends AppCompatActivity {
         btn_camera_video = findViewById(R.id.btn_camera_video);
         btn_galery_video = findViewById(R.id.btn_galery_video);
 
+        spinner_jenis_post = findViewById(R.id.spinner_jenis_post);
+        id_layout_caption_media_post_everything = findViewById(R.id.id_layout_caption_media_post_everything);
+        id_layout_pertanyaan = findViewById(R.id.id_layout_pertanyaan);
+        table_pertanyaan = findViewById(R.id.table_pertanyaan);
+
         txt_nama_user.setText(username);
 
         get_detail_user(id_user);
@@ -180,6 +194,105 @@ public class add_post_everything extends AppCompatActivity {
                 alamat ="Address Undetected";
             }
         }
+
+        spinner_jenis_post.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                Object item = adapterView.getItemAtPosition(i);
+                if (item != null) {
+//                    Toast.makeText(getApplicationContext(), "jenis Post : "+String.valueOf(item.toString()), Toast.LENGTH_LONG).show();
+                    clean_pertanyaan();
+                    if(item.equals("Briefing Pagi")){
+                        jenis_post = "briefing_pagi";
+                        get_pertanyaan("briefing_pagi");
+                        id_layout_caption_media_post_everything.setVisibility(View.VISIBLE);
+                    }
+                    else if(item.equals("Briefing Sore")){
+                        jenis_post = "briefing_sore";
+                        get_pertanyaan("briefing_sore");
+                        id_layout_caption_media_post_everything.setVisibility(View.VISIBLE);
+                    }
+                    else if(item.equals("Visit Outlet (outlet RO)")){
+                        jenis_post = "visit_outlet";
+                        get_pertanyaan("visit_outlet");
+                        id_layout_caption_media_post_everything.setVisibility(View.VISIBLE);
+                    }
+                    else if(item.equals("Meeting")){
+                        jenis_post = "meeting";
+                        get_pertanyaan("meeting");
+                        id_layout_caption_media_post_everything.setVisibility(View.VISIBLE);
+                    }
+                    else if(item.equals("Sidak / Audit")){
+                        jenis_post = "sidak_audit";
+                        get_pertanyaan("sidak_audit");
+                        id_layout_caption_media_post_everything.setVisibility(View.VISIBLE);
+                    }
+                    else if(item.equals("Prospecting & Dealing Outlet")){
+                        jenis_post = "prospecting_dealing_outlet";
+                        get_pertanyaan("prospecting_dealing_outlet");
+                        id_layout_caption_media_post_everything.setVisibility(View.VISIBLE);
+                    }
+                    else if(item.equals("Branding")){
+                        jenis_post = "branding";
+                        get_pertanyaan("branding");
+                        id_layout_caption_media_post_everything.setVisibility(View.VISIBLE);
+                    }
+                    else if(item.equals("Event")){
+                        jenis_post = "event";
+                        get_pertanyaan("event");
+                        id_layout_caption_media_post_everything.setVisibility(View.VISIBLE);
+                    }
+                    else if(item.equals("OPS - Loading")){
+                        jenis_post = "ops_loading";
+                        get_pertanyaan("ops_loading");
+                        id_layout_caption_media_post_everything.setVisibility(View.VISIBLE);
+                    }
+                    else if(item.equals("OPS - Unloading")){
+                        jenis_post = "ops_unloading";
+                        get_pertanyaan("ops_unloading");
+                        id_layout_caption_media_post_everything.setVisibility(View.VISIBLE);
+                    }
+                    else if(item.equals("OPS - Badstock")){
+                        jenis_post = "ops_badstock";
+                        get_pertanyaan("ops_badstock");
+                        id_layout_caption_media_post_everything.setVisibility(View.VISIBLE);
+                    }
+                    else if(item.equals("OPS - GWP")){
+                        jenis_post = "ops_gwp";
+                        get_pertanyaan("ops_gwp");
+                        id_layout_caption_media_post_everything.setVisibility(View.VISIBLE);
+                    }
+                    else if(item.equals("AMS - Kendaraan")){
+                        jenis_post = "ams_kendaraan";
+                        get_pertanyaan("ams_kendaraan");
+                        id_layout_caption_media_post_everything.setVisibility(View.VISIBLE);
+                    }
+                    else if(item.equals("SOE - RR Kunjungan")){
+                        jenis_post = "soe_rr_kunjungan";
+                        get_pertanyaan("soe_rr_kunjungan");
+                        id_layout_caption_media_post_everything.setVisibility(View.VISIBLE);
+                    }
+                    else if(item.equals("SOE - MV Delivery")){
+                        jenis_post = "soe_mv_delivery";
+                        get_pertanyaan("soe_mv_delivery");
+                        id_layout_caption_media_post_everything.setVisibility(View.VISIBLE);
+                    }
+                    else if(item.equals("Other")){
+                        jenis_post = "other";
+                        clean_pertanyaan();
+                        id_layout_caption_media_post_everything.setVisibility(View.VISIBLE);
+                    }
+                    else {
+                        id_layout_caption_media_post_everything.setVisibility(View.GONE);
+                    }
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
 
         btn_camera_foto.setOnClickListener(new View.OnClickListener() {
 
@@ -309,9 +422,15 @@ public class add_post_everything extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-                // update login session ke FALSE dan mengosongkan nilai id dan username
-                proc_save_posting();
+                jawaban_pertanyaan = new String[1000];
+                int nmr_sub = 0;
+                for (EditText list_edit_text : list_edit_text_jawaban) {
+                    jawaban_pertanyaan[nmr_sub] = list_edit_text.getText().toString();
+                    nmr_sub++;
+                }
 
+                Toast.makeText(getApplicationContext(), "Save Post Everything", Toast.LENGTH_LONG).show();
+                proc_save_posting();
             }
         });
 
@@ -400,8 +519,7 @@ public class add_post_everything extends AppCompatActivity {
         AppController.getInstance(this).addToRequestQueue(strReq);
     }
 
-    private void pilihImageByCamera()
-    {
+    private void pilihImageByCamera() {
         String IMAGE_DIRECTORY = "ILV";
         File file =  new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
                 + "/" + IMAGE_DIRECTORY);
@@ -544,8 +662,7 @@ public class add_post_everything extends AppCompatActivity {
         //CropImage.startPickImageActivity(this);
     }
 
-    public String getPath(Uri uri)
-    {
+    public String getPath(Uri uri) {
         String[] projection = { MediaStore.Images.Media.DATA };
         Cursor cursor = getContentResolver().query(uri, projection, null, null, null);
         if (cursor == null) return null;
@@ -777,110 +894,108 @@ public class add_post_everything extends AppCompatActivity {
         final String isi_timeline = txt_post.getText().toString();
         final String kategori = "post_everything";
 
-        // Get the device's current location and address
-        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
+        int jumlah_pertanyaan = dataDaftarPertanyaan.size();
+        boolean jawaban_terisi = true;
+        for (int x = 0; x < jumlah_pertanyaan;x++){
+            if(jawaban_pertanyaan[x] != null){
+                continue;
+            }
+            else {
+                jawaban_terisi = false;
+            }
         }
 
-        Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-        double latitude = location.getLatitude();
-        double longitude = location.getLongitude();
+        if(!jawaban_terisi){
+            Toast.makeText(getApplicationContext(), "Semua Pertanyaan harus diisi ", Toast.LENGTH_LONG).show();
+            progressDialog.dismiss();
+        } else {
+            if(isi_timeline.equals("")){
+                Toast.makeText(getApplicationContext(), "Caption harus diisi ", Toast.LENGTH_LONG).show();
+                progressDialog.dismiss();
+            }
+            else if(jenis_post.equals("ams_kendaraan") && image_name.equals("")){
+                Toast.makeText(getApplicationContext(), "AMS Kendaraan WAJIB menyertakan FOTO!", Toast.LENGTH_LONG).show();
+                progressDialog.dismiss();
+            }
+            else {
+                StringRequest strReq = new StringRequest(Request.Method.POST, url_post_timeline2, new Response.Listener<String>() {
 
-        Geocoder geocoder = new Geocoder(add_post_everything.this, Locale.getDefault());
-        List<Address> addresses = null;
-        try {
-            addresses = geocoder.getFromLocation(latitude, longitude, 1);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        String address = addresses.get(0).getAddressLine(0);
+                    @Override
+                    public void onResponse(String response) {
+                        Log.e(TAG, "Response: " + response.toString());
 
-        if(isi_timeline.equals("")){
-            Toast.makeText(getApplicationContext(), "Caption harus diisi ", Toast.LENGTH_LONG).show();
-        }
-        else {
-            StringRequest strReq = new StringRequest(Request.Method.POST, url_post_timeline, new Response.Listener<String>() {
+                        try {
+                            JSONObject jObj = new JSONObject(response);
+                            success = jObj.getInt(TAG_SUCCESS);
 
-                @Override
-                public void onResponse(String response) {
-                    Log.e(TAG, "Response: " + response.toString());
+                            // Check for error node in json
+                            if (success == 1) {
+                                Log.d("Save Post Everything!", jObj.toString());
 
-                    try {
-                        JSONObject jObj = new JSONObject(response);
-                        success = jObj.getInt(TAG_SUCCESS);
+                                if(!jenis_post.equals("other")){
+                                    String id_timeline_jawaban = jObj.getString("id_timeline_jawaban");
+                                    proc_save_pertanyaan(progressDialog,id_timeline_jawaban);
+                                }
 
-                        // Check for error node in json
-                        if (success == 1) {
+                                Toast.makeText(getApplicationContext(), jObj.getString(TAG_MESSAGE), Toast.LENGTH_LONG).show();
+                                if (image_name.equals("")) {
+                                    //end proses
+                                    progressDialog.dismiss();
+                                    onBackPressedWithProcess();
+                                } else {
+                                    save_foto();
+                                }
 
-                            Log.d("Save", jObj.toString());
-                            Toast.makeText(getApplicationContext(), jObj.getString(TAG_MESSAGE), Toast.LENGTH_LONG).show();
-
-                            if (image_name.equals("")) {
+                            } else {
                                 //end proses
                                 progressDialog.dismiss();
-                                onBackPressedWithProcess();
-                            } else {
-                                save_foto();
                             }
-
-                        } else {
+                        } catch (JSONException e) {
+                            // JSON error
+                            e.printStackTrace();
                             //end proses
                             progressDialog.dismiss();
                         }
-                    } catch (JSONException e) {
-                        // JSON error
-                        e.printStackTrace();
+
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e(TAG, "Save Company Error: " + error.getMessage());
                         //end proses
                         progressDialog.dismiss();
+
+                    }
+                }) {
+
+                    @Override
+                    protected Map<String, String> getParams() {
+                        // Posting parameters to login url
+
+                        Map<String, String> params = new HashMap<String, String>();
+                        params.put("kategori", kategori);
+                        params.put("jenis_post", jenis_post);
+                        params.put("isi_timeline", isi_timeline);
+                        params.put("id_relasi", "");
+                        params.put("id_company", id_company);
+                        params.put("photo_timeline", image_name);
+                        params.put("create_by", id_user);
+
+                        return params;
                     }
 
-                }
-            }, new Response.ErrorListener() {
+                };
 
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    Log.e(TAG, "Save Company Error: " + error.getMessage());
-                    //end proses
-                    progressDialog.dismiss();
+                strReq.setRetryPolicy(new DefaultRetryPolicy(
+                        30000,//DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2,//30000,
+                        DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                        DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
-                }
-            }) {
+                // Adding request to request queue
+                AppController.getInstance(this).addToRequestQueue(strReq);
 
-                @Override
-                protected Map<String, String> getParams() {
-                    // Posting parameters to login url
-
-                    Map<String, String> params = new HashMap<String, String>();
-                    params.put("kategori", kategori);
-                    params.put("isi_timeline", isi_timeline);
-                    params.put("id_relasi", "");
-                    params.put("id_company", id_company);
-                    params.put("photo_timeline", image_name);
-                    params.put("create_by", id_user);
-                    params.put("latitude", String.valueOf(latitude));
-                    params.put("longitude", String.valueOf(longitude));
-                    params.put("address", address);
-
-                    return params;
-                }
-            };
-
-            strReq.setRetryPolicy(new DefaultRetryPolicy(
-                    30000,//DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2,//30000,
-                    DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-                    DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-
-            // Adding request to request queue
-            AppController.getInstance(this).addToRequestQueue(strReq);
-
+            }
         }
     }
 
@@ -956,5 +1071,458 @@ public class add_post_everything extends AppCompatActivity {
 
         }
 
+    }
+
+    private void clean_pertanyaan(){
+        table_pertanyaan.removeAllViews();
+        dataDaftarPertanyaan.clear();
+        judul_pertanyaan = "";
+    }
+
+    private void get_pertanyaan(String jenis_post) {
+        final ProgressDialog progressDialog = new ProgressDialog(add_post_everything.this,
+                R.style.AppTheme_Dark_Dialog);
+        progressDialog.setIndeterminate(true);
+        progressDialog.setMessage("Get Pertanyaan Post Everything.....");
+        progressDialog.show();
+
+        String url_server = url_get_pertanyaan_timeline + jenis_post;
+        Log.d("url_question", url_server);
+
+        // membuat request JSON
+        JsonArrayRequest jArr = new JsonArrayRequest(url_server, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                Log.d("url_question_result", response.toString());
+                if (response.length() > 0) {
+                    int nomor = 1;
+                    list_edit_text_jawaban.clear();
+
+                    // Parsing json
+                    for (int i = 0; i < response.length(); i++) {
+                        final int penomoran = nomor ;
+                        try {
+                            JSONObject obj = response.getJSONObject(i);
+                            String tipe_pertanyaan = obj.getString("tipe_pertanyaan");
+                            final HashMap<String,Object> dataPertanyaan = new HashMap<String,Object>();
+                            dataPertanyaan.put("nomor",String.valueOf(penomoran));
+                            dataPertanyaan.put("id_pertanyaan",obj.getInt("id_pertanyaan"));
+                            dataPertanyaan.put("judul_pertanyaan",obj.getString("judul_pertanyaan"));
+                            dataPertanyaan.put("pertanyaan",obj.getString("pertanyaan"));
+                            dataPertanyaan.put("keterangan_system",obj.getString("keterangan_system"));
+
+                            int nomor_pertanyaan = Integer.valueOf(obj.getString("nomor_pertanyaan"));
+                            if (dataDaftarPertanyaan.size() < nomor_pertanyaan) {
+                                dataDaftarPertanyaan.add(dataPertanyaan);
+                            }
+                            else {
+                                dataDaftarPertanyaan.set(nomor_pertanyaan-1,dataPertanyaan);
+                            }
+
+                            TableRow.LayoutParams params1 = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT);
+                            params1.setMargins(3, 1, 3, 1);
+                            params1.weight = 1;
+                            params1.span = 3;
+
+                            TableRow.LayoutParams params2 = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT);
+                            params2.setMargins(3, 1, 3, 1);
+                            params2.weight = 1;
+                            params2.span = 1;
+
+                            TableRow.LayoutParams params3 = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT);
+                            params3.setMargins(3, 1, 3, 1);
+                            params3.weight = 1;
+                            params3.span = 2;
+
+                            if(jenis_post.equals("ops_gwp") && !obj.getString("judul_pertanyaan").equals(judul_pertanyaan) && !obj.getString("judul_pertanyaan").equals("")){
+                                judul_pertanyaan = obj.getString("judul_pertanyaan");
+                                TableRow row_judul = new TableRow(add_post_everything.this);
+                                row_judul.setBackgroundColor(getResources().getColor(R.color.white));
+
+                                TextView txt_judul_pertanyaan = new TextView(add_post_everything.this);
+                                txt_judul_pertanyaan.setText(obj.getString("judul_pertanyaan"));
+                                txt_judul_pertanyaan.setBackgroundResource(R.color.orange_800);
+                                txt_judul_pertanyaan.setTextColor(getResources().getColor(R.color.white));
+                                txt_judul_pertanyaan.setTextSize(15);
+                                txt_judul_pertanyaan.setGravity(Gravity.LEFT);
+                                txt_judul_pertanyaan.setTypeface(null, Typeface.BOLD);
+                                row_judul.addView(txt_judul_pertanyaan, params3);
+                                table_pertanyaan.addView(row_judul);
+                            }
+
+                            TableRow row = new TableRow(add_post_everything.this);
+                            row.setBackgroundColor(getResources().getColor(R.color.white));
+
+                            TextView txt_pertanyaan = new TextView(add_post_everything.this);
+                            txt_pertanyaan.setText(obj.getString("pertanyaan"));
+                            if(obj.getString("keterangan_system").equals("sum_score_akhir")){
+                                txt_pertanyaan.setBackgroundResource(R.color.orange_800);
+                            } else {
+                                txt_pertanyaan.setBackgroundResource(R.color.holo_blue_light);
+                            }
+                            txt_pertanyaan.setTextColor(getResources().getColor(R.color.white));
+                            txt_pertanyaan.setTextSize(15);
+                            txt_pertanyaan.setGravity(Gravity.LEFT);
+                            txt_pertanyaan.setTypeface(null, Typeface.BOLD);
+                            // add to row
+                            if(obj.getString("keterangan_system").equals("sistem_lokasi")){
+                                row.addView(txt_pertanyaan, params3);
+                                table_pertanyaan.addView(row);
+                            }
+                            else if(obj.getString("keterangan_system").equals("no_yes_question")){
+                                row.addView(txt_pertanyaan, params3);
+                                table_pertanyaan.addView(row);
+                            }
+                            else if(obj.getString("keterangan_system").equals("ada_tidak_question")){
+                                row.addView(txt_pertanyaan, params3);
+                                table_pertanyaan.addView(row);
+                            }
+                            else if(obj.getString("keterangan_system").equals("n_p_y_na_question")){
+                                row.addView(txt_pertanyaan, params3);
+                                table_pertanyaan.addView(row);
+                            }
+                            else {
+                                row.addView(txt_pertanyaan, params2);
+                            }
+
+
+                            if (tipe_pertanyaan.equals("date")) {
+                                if(obj.getString("keterangan_system").equals("sistem_tanggal")){
+                                    calendar = Calendar.getInstance();
+                                    dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                                    date = dateFormat.format(calendar.getTime());
+
+                                    final EditText txt_jawaban = new EditText(add_post_everything.this);
+                                    txt_jawaban.setBackgroundResource(R.drawable.edittext_border);
+                                    txt_jawaban.setTextSize(15);
+                                    txt_jawaban.setGravity(Gravity.LEFT);
+                                    txt_jawaban.setSingleLine(true);
+                                    txt_jawaban.setLines(1);
+                                    txt_jawaban.setText(date);
+                                    txt_jawaban.setEnabled(false);
+                                    // add to row
+                                    row.addView(txt_jawaban, params3);
+                                    table_pertanyaan.addView(row);
+                                    list_edit_text_jawaban.add(txt_jawaban);
+                                }
+                                else {
+                                    final EditText txt_jawaban = new EditText(add_post_everything.this);
+                                    txt_jawaban.setBackgroundResource(R.drawable.edittext_border);
+                                    txt_jawaban.setTextSize(15);
+                                    txt_jawaban.setGravity(Gravity.LEFT);
+                                    txt_jawaban.setSingleLine(true);
+                                    txt_jawaban.setLines(1);
+                                    txt_jawaban.setText("");
+                                    // add to row
+                                    row.addView(txt_jawaban, params3);
+                                    table_pertanyaan.addView(row);
+                                    list_edit_text_jawaban.add(txt_jawaban);
+                                }
+                            }
+                            else if (tipe_pertanyaan.equals("text")) {
+                                if(obj.getString("keterangan_system").equals("sistem_lokasi")){
+                                    TableRow row2 = new TableRow(add_post_everything.this);
+                                    row2.setBackgroundColor(getResources().getColor(R.color.white));
+
+                                    final EditText txt_jawaban = new EditText(add_post_everything.this);
+                                    txt_jawaban.setBackgroundResource(R.drawable.edittext_border);
+                                    txt_jawaban.setTextSize(15);
+                                    txt_jawaban.setGravity(Gravity.LEFT);
+                                    txt_jawaban.setSingleLine(true);
+                                    txt_jawaban.setLines(1);
+                                    txt_jawaban.setEnabled(false);
+                                    txt_jawaban.setText("");
+                                    // add to row
+                                    row2.addView(txt_jawaban, params3);
+
+                                    Button button = new Button(add_post_everything.this);
+                                    button.setText("Ambil Titik Lokasi");
+                                    button.setTextSize(10);
+                                    button.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v){
+                                            GPSTracker gps = new GPSTracker(add_post_everything.this, add_post_everything.this);
+                                            if(gps.canGetLocation()) {
+                                                latitude = gps.getLatitude();
+                                                longitude = gps.getLongitude();
+                                            }
+                                            txt_jawaban.setText(latitude+" | "+longitude);
+                                        }
+                                    });
+                                    row2.addView(button, params2);
+                                    table_pertanyaan.addView(row2);
+                                    list_edit_text_jawaban.add(txt_jawaban);
+                                }
+                                else {
+                                    final EditText txt_jawaban = new EditText(add_post_everything.this);
+                                    txt_jawaban.setBackgroundResource(R.drawable.edittext_border);
+                                    txt_jawaban.setTextSize(15);
+                                    txt_jawaban.setGravity(Gravity.LEFT);
+                                    txt_jawaban.setSingleLine(true);
+                                    txt_jawaban.setLines(1);
+                                    txt_jawaban.setText("");
+                                    // add to row
+                                    row.addView(txt_jawaban, params3);
+                                    table_pertanyaan.addView(row);
+                                    list_edit_text_jawaban.add(txt_jawaban);
+                                }
+                            }
+                            else if (tipe_pertanyaan.equals("numeric")) {
+                                if(obj.getString("keterangan_system").equals("sum_score_akhir")){
+                                    EditText txt_jawaban = new EditText(add_post_everything.this);
+                                    txt_jawaban.setInputType(InputType.TYPE_CLASS_NUMBER);
+                                    txt_jawaban.setSingleLine(true);
+                                    txt_jawaban.setBackgroundResource(R.color.orange_800);
+                                    txt_jawaban.setFocusable(false);
+                                    txt_jawaban.setTextSize(15);
+                                    txt_jawaban.setGravity(Gravity.CENTER);
+                                    txt_jawaban.setText("0");
+                                    // add to row
+                                    row.addView(txt_jawaban, params3);
+
+                                    table_pertanyaan.addView(row);
+                                    list_edit_text_jawaban.add(txt_jawaban);
+                                    id_summary_score = list_edit_text_jawaban.size()-1;
+                                }
+                                else {
+                                    EditText txt_jawaban = new EditText(add_post_everything.this);
+                                    txt_jawaban.setInputType(InputType.TYPE_CLASS_NUMBER);
+                                    txt_jawaban.setSingleLine(true);
+                                    txt_jawaban.setBackgroundResource(R.drawable.edittext_border);
+                                    txt_jawaban.setTextSize(15);
+                                    txt_jawaban.setGravity(Gravity.CENTER);
+                                    txt_jawaban.setText("0");
+                                    // add to row
+                                    row.addView(txt_jawaban, params3);
+
+                                    table_pertanyaan.addView(row);
+                                    list_edit_text_jawaban.add(txt_jawaban);
+                                }
+                            }
+                            else if (tipe_pertanyaan.equals("spinner")){
+                                if(obj.getString("keterangan_system").equals("no_yes_question")){
+                                    TableRow row2 = new TableRow(add_post_everything.this);
+                                    row2.setBackgroundColor(getResources().getColor(R.color.white));
+
+                                    final EditText txt_jawaban = new EditText(add_post_everything.this);
+                                    txt_jawaban.setBackgroundResource(R.drawable.edittext_border);
+                                    txt_jawaban.setTextSize(15);
+                                    txt_jawaban.setGravity(Gravity.LEFT);
+                                    txt_jawaban.setSingleLine(true);
+                                    txt_jawaban.setLines(1);
+                                    txt_jawaban.setEnabled(false);
+                                    txt_jawaban.setVisibility(View.GONE);
+                                    txt_jawaban.setText("No");
+                                    // add to row
+                                    row2.addView(txt_jawaban, params3);
+
+                                    Spinner spinner = new Spinner(add_post_everything.this);
+                                    ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(add_post_everything.this, android.R.layout.simple_spinner_dropdown_item, getResources().getStringArray(R.array.slc_no_yes_question));
+                                    spinner.setAdapter(spinnerArrayAdapter);
+
+                                    spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                        @Override
+                                        public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                                            txt_jawaban.setText(adapterView.getItemAtPosition(i).toString());
+                                        }
+
+                                        @Override
+                                        public void onNothingSelected(AdapterView<?> adapterView) {
+
+                                        }
+                                    });
+
+                                    row2.addView(spinner, params3);
+                                    table_pertanyaan.addView(row2);
+                                    list_edit_text_jawaban.add(txt_jawaban);
+                                }
+                                else if(obj.getString("keterangan_system").equals("ada_tidak_question")){
+                                    TableRow row2 = new TableRow(add_post_everything.this);
+                                    row2.setBackgroundColor(getResources().getColor(R.color.white));
+
+                                    final EditText txt_jawaban = new EditText(add_post_everything.this);
+                                    txt_jawaban.setBackgroundResource(R.drawable.edittext_border);
+                                    txt_jawaban.setTextSize(15);
+                                    txt_jawaban.setGravity(Gravity.LEFT);
+                                    txt_jawaban.setSingleLine(true);
+                                    txt_jawaban.setLines(1);
+                                    txt_jawaban.setEnabled(false);
+                                    txt_jawaban.setVisibility(View.GONE);
+                                    txt_jawaban.setText("No");
+                                    // add to row
+                                    row2.addView(txt_jawaban, params3);
+
+                                    Spinner spinner = new Spinner(add_post_everything.this);
+                                    ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(add_post_everything.this, android.R.layout.simple_spinner_dropdown_item, getResources().getStringArray(R.array.slc_ada_tidak_question));
+                                    spinner.setAdapter(spinnerArrayAdapter);
+
+                                    spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                        @Override
+                                        public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                                            txt_jawaban.setText(adapterView.getItemAtPosition(i).toString());
+                                        }
+
+                                        @Override
+                                        public void onNothingSelected(AdapterView<?> adapterView) {
+
+                                        }
+                                    });
+
+                                    row2.addView(spinner, params3);
+                                    table_pertanyaan.addView(row2);
+                                    list_edit_text_jawaban.add(txt_jawaban);
+                                }
+                                else if(obj.getString("keterangan_system").equals("n_p_y_na_question")){
+                                    JSONArray jsonSub = obj.getJSONArray("sub_question");
+
+                                    TableRow row2 = new TableRow(add_post_everything.this);
+                                    row2.setBackgroundColor(getResources().getColor(R.color.white));
+
+                                    final EditText txt_jawaban = new EditText(add_post_everything.this);
+                                    txt_jawaban.setBackgroundResource(R.drawable.edittext_border);
+                                    txt_jawaban.setTextSize(15);
+                                    txt_jawaban.setGravity(Gravity.LEFT);
+                                    txt_jawaban.setSingleLine(true);
+                                    txt_jawaban.setLines(1);
+                                    txt_jawaban.setEnabled(false);
+                                    txt_jawaban.setVisibility(View.GONE);
+                                    txt_jawaban.setText("N/A");
+                                    // add to row
+                                    row2.addView(txt_jawaban, params3);
+
+                                    Spinner spinner = new Spinner(add_post_everything.this);
+                                    ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(add_post_everything.this, android.R.layout.simple_spinner_dropdown_item, getResources().getStringArray(R.array.slc_n_p_y_na_question));
+                                    spinner.setAdapter(spinnerArrayAdapter);
+
+                                    spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                        @Override
+                                        public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                                            txt_jawaban.setText(adapterView.getItemAtPosition(i).toString());
+
+                                            double total_score = 0;
+                                            for(int x = 0; x < list_edit_text_jawaban_score.size();x++){
+                                                for(int y = 0; y < list_edit_text_jawaban_score.get(x).length(); y++){
+                                                    try {
+                                                        JSONObject objChild = list_edit_text_jawaban_score.get(x).getJSONObject(y);
+                                                        if(list_edit_text_jawaban.get(x).getText().toString().equals(objChild.getString("jawaban"))){
+                                                            total_score += Double.valueOf(objChild.getString("score"));
+                                                        }
+                                                    } catch (JSONException e) {
+                                                        e.printStackTrace();
+                                                    }
+                                                }
+                                            }
+                                            list_edit_text_jawaban.get(id_summary_score).setText(String.valueOf(total_score));
+                                        }
+
+                                        @Override
+                                        public void onNothingSelected(AdapterView<?> adapterView) {
+
+                                        }
+                                    });
+
+                                    row2.addView(spinner, params3);
+                                    table_pertanyaan.addView(row2);
+                                    list_edit_text_jawaban.add(txt_jawaban);
+                                    list_edit_text_jawaban_score.add(jsonSub);
+                                }
+                            }
+                            nomor++;
+                        } catch (JSONException e) {
+                            progressDialog.dismiss();
+                            e.printStackTrace();
+                        }
+                    }
+
+                    progressDialog.dismiss();
+                } else {
+                    Toast.makeText(add_post_everything.this, "Pertanyaan Gagal Ditampilkan", Toast.LENGTH_SHORT).show();
+                    btn_submit.setVisibility(View.GONE);
+                    progressDialog.dismiss();
+                }
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                VolleyLog.d(TAG, "Error: " + error.getMessage());
+                btn_submit.setVisibility(View.GONE);
+                progressDialog.dismiss();
+                Toast.makeText(add_post_everything.this, "Koneksi ke server error", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        jArr.setRetryPolicy(new DefaultRetryPolicy(
+                30000,//DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2,//30000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+        // menambah request ke request queue
+        AppController.getInstance(this).addToRequestQueue(jArr);
+    }
+
+    private void proc_save_pertanyaan(ProgressDialog progressDialog,String id_timeline_jawaban){
+        int counter = 0;
+        ArrayList<HashMap<String,Object>> list =(ArrayList<HashMap<String,Object>>)dataDaftarPertanyaan;
+        for (HashMap<String, Object> row_pertanyaan : list) {
+            String id_pertanyaan = row_pertanyaan.get("id_pertanyaan").toString();
+
+            if(jawaban_pertanyaan[counter] != null){
+                final String jawaban = jawaban_pertanyaan[counter];
+                StringRequest strReq = new StringRequest(Request.Method.POST, url_post_timeline2_jawaban_detail, new Response.Listener<String>() {
+
+                    @Override
+                    public void onResponse(String response) {
+                        Log.e(TAG, "save survey Response: " + response.toString());
+
+                        try {
+                            JSONObject jObj = new JSONObject(response);
+                            success = jObj.getInt(TAG_SUCCESS);
+
+                            // Check for error node in json
+                            if (success == 1) {
+                                Log.e("save jawaban pertanyaan", jObj.toString());
+                            } else {
+                                Toast.makeText(getApplicationContext(), jObj.getString(TAG_MESSAGE), Toast.LENGTH_LONG).show();
+                            }
+                        } catch (JSONException e) {
+                            // JSON error
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e(TAG, "save Error: " + error.getMessage());
+                        Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                }) {
+                    @Override
+                    protected Map<String, String> getParams() {
+
+                        // Posting parameters to url
+                        Map<String, String> params = new HashMap<String, String>();
+                        params.put("id_timeline_jawaban", id_timeline_jawaban);
+                        params.put("id_timeline_pertanyaan", id_pertanyaan);
+                        params.put("jawaban", jawaban);
+
+                        return params;
+                    }
+
+                };
+
+                strReq.setRetryPolicy(new DefaultRetryPolicy(
+                        30000,//DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2,//30000,
+                        DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                        DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+                // Adding request to request queue
+                AppController.getInstance(this).addToRequestQueue(strReq);
+            }
+            else {
+                continue;
+            }
+            counter++;
+        }
+        progressDialog.dismiss();
     }
 }
