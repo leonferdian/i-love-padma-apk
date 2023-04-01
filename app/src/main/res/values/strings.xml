@@ -184,48 +184,6 @@
         <item>WHOLESALER</item>
     </string-array>
 
-    <string-array name="slc_post_eveything">
-        <item>--Pilih Jenis Post--</item>
-        <item>Briefing Pagi</item>
-        <item>Briefing Sore</item>
-        <item>Visit Outlet (outlet RO)</item>
-        <item>Meeting</item>
-        <item>Sidak / Audit</item>
-        <item>Prospecting &amp; Dealing Outlet</item>
-        <item>Branding</item>
-        <item>Event</item>
-        <item>OPS - Loading</item>
-        <item>OPS - Unloading</item>
-        <item>OPS - Badstock</item>
-        <item>OPS - GWP</item>
-        <item>AMS - Kendaraan</item>
-        <item>SOE - RR Kunjungan</item>
-        <item>SOE - MV Delivery</item>
-        <item>Other</item>
-    </string-array>
-
-    <string-array name="slc_result_dealing">
-        <item>Approved</item>
-        <item>Reject</item>
-    </string-array>
-
-    <string-array name="slc_no_yes_question">
-        <item>No</item>
-        <item>Yes</item>
-    </string-array>
-
-    <string-array name="slc_ada_tidak_question">
-        <item>Tidak ada</item>
-        <item>Ada</item>
-    </string-array>
-
-    <string-array name="slc_n_p_y_na_question">
-        <item>N/A</item>
-        <item>N</item>
-        <item>P</item>
-        <item>Y</item>
-    </string-array>
-
     <string name="google_maps_key">AIzaSyBtX8Zci5VlzaielTuX_0Y9t-8rhKL0An8</string>
 
 </resources>

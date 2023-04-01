@@ -10,6 +10,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -39,6 +43,7 @@ import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.project45.ilovepadma.R;
+import com.project45.ilovepadma.aktifitas.add_aktifitas;
 import com.project45.ilovepadma.app.AppController;
 import com.project45.ilovepadma.complain.add_complain;
 import com.project45.ilovepadma.complain.add_respon_complain;
@@ -1170,6 +1175,32 @@ public class add_project extends AppCompatActivity {
         String flow = txt_flow.getText().toString().trim();
         String presentasi = txt_presentasi.getText().toString().trim();
 
+        // Get the device's current location and address
+        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+
+        Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+        double latitude = location.getLatitude();
+        double longitude = location.getLongitude();
+
+        Geocoder geocoder = new Geocoder(add_project.this, Locale.getDefault());
+        List<Address> addresses = null;
+        try {
+            addresses = geocoder.getFromLocation(latitude, longitude, 1);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String address = addresses.get(0).getAddressLine(0);
+
         if(nama_project.equals("")){
             Toast.makeText(getApplicationContext(), "Nama project harus diisi ", Toast.LENGTH_LONG).show();
         }
@@ -1306,6 +1337,9 @@ public class add_project extends AppCompatActivity {
                     params.put("member", id_member_project);
                     params.put("id_company", id_company);
                     params.put("create_by", id_user);
+                    params.put("latitude", String.valueOf(latitude));
+                    params.put("longitude", String.valueOf(longitude));
+                    params.put("address", address);
 
                     return params;
                 }

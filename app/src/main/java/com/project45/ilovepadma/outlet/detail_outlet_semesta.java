@@ -28,7 +28,6 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -39,8 +38,6 @@ import android.widget.Toast;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.VolleyLog;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.project45.ilovepadma.R;
 import com.project45.ilovepadma.adapter.GPSTracker;
@@ -65,7 +62,6 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -100,40 +96,40 @@ public class detail_outlet_semesta extends AppCompatActivity {
 
     private static final String TAG = add_deskripsi.class.getSimpleName();
 
-    //    private static String url_post_outlet     = Server.URL + "outlet/post_add_outlet_semesta";
-    private static String url_save_update_outlet = Server.URL + "outlet/post_save_listed_outlet";
+    private static String url_post_outlet     = Server.URL + "outlet/post_add_outlet_semesta";
     public static String url_image_upload = Server.URL2 +"image_upload/upload_foto_outlet.php";
-    private static String url_list_segment = Server.URL + "outlet/get_list_segmentasi";
+
     ImageView img_outlet;
     public EditText txt_idcust,txt_namecust,txt_lat,txt_long,txt_address,txt_address2,txt_kelurahan,txt_kecamatan,txt_zip_code,
             txt_city,txt_province,txt_country,txt_jam_buka,txt_jam_tutup,txt_jam_istirahat_mulai,txt_jam_istirahat_tutup,txt_contact_person,
-            txt_telp_pic,txt_phone_pic,txt_wa_pic,txt_id_dms, txt_segment_tiv, txt_channel, txt_segment;
+            txt_telp_pic,txt_phone_pic,txt_wa_pic,txt_id_dms;
     private Button btPlacesAPI,btn_camera_foto,btn_galery_foto,btn_save_outlet;
-    Spinner spinner_type_outlet,spinner_saluran_dist,spinner_segment1,spinner_subsegment;
-    private ArrayList<Data_customer> list_id_segment;
+    Spinner spinner_type_outlet,spinner_saluran_dist,spinner_segment1;
+
     GPSTracker gps;
     double latitude,longitude;
     String alamat="";
     private Matrix matrix;
     private Bitmap bitmapLast;
     //for image
-    private String fileImagePath,image_name = "",url_foto_stok="",pathFoto, id_company="",nama_company="";
+    private String fileImagePath,image_name = "",url_foto_stok="",pathFoto;
     private File destFile;
     Uri imageCaptureUri,mCropImageUri;
     public static final int CAMERA_REQUEST = 100;
-    int RESULT_LOAD_IMG = 9, selected_id_segment = 0, detail_id_segmentasi = 0;
+    int RESULT_LOAD_IMG = 9;
     // last for image
-    Data_customer detOutlet, segmentasi;
+    Data_customer detOutlet;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.add_listed_outlet);
+        setContentView(R.layout.add_outlet_semesta);
 
         //menerapkan tool bar sesuai id toolbar | ToolBarAtas adalah variabel buatan sndiri
         Toolbar ToolBarAtasaccount_user = (Toolbar) findViewById(R.id.toolbar_outlet);
         setSupportActionBar(ToolBarAtasaccount_user);
         // ToolBarAtas.setLogo(R.mipmap.ic_launcher);
         ToolBarAtasaccount_user.setLogoDescription(getResources().getString(R.string.app_name));
+
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -145,8 +141,6 @@ public class detail_outlet_semesta extends AppCompatActivity {
         email = Api.sharedpreferences.getString(Api.TAG_EMAIL, null);
         employee_id_dms3 = Api.sharedpreferences.getString(Api.TAG_ID_EMPLOYEE_DMS3, null);
         jabatan = Api.sharedpreferences.getString(Api.TAG_JABATAN, null);
-        id_company = Api.sharedpreferences.getString(Api.TAG_COMPANY_USER_ID, null);
-        nama_company = Api.sharedpreferences.getString(Api.TAG_COMPANY_USER_NAME, null);
 
         img_outlet = findViewById(R.id.img_outlet);
         btn_camera_foto = findViewById(R.id.btn_camera_foto);
@@ -164,18 +158,13 @@ public class detail_outlet_semesta extends AppCompatActivity {
         txt_city = findViewById(R.id.txt_city);
         txt_province = findViewById(R.id.txt_province);
         txt_country = findViewById(R.id.txt_country);
-        list_id_segment = new ArrayList<Data_customer>();
-//        spinner_type_outlet = findViewById(R.id.spinner_type_outlet);
-//        spinner_saluran_dist = findViewById(R.id.spinner_saluran_dist);
-//        spinner_segment1 = findViewById(R.id.spinner_segment1);
-        txt_segment_tiv = findViewById(R.id.txt_segment_tiv);
-        txt_channel = findViewById(R.id.txt_channel);
-        txt_segment = findViewById(R.id.txt_segment);
-        spinner_subsegment = findViewById(R.id.spinner_subsegment);
-
+        spinner_type_outlet = findViewById(R.id.spinner_type_outlet);
+        spinner_saluran_dist = findViewById(R.id.spinner_saluran_dist);
+        spinner_segment1 = findViewById(R.id.spinner_segment1);
         btn_save_outlet = findViewById(R.id.btn_save_outlet);
 
-        timeStamp = new SimpleDateFormat("yyyyMMdd", Locale.getDefault()).format(new Date());
+        timeStamp = new SimpleDateFormat("yyyyMMdd",
+                Locale.getDefault()).format(new Date());
         /*
         txt_lat.setVisibility(View.GONE);
         txt_long.setVisibility(View.GONE);
@@ -191,8 +180,8 @@ public class detail_outlet_semesta extends AppCompatActivity {
         Intent intentku = getIntent(); // gets the previously created intent
         act_form = intentku.getStringExtra("act");
         detOutlet = (Data_customer) intentku.getSerializableExtra(Api.PARAM_DATA);
-        getListSegmentasi();
         if (detOutlet != null) {
+
             display_outlet = detOutlet.getimage_customer();
             image_name = detOutlet.getimage_customer();
             String bm = Server.URL2 +"image_upload/list_foto_outlet/"+detOutlet.getimage_customer();
@@ -216,26 +205,26 @@ public class detail_outlet_semesta extends AppCompatActivity {
             txt_country.setText(detOutlet.getCountry());
             txt_address2.setText(detOutlet.getkoreksi_alamat());
 
-//            ArrayAdapter<CharSequence> adapterTypeOutlet = ArrayAdapter.createFromResource(getApplicationContext(), R.array.slc_type_outlet, android.R.layout.simple_spinner_item);
-//            adapterTypeOutlet.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//            if (detOutlet.getOutlet_type() != null) {
-//                int spinnerPosition2 = adapterTypeOutlet.getPosition(detOutlet.getOutlet_type());
-//                spinner_type_outlet.setSelection(spinnerPosition2);
-//            }
-//
-//            ArrayAdapter<CharSequence> adapterSaluranDist = ArrayAdapter.createFromResource(getApplicationContext(), R.array.slc_saluran_disc, android.R.layout.simple_spinner_item);
-//            adapterSaluranDist.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//            if (detOutlet.getSaluran_distribusi() != null) {
-//                int spinnerPosition2 = adapterSaluranDist.getPosition(detOutlet.getSaluran_distribusi());
-//                spinner_saluran_dist.setSelection(spinnerPosition2);
-//            }
-//
-//            ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getApplicationContext(), R.array.slc_segment1, android.R.layout.simple_spinner_item);
-//            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//            if (detOutlet.getSegment_level_1() != null) {
-//                int spinnerPosition2 = adapter.getPosition(detOutlet.getSegment_level_1());
-//                spinner_segment1.setSelection(spinnerPosition2);
-//            }
+            ArrayAdapter<CharSequence> adapterTypeOutlet = ArrayAdapter.createFromResource(getApplicationContext(), R.array.slc_type_outlet, android.R.layout.simple_spinner_item);
+            adapterTypeOutlet.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            if (detOutlet.getOutlet_type() != null) {
+                int spinnerPosition2 = adapterTypeOutlet.getPosition(detOutlet.getOutlet_type());
+                spinner_type_outlet.setSelection(spinnerPosition2);
+            }
+
+            ArrayAdapter<CharSequence> adapterSaluranDist = ArrayAdapter.createFromResource(getApplicationContext(), R.array.slc_saluran_disc, android.R.layout.simple_spinner_item);
+            adapterSaluranDist.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            if (detOutlet.getSaluran_distribusi() != null) {
+                int spinnerPosition2 = adapterSaluranDist.getPosition(detOutlet.getSaluran_distribusi());
+                spinner_saluran_dist.setSelection(spinnerPosition2);
+            }
+
+            ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getApplicationContext(), R.array.slc_segment1, android.R.layout.simple_spinner_item);
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            if (detOutlet.getSegment_level_1() != null) {
+                int spinnerPosition2 = adapter.getPosition(detOutlet.getSegment_level_1());
+                spinner_segment1.setSelection(spinnerPosition2);
+            }
 
             /*
             if(!detOutlet.getcreate_by().equals(id_user)){
@@ -331,23 +320,6 @@ public class detail_outlet_semesta extends AppCompatActivity {
             }
         });
 
-        spinner_subsegment.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                selected_id_segment = list_id_segment.get(position).getId_segmentasi();
-                txt_segment_tiv.setText(list_id_segment.get(position).getSegment_tiv());
-                txt_channel.setText(list_id_segment.get(position).getChannel());
-                txt_segment.setText(list_id_segment.get(position).getSegment());
-//                Toast.makeText(add_new_customer_survey.this, Integer.toString(selected_id_segment), Toast.LENGTH_LONG).show();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parentView) {
-                // your code here
-            }
-
-        });
-
         btn_save_outlet.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -355,6 +327,7 @@ public class detail_outlet_semesta extends AppCompatActivity {
                 // TODO Auto-generated method stub
                 // update login session ke FALSE dan mengosongkan nilai id dan username
                 postOutlet();
+
             }
         });
 
@@ -369,6 +342,7 @@ public class detail_outlet_semesta extends AppCompatActivity {
 
             }
         });
+
     }
 
     public boolean onSupportNavigateUp(){
@@ -426,7 +400,8 @@ public class detail_outlet_semesta extends AppCompatActivity {
         return randomNumber;
     }
 
-    private void pilihImageByCamera() {
+    private void pilihImageByCamera()
+    {
         String IMAGE_DIRECTORY = "ILV";
         File file =  new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
                 + "/" + IMAGE_DIRECTORY);
@@ -564,103 +539,6 @@ public class detail_outlet_semesta extends AppCompatActivity {
         txt_long.setText(String.valueOf(Long));
     }
 
-    private void getListSegmentasi(){
-        final ProgressDialog progressDialog = new ProgressDialog(detail_outlet_semesta.this,
-                R.style.AppTheme_Dark_Dialog);
-        progressDialog.setIndeterminate(true);
-        progressDialog.setMessage("Loading Segment...");
-        progressDialog.show();
-
-        String url_server = url_list_segment;
-        Log.d("url segment", url_server);
-        JsonArrayRequest jArr = new JsonArrayRequest(url_server, new Response.Listener<JSONArray>() {
-            @Override
-            public void onResponse(JSONArray response) {
-                Log.d(TAG, response.toString());
-
-                if(response.length()>0) {
-                    // Parsing json
-                    for (int i = 0; i < response.length(); i++) {
-                        try {
-                            JSONObject obj = response.getJSONObject(i);
-                            segmentasi = new Data_customer();
-                            segmentasi.setId_segmentasi(obj.getInt("id"));
-                            segmentasi.setChannel(obj.getString("channel"));
-                            segmentasi.setSegment(obj.getString("segment"));
-                            segmentasi.setSubsegment(obj.getString("subsegment"));
-                            segmentasi.setSegment_tiv(obj.getString("segment_tiv"));
-                            list_id_segment.add(segmentasi);
-//                            list_channel.add(segmentasi);
-//                            list_segment.add(segmentasi);
-//                            list_subsegment.add(segmentasi);
-//                            list_segment_tiv.add(segmentasi);
-
-                            if(detOutlet.getSegment_level_1().equals(obj.getString("subsegment"))) {
-//                                detail_id_segmentasi = list_id_segment.get(i).getId_segmentasi();
-                                selected_id_segment = list_id_segment.get(i).getId_segmentasi();
-                                txt_segment_tiv.setText(list_id_segment.get(i).getSegment_tiv());
-                                txt_channel.setText(list_id_segment.get(i).getChannel());
-                                txt_segment.setText(list_id_segment.get(i).getSegment());
-
-                                //            if (detOutlet.getSegment_level_1() != null && detail_id_segmentasi != 0) {
-//                spinner_subsegment.setSelection(detail_id_segmentasi);
-//                                spinner_subsegment.setSelection(selected_id_segment);
-//            }
-                            }
-//                            } else {
-//                                selected_id_segment = list_id_segment.get(0).getId_segmentasi();
-//                                txt_segment_tiv.setText(list_id_segment.get(0).getSegment_tiv());
-//                                txt_channel.setText(list_id_segment.get(0).getChannel());
-//                                txt_segment.setText(list_id_segment.get(0).getSegment());
-//                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-
-                    //Toast.makeText(add_complain.this, "size "+String.valueOf(jenis_complainList.size()), Toast.LENGTH_LONG).show();
-                    addItemsOnSpinnerRoute();
-                    //end proses
-                    progressDialog.dismiss();
-                }
-                else{
-                    //end proses
-                    progressDialog.dismiss();
-                }
-                // notifikasi adanya perubahan data pada adapter
-                //photoAdapter.notifyDataSetChanged();
-
-
-            }
-        }, new Response.ErrorListener() {
-
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                VolleyLog.d(TAG, "Error: " + error.getMessage());
-                //end proses
-                progressDialog.dismiss();
-            }
-        });
-
-        // menambah request ke request queue
-        AppController.getInstance(this).addToRequestQueue(jArr);
-    }
-
-    public void addItemsOnSpinnerRoute() {
-        List<String> list = new ArrayList<String>();
-        //Toast.makeText(add_complain.this, "size "+String.valueOf(jenis_complainList.size()), Toast.LENGTH_LONG).show();
-        for (int i = 0; i < list_id_segment.size(); i++) {
-            list.add(list_id_segment.get(i).getSubsegment());
-            //Toast.makeText(add_complain.this, "name "+jenis_complainList.get(i).getName(), Toast.LENGTH_LONG).show();
-        }
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item, list);
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner_subsegment.setAdapter(dataAdapter);
-
-        spinner_subsegment.setSelection(selected_id_segment-1);
-    }
-
     private void startCropImageActivity(Uri imageUri) {
 
         //Toast.makeText(account_user.this,String.valueOf(imageUri), Toast.LENGTH_LONG).show();
@@ -671,7 +549,8 @@ public class detail_outlet_semesta extends AppCompatActivity {
         //CropImage.startPickImageActivity(this);
     }
 
-    public String getPath(Uri uri) {
+    public String getPath(Uri uri)
+    {
         String[] projection = { MediaStore.Images.Media.DATA };
         Cursor cursor = getContentResolver().query(uri, projection, null, null, null);
         if (cursor == null) return null;
@@ -806,6 +685,7 @@ public class detail_outlet_semesta extends AppCompatActivity {
     }
 
     private void postOutlet() {
+
         final String id_outlet = txt_idcust.getText().toString();
         final String nama_outlet = txt_namecust.getText().toString();
         final String latitude = txt_lat.getText().toString();
@@ -818,23 +698,19 @@ public class detail_outlet_semesta extends AppCompatActivity {
         final String province = txt_province.getText().toString();
         final String country = txt_country.getText().toString();
         final String koreksi_alamat = txt_address2.getText().toString();
-//        final String channel_outlet = String.valueOf(spinner_type_outlet.getSelectedItem());
-//        final String segment = String.valueOf(spinner_saluran_dist.getSelectedItem());
-//        final String sub_segment = String.valueOf(spinner_segment1.getSelectedItem());
-        final String sub_segment = String.valueOf(selected_id_segment);
+        final String channel_outlet = String.valueOf(spinner_type_outlet.getSelectedItem());
+        final String segment = String.valueOf(spinner_saluran_dist.getSelectedItem());
+        final String sub_segment = String.valueOf(spinner_segment1.getSelectedItem());
         final String foto_outlet = image_name;
 
         if(foto_outlet.equals("")){
             Toast.makeText(getApplicationContext(), "Foto harus dilengkapi ", Toast.LENGTH_LONG).show();
         }
         else if(nama_outlet.equals("")){
-            Toast.makeText(getApplicationContext(), "Nama Outlet harus diisi ", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Nama Outlet From harus diisi ", Toast.LENGTH_LONG).show();
         }
         else if(alamat.equals("")){
             Toast.makeText(getApplicationContext(), "Alamat harus diisi ", Toast.LENGTH_LONG).show();
-        }
-        else if(selected_id_segment == 0){
-            Toast.makeText(getApplicationContext(), "Subsegment harus dipilih ", Toast.LENGTH_LONG).show();
         }
         else{
 
@@ -845,7 +721,7 @@ public class detail_outlet_semesta extends AppCompatActivity {
             progressDialog.show();
 
             //proses save to database using api
-            StringRequest strReq = new StringRequest(Request.Method.POST, url_save_update_outlet, new Response.Listener<String>() {
+            StringRequest strReq = new StringRequest(Request.Method.POST, url_post_outlet, new Response.Listener<String>() {
 
                 @Override
                 public void onResponse(String response) {
@@ -913,11 +789,12 @@ public class detail_outlet_semesta extends AppCompatActivity {
                     params.put("province", province);
                     params.put("country", country);
                     params.put("koreksi_alamat", koreksi_alamat);
+                    params.put("channel_outlet", channel_outlet);
+                    params.put("segment", segment);
                     params.put("sub_segment", sub_segment);
                     params.put("foto_outlet", foto_outlet);
                     params.put("create_by", id_user);
                     params.put("update_by", id_user);
-                    params.put("id_company", id_company);
 
                     return params;
                 }
@@ -932,6 +809,7 @@ public class detail_outlet_semesta extends AppCompatActivity {
     }
 
     private void save_foto(){
+
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inSampleSize = 8;
         Bitmap bm = BitmapFactory.decodeFile(url_foto_stok);

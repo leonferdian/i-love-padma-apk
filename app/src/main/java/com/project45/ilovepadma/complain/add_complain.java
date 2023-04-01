@@ -1,17 +1,26 @@
 package com.project45.ilovepadma.complain;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
+
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+
 import android.text.Html;
 import android.util.Log;
 import android.view.Gravity;
@@ -53,6 +62,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -65,7 +75,7 @@ import java.util.Random;
 
 public class add_complain extends AppCompatActivity {
 
-    String id_user, username,bm,email,jabatan,employee_id_dms3="",id_complain="",timeStamp="",act_form="",tanggal_act="",complain_purpose="";
+    String id_user, username, bm, email, jabatan, employee_id_dms3 = "", id_complain = "", timeStamp = "", act_form = "", tanggal_act = "", complain_purpose = "";
     int randomNumber;
 
     private static final String TAG_SUCCESS = "success";
@@ -74,31 +84,31 @@ public class add_complain extends AppCompatActivity {
 
     private static final String TAG = add_complain.class.getSimpleName();
 
-    private static String url_post_complain     = Server.URL + "cust_service/post_save_padma_complain";
-    private static String url_post_delete_deskripsi_padma_complain     = Server.URL + "cust_service/post_delete_deskripsi_padma_complain";
+    private static String url_post_complain = Server.URL + "cust_service/post_save_padma_complain";
+    private static String url_post_delete_deskripsi_padma_complain = Server.URL + "cust_service/post_delete_deskripsi_padma_complain";
     //private static String url_list_master_complain_to     = Server.URL + "cust_service/list_master_complain_to";
-    private static String url_list_master_complain_to     = Server.URL + "project/list_member_project/";
-    private static String url_list_complain_deskripsi     = Server.URL + "cust_service/get_list_complain_deskripsi/";
-    private static String url_get_list_project    = Server.URL + "project/list_project_by_user3/";
-    private static String url_get_list_subproject    = Server.URL + "project/list_sub_project_by_user/";
+    private static String url_list_master_complain_to = Server.URL + "project/list_member_project/";
+    private static String url_list_complain_deskripsi = Server.URL + "cust_service/get_list_complain_deskripsi/";
+    private static String url_get_list_project = Server.URL + "project/list_project_by_user3/";
+    private static String url_get_list_subproject = Server.URL + "project/list_sub_project_by_user/";
 
-    Spinner spinner_complain_purpose,spinner_jenis_complain,spinner_project,spinner_subproject;
-    EditText txt_complain_from,txt_subject,txt_due_date,txt_periode_awal,txt_periode_akhir,txt_l1,txt_l2,txt_l3;
-    AutoCompleteTextView multi_ac_to,multi_pic2;
-    TableLayout tabel_1a,tabel_1b;
+    Spinner spinner_complain_purpose, spinner_jenis_complain, spinner_project, spinner_subproject;
+    EditText txt_complain_from, txt_subject, txt_due_date, txt_periode_awal, txt_periode_akhir, txt_l1, txt_l2, txt_l3;
+    AutoCompleteTextView multi_ac_to, multi_pic2;
+    TableLayout tabel_1a, tabel_1b;
     Button btn_deskripsi;
     TextView txt_durasi;
-    LinearLayout layout_durasi,layout_project,layout_subproject,layout_l;
+    LinearLayout layout_durasi, layout_project, layout_subproject, layout_l;
 
     private DatePickerDialog datePickerDialog;
     private SimpleDateFormat dateFormatter;
 
-    private ArrayList<Data_jenis_complain> jenis_complainList ;
+    private ArrayList<Data_jenis_complain> jenis_complainList;
     List<Data_work_report> itemList = new ArrayList<Data_work_report>();
-    String id_company="",nama_company="",nmr_project="",jml_subproject="0",nmr_subproject="",global_pic2="",check_id_complain_to="";
-    String tahun="",bulan="";
+    String id_company = "", nama_company = "", nmr_project = "", jml_subproject = "0", nmr_subproject = "", global_pic2 = "", check_id_complain_to = "";
+    String tahun = "", bulan = "";
 
-    private ArrayList<Data_work_report> list_project,list_subproject;
+    private ArrayList<Data_work_report> list_project, list_subproject;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -128,8 +138,8 @@ public class add_complain extends AppCompatActivity {
         list_project = new ArrayList<Data_work_report>();
         list_subproject = new ArrayList<Data_work_report>();
 
-        tahun= String.valueOf(Calendar.getInstance().get(Calendar.YEAR));
-        bulan= String.valueOf(Calendar.getInstance().get(Calendar.MONTH)+1);
+        tahun = String.valueOf(Calendar.getInstance().get(Calendar.YEAR));
+        bulan = String.valueOf(Calendar.getInstance().get(Calendar.MONTH) + 1);
 
         dateFormatter = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
 
@@ -180,12 +190,11 @@ public class add_complain extends AppCompatActivity {
                 Object item = adapterView.getItemAtPosition(position);
                 if (item != null) {
                     //Toast.makeText(getApplicationContext(), "jenis: "+String.valueOf(item.toString()), Toast.LENGTH_LONG).show();
-                    if(item.equals("internal")){
+                    if (item.equals("internal")) {
 
                         txt_complain_from.setText(username);
                         txt_complain_from.setEnabled(false);
-                    }
-                    else if(item.equals("external")){
+                    } else if (item.equals("external")) {
 
                         txt_complain_from.setText("");
                         txt_complain_from.setEnabled(true);
@@ -208,7 +217,7 @@ public class add_complain extends AppCompatActivity {
                 Object item = adapterView.getItemAtPosition(position);
                 if (item != null) {
                     //Toast.makeText(getApplicationContext(), "jenis: "+String.valueOf(item.toString()), Toast.LENGTH_LONG).show();
-                    if(item.equals("Proak")){
+                    if (item.equals("Proak")) {
 
                         txt_durasi.setVisibility(View.VISIBLE);
                         layout_durasi.setVisibility(View.VISIBLE);
@@ -220,21 +229,19 @@ public class add_complain extends AppCompatActivity {
                         //layout_l.setVisibility(View.VISIBLE);
                         nmr_subproject = "";
                         nmr_project = "";
-                    }
-                    else if(item.equals("Project")){
+                    } else if (item.equals("Project")) {
 
                         txt_durasi.setVisibility(View.GONE);
                         layout_durasi.setVisibility(View.GONE);
                         layout_project.setVisibility(View.VISIBLE);
-                        getListProject(id_company,id_user);
+                        getListProject(id_company, id_user);
                         txt_l1.setVisibility(View.GONE);
                         txt_l2.setVisibility(View.GONE);
                         txt_l3.setVisibility(View.GONE);
                         layout_l.setVisibility(View.GONE);
                         nmr_subproject = "";
                         nmr_project = "";
-                    }
-                    else {
+                    } else {
                         txt_durasi.setVisibility(View.GONE);
                         layout_durasi.setVisibility(View.GONE);
                         layout_project.setVisibility(View.GONE);
@@ -267,11 +274,10 @@ public class add_complain extends AppCompatActivity {
                     nmr_project = String.valueOf(sel.getid_job_list());
                     jml_subproject = String.valueOf(sel.getsub_project());
                     //Toast.makeText(getApplicationContext(), "sub_project "+String.valueOf(jml_subproject), Toast.LENGTH_LONG).show();
-                    if(!jml_subproject.equals("0")){
+                    if (!jml_subproject.equals("0")) {
                         layout_subproject.setVisibility(View.VISIBLE);
-                        getListSubProject(nmr_project,id_user);
-                    }
-                    else{
+                        getListSubProject(nmr_project, id_user);
+                    } else {
                         layout_subproject.setVisibility(View.GONE);
                         nmr_subproject = "";
                     }
@@ -333,7 +339,7 @@ public class add_complain extends AppCompatActivity {
                 // TODO Auto-generated method stub
                 // update login session ke FALSE dan mengosongkan nilai id dan username
                 String tgl_absen = "filter1";
-                showDateDialog(tgl_absen,txt_due_date);
+                showDateDialog(tgl_absen, txt_due_date);
 
             }
         });
@@ -345,7 +351,7 @@ public class add_complain extends AppCompatActivity {
                 // TODO Auto-generated method stub
                 // update login session ke FALSE dan mengosongkan nilai id dan username
                 String tgl_absen = "filter1";
-                showDateDialog(tgl_absen,txt_periode_awal);
+                showDateDialog(tgl_absen, txt_periode_awal);
 
             }
         });
@@ -357,16 +363,15 @@ public class add_complain extends AppCompatActivity {
                 // TODO Auto-generated method stub
                 // update login session ke FALSE dan mengosongkan nilai id dan username
                 String tgl_absen = "filter1";
-                showDateDialog(tgl_absen,txt_periode_akhir);
+                showDateDialog(tgl_absen, txt_periode_akhir);
 
             }
         });
 
 
-
     }
 
-    public boolean onSupportNavigateUp(){
+    public boolean onSupportNavigateUp() {
         onBackPressed();
 
         return true;
@@ -381,7 +386,7 @@ public class add_complain extends AppCompatActivity {
         }
     }
 
-    private void showDateDialog(final String absen, final EditText tgl_awal){
+    private void showDateDialog(final String absen, final EditText tgl_awal) {
 
         /**
          * Calendar untuk mendapatkan tanggal sekarang
@@ -409,15 +414,14 @@ public class add_complain extends AppCompatActivity {
                 /**
                  * Update TextView dengan tanggal yang kita pilih
                  */
-                if(absen.equals("filter1"))
-                {
+                if (absen.equals("filter1")) {
                     tgl_awal.setText(dateFormatter.format(newDate.getTime()));
                 }
 
 
             }
 
-        },newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
+        }, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
 
         /**
          * Tampilkan DatePicker dialog
@@ -439,23 +443,20 @@ public class add_complain extends AppCompatActivity {
             final String complain_to_name = multi_ac_to.getText().toString();
             boolean trueName = false;
 
-            if(itemList.size()==0){
+            if (itemList.size() == 0) {
                 Toast.makeText(getApplicationContext(), "Anda Harus Menambahkan Deskripsi  ", Toast.LENGTH_LONG).show();
-            }
-            else {
+            } else {
                 //postComplain();
                 for (int i = 0; i < jenis_complainList.size(); i++) {
-                    if(jenis_complainList.get(i).getName().equals(complain_to_name))
-                    {
+                    if (jenis_complainList.get(i).getName().equals(complain_to_name)) {
                         trueName = true;
                     }
 
                 }
-                if(trueName == true){
+                if (trueName == true) {
                     //Toast.makeText(getApplicationContext(), "Complain To sesuai", Toast.LENGTH_LONG).show();
                     postComplain();
-                }
-                else{
+                } else {
                     Toast.makeText(getApplicationContext(), "Complain To tidak sesuai", Toast.LENGTH_LONG).show();
                 }
             }
@@ -466,8 +467,8 @@ public class add_complain extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void get_id_id_complain(final String tanggal){
-        id_complain =  id_user+"-"+tanggal+"-"+ String.valueOf(generateRandomNumbers(100001,999999));
+    private void get_id_id_complain(final String tanggal) {
+        id_complain = id_user + "-" + tanggal + "-" + String.valueOf(generateRandomNumbers(100001, 999999));
         //getDeskripsi(id_complain);
         //Toast.makeText(getApplicationContext(), " id_survey "+id_survey, Toast.LENGTH_LONG).show();
     }
@@ -486,7 +487,6 @@ public class add_complain extends AppCompatActivity {
 
         int margin = (int) Math.ceil((float) dif / randomNumberCount);
         List<Integer> randomNumberList = new ArrayList<>();
-
 
 
         Random random = new Random();
@@ -521,14 +521,14 @@ public class add_complain extends AppCompatActivity {
     }
 
     private void getListComplainTo() {
-        String url_server = url_list_master_complain_to+id_company;
-        Log.d("complain_url",url_server);
+        String url_server = url_list_master_complain_to + id_company;
+        Log.d("complain_url", url_server);
         JsonArrayRequest jArr = new JsonArrayRequest(url_server, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 Log.d(TAG, response.toString());
 
-                if(response.length()>0) {
+                if (response.length() > 0) {
                     // Parsing json
                     for (int i = 0; i < response.length(); i++) {
                         try {
@@ -546,8 +546,7 @@ public class add_complain extends AppCompatActivity {
                     addItemsOnSpinnerJenisComplain();
                     //Toast.makeText(add_complain.this, "size "+String.valueOf(jenis_complainList.size()), Toast.LENGTH_LONG).show();
 
-                }
-                else{
+                } else {
 
                 }
                 // notifikasi adanya perubahan data pada adapter
@@ -633,7 +632,7 @@ public class add_complain extends AppCompatActivity {
             public void onResponse(JSONArray response) {
                 Log.d(TAG, response.toString());
 
-                if(response.length()>0) {
+                if (response.length() > 0) {
 
                     // Parsing json
                     for (int i = 0; i < response.length(); i++) {
@@ -657,14 +656,12 @@ public class add_complain extends AppCompatActivity {
                     //Toast.makeText(getApplicationContext(), "Klik RO untuk melihat detail ", Toast.LENGTH_LONG).show();
                     callList1();
                     callList2();
-                }
-                else{
+                } else {
                     Toast.makeText(add_complain.this, "Tidak bisa mendapatkan data ", Toast.LENGTH_LONG).show();
                     progressDialog.dismiss();
                 }
                 // notifikasi adanya perubahan data pada adapter
                 //photoAdapter.notifyDataSetChanged();
-
 
 
             }
@@ -755,7 +752,7 @@ public class add_complain extends AppCompatActivity {
             row.addView(txt_keterangan, params2);
 
             ImageView img_coaching = new ImageView(add_complain.this);
-            img_coaching.setImageBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.ic_clear_white_48));
+            img_coaching.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.ic_clear_white_48));
             img_coaching.setBackgroundResource(R.color.page_join_visit);
             img_coaching.setOnClickListener(new View.OnClickListener() {
 
@@ -775,7 +772,7 @@ public class add_complain extends AppCompatActivity {
         }
     }
 
-    private void proc_del_deskripsi(final String id_report){
+    private void proc_del_deskripsi(final String id_report) {
 
         Log.e(TAG, "id_report: " + id_report);
 
@@ -844,7 +841,7 @@ public class add_complain extends AppCompatActivity {
         progressDialog.dismiss();
     }
 
-    private void postComplain(){
+    private void postComplain() {
         final String complain_purpose = String.valueOf(spinner_complain_purpose.getSelectedItem());
         final String complain_subject = txt_subject.getText().toString();
         final String complain_from = txt_complain_from.getText().toString();
@@ -853,10 +850,37 @@ public class add_complain extends AppCompatActivity {
         final String periode_awal = txt_periode_awal.getText().toString();
         final String periode_akhir = txt_periode_akhir.getText().toString();
         final String jenis_complain = String.valueOf(spinner_jenis_complain.getSelectedItem());
-        String l1 ;
-        String l2 ;
-        String l3 ;
+        String l1;
+        String l2;
+        String l3;
         String pic2;
+
+        // Get the device's current location and address
+        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+
+        Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+        double latitude = location.getLatitude();
+        double longitude = location.getLongitude();
+
+        Geocoder geocoder = new Geocoder(add_complain.this, Locale.getDefault());
+        List<Address> addresses = null;
+        try {
+            addresses = geocoder.getFromLocation(latitude, longitude, 1);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String address = addresses.get(0).getAddressLine(0);
+
         if(spinner_jenis_complain.getSelectedItem().equals("Project"))
         {
             l1 = spinner_project.getSelectedItem().toString();
@@ -956,6 +980,9 @@ public class add_complain extends AppCompatActivity {
                     params.put("l2", l2);
                     params.put("l3", l3);
                     params.put("pic2", pic2);
+                    params.put("latitude", String.valueOf(latitude));
+                    params.put("longitude", String.valueOf(longitude));
+                    params.put("address", address);
 
                     return params;
                 }

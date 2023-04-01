@@ -9,15 +9,12 @@ import android.widget.ImageView;
 
 import com.project45.ilovepadma.global.Api;
 
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Comparator;
 
 public class Data_join_visit implements Serializable {
@@ -31,7 +28,7 @@ public class Data_join_visit implements Serializable {
             vol_vit,vol_beverage,vol_tot_order,komitmen_aqua,komitmen_vit,komitmen_beverage,jml_foto_stok,jml_foto_display,
             sisa_target_aqua,sisa_target_vit,sisa_target_bev,target_vol,pre_route,on_route,post_route,market_visit,coaching,jml_brg_dijual,
             bln_hr_kerja,mtd_tgl,mtd,target_harian,not_komitmen,target_cs,mtd_ideal,foto_blm_diupload,foto_sdh_diupload,nilai_klik,target_ao,jml_rute,
-            qty_so,qty_dist,entity,urutas_st,kunjugan_ke,jml_komen,status_like,jml_like,jenis_post;
+            qty_so,qty_dist,entity,urutas_st,kunjugan_ke,jml_komen,status_like,jml_like;
     private int id_salesman;
     private Uri uri;
     private Bitmap bitmap;
@@ -69,30 +66,6 @@ public class Data_join_visit implements Serializable {
     /* for rate */
     private String rate1,rate2,rate3,rate4,rate5,rate6,rate7,rate8,rate9,avg_rate,jenis_file;
     /* ---*/
-
-    private ArrayList<Data_pertanyaan_post_everything> pertanyaan_post_everything;
-
-    public ArrayList<Data_pertanyaan_post_everything> getPertanyaan_post_everything(){
-        return pertanyaan_post_everything;
-    }
-
-    public void setPertanyaan_post_everything(Data_pertanyaan_post_everything pertanyaan){
-        if(this.pertanyaan_post_everything == null){
-            declare_pertanyaan_post_everything();
-        }
-        this.pertanyaan_post_everything.add(pertanyaan);
-    }
-
-    private void declare_pertanyaan_post_everything(){
-        this.pertanyaan_post_everything = new ArrayList<>();
-    }
-
-    public String getjenis_post() {
-        return jenis_post;
-    }
-    public void setjenis_post(String jenis_post) {
-        this.jenis_post = jenis_post;
-    }
 
     public String getjenis_file() {
         return jenis_file;
