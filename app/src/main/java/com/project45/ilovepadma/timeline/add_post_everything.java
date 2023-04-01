@@ -14,6 +14,10 @@ import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Typeface;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -905,6 +909,32 @@ public class add_post_everything extends AppCompatActivity {
             }
         }
 
+        // Get the device's current location and address
+        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+
+        Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+        double latitude = location.getLatitude();
+        double longitude = location.getLongitude();
+
+        Geocoder geocoder = new Geocoder(add_post_everything.this, Locale.getDefault());
+        List<Address> addresses = null;
+        try {
+            addresses = geocoder.getFromLocation(latitude, longitude, 1);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String address = addresses.get(0).getAddressLine(0);
+
         if(!jawaban_terisi){
             Toast.makeText(getApplicationContext(), "Semua Pertanyaan harus diisi ", Toast.LENGTH_LONG).show();
             progressDialog.dismiss();
@@ -981,6 +1011,9 @@ public class add_post_everything extends AppCompatActivity {
                         params.put("id_company", id_company);
                         params.put("photo_timeline", image_name);
                         params.put("create_by", id_user);
+                        params.put("latitude", String.valueOf(latitude));
+                        params.put("longitude", String.valueOf(longitude));
+                        params.put("address", address);
 
                         return params;
                     }

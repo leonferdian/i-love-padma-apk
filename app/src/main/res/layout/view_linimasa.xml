@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_main_ms"
+        android:minHeight="?attr/actionBarSize"
+        android:background="@color/page_red"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:elevation="@dimen/elevation_medium"
+        app:titleTextAppearance="@style/ToolbarTitleText"
+        android:theme="@style/AppTheme.AppBarOverlay">
+    </androidx.appcompat.widget.Toolbar>
+
+    <LinearLayout
+        android:layout_below="@id/toolbar_main_ms"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ImageButton
+            android:id="@+id/toggle"
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ic_arrow_drop_grey"
+            android:layout_gravity="right"
+            android:textColor="@color/white" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/filter_layout"
+            android:orientation="vertical">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:visibility="visible"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp">
+
+                <EditText
+                    android:id="@+id/date"
+                    android:layout_width="400dp"
+                    android:layout_height="40dp"
+                    android:padding="8dp"
+                    android:ems="10"
+                    android:focusable="false"
+                    android:background="@drawable/edittext_border"
+                    android:inputType="date"
+                    android:drawableStart="@drawable/baseline_calendar_month_24"
+                    android:layout_gravity="center_horizontal"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <AutoCompleteTextView
+                android:id="@+id/list_user"
+                android:layout_width="400dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:padding="8dp"
+                android:textSize="15sp"
+                android:background="@drawable/edittext_border"
+                android:layout_gravity="center_horizontal"
+                android:drawableStart="@drawable/baseline_account_circle_24"
+                android:hint=" Search user... " />
+
+
+            <EditText
+                android:id="@+id/user_id"
+                android:layout_width="400dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="5dp"
+                android:padding="8dp"
+                android:textSize="15sp"
+                android:visibility="gone"
+                android:layout_gravity="center_horizontal"/>
+
+            <Button
+                android:id="@+id/loadMap"
+                android:layout_width="400dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:backgroundTint="@color/page_red"
+                android:text="View"
+                android:textColor="@color/white" />
+        </LinearLayout>
+        <include layout="@layout/map_fragment" />
+    </LinearLayout>
+
+</RelativeLayout>

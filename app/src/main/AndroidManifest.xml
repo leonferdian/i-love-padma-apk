@@ -3,6 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.project45.ilovepadma">
 
+    <meta-data
+        android:name="com.google.android.geo.API_KEY"
+        android:value="@string/google_maps_key" />
     <uses-feature
         android:name="android.hardware.camera"
         android:required="false" />
@@ -1222,6 +1225,16 @@
             android:name=".setting.reservasi_meeting"
             android:exported="true"
             android:label="Reservasi Meeting"
+            android:parentActivityName=".setting.main_setting"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.project45.ilovepadma.setting.main_setting" />
+        </activity>
+        <activity
+            android:name=".setting.linimasa"
+            android:exported="true"
+            android:label="Linimasa"
             android:parentActivityName=".setting.main_setting"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
